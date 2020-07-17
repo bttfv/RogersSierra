@@ -6,6 +6,8 @@ Public Class cRogersSierra
 
     Private SmokeScript As cSmokeScript
 
+    Public AudioEngine As New AudioEngine()
+
     ''' <summary>
     ''' Points to the Rogers Sierra vehicle.
     ''' </summary>
@@ -68,7 +70,7 @@ Public Class cRogersSierra
     ''' Modifier for the train's acceleration.
     ''' </summary>
     ''' <returns></returns>
-    Friend Property LocomotiveAccModifier As Single = 1
+    Friend Property LocomotiveAccModifier As Single = 4
 
     ''' <summary>
     ''' Setted speed of the train.
@@ -243,38 +245,38 @@ Public Class cRogersSierra
 
     Private Sub LoadSounds()
 
-        myAudioEngine.DefaultSourceEntity = Locomotive
+        AudioEngine.DefaultSourceEntity = Locomotive
 
-        sTrainStart = myAudioEngine.Create("trainstart", My.Resources.TrainStart, Presets.Exterior)
+        sTrainStart = AudioEngine.Create("trainstart", My.Resources.TrainStart, Presets.Exterior)
 
-        sTrainMove1 = myAudioEngine.Create("trainmove1", My.Resources.TrainMove1, Presets.Exterior)
+        sTrainMove1 = AudioEngine.Create("trainmove1", My.Resources.TrainMove1, Presets.Exterior)
 
-        sTrainMove2 = myAudioEngine.Create("trainmove2", My.Resources.TrainMove2, Presets.Exterior)
+        sTrainMove2 = AudioEngine.Create("trainmove2", My.Resources.TrainMove2, Presets.Exterior)
 
-        sWhistleSound = myAudioEngine.Create("whistle", My.Resources.Whistle, Presets.Exterior)
+        sWhistleSound = AudioEngine.Create("whistle", My.Resources.Whistle, Presets.Exterior)
 
-        sPistonSteamVentSound = myAudioEngine.Create("pistonsteamvent", My.Resources.PistonSteamVent, Presets.Exterior)
+        sPistonSteamVentSound = AudioEngine.Create("pistonsteamvent", My.Resources.PistonSteamVent, Presets.Exterior)
 
-        sBellSound = myAudioEngine.Create("bell", My.Resources.Bell, Presets.Exterior)
+        sBellSound = AudioEngine.Create("bell", My.Resources.Bell, Presets.Exterior)
 
         sTrainMoving.Clear()
 
         With sTrainMoving
-            .Add(myAudioEngine.Create("trainmoving1", My.Resources.ambient_moving1, Presets.ExteriorLoop))
+            .Add(AudioEngine.Create("trainmoving1", My.Resources.ambient_moving1, Presets.ExteriorLoop))
             .Last.StartFadeIn = True
             .Last.FadeInMultiplier = 0.7
             .Last.StopFadeOut = True
             .Last.FadeOutMultiplier = 0.7
 
-            .Add(myAudioEngine.Create("trainmoving2", My.Resources.ambient_moving2, Presets.ExteriorLoop))
+            .Add(AudioEngine.Create("trainmoving2", My.Resources.ambient_moving2, Presets.ExteriorLoop))
 
-            .Add(myAudioEngine.Create("trainmoving3", My.Resources.ambient_moving3, Presets.ExteriorLoop))
+            .Add(AudioEngine.Create("trainmoving3", My.Resources.ambient_moving3, Presets.ExteriorLoop))
 
-            .Add(myAudioEngine.Create("trainmoving5", My.Resources.ambient_moving5, Presets.ExteriorLoop))
+            .Add(AudioEngine.Create("trainmoving5", My.Resources.ambient_moving5, Presets.ExteriorLoop))
 
-            .Add(myAudioEngine.Create("trainmoving6", My.Resources.ambient_moving6, Presets.ExteriorLoop))
+            .Add(AudioEngine.Create("trainmoving6", My.Resources.ambient_moving6, Presets.ExteriorLoop))
 
-            .Add(myAudioEngine.Create("trainmoving7", My.Resources.ambient_moving7, Presets.ExteriorLoop))
+            .Add(AudioEngine.Create("trainmoving7", My.Resources.ambient_moving7, Presets.ExteriorLoop))
         End With
     End Sub
 
@@ -930,7 +932,7 @@ Public Class cRogersSierra
         Locomotive.RemoveParticleEffects()
         VisibleLocomotive.RemoveParticleEffects()
 
-        myAudioEngine.Dispose()
+        AudioEngine.Dispose()
 
         Tender.Delete()
         Locomotive.Delete()

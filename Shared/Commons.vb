@@ -4,8 +4,6 @@ Public Module Commons
 
     Friend RndGenerator As New Random(Game.GameTime)
 
-    Friend myAudioEngine As New KlangRageAudioLibrary.AudioEngine()
-
     Public Enum SmokeColor
         Off
         [Default]

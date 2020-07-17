@@ -180,6 +180,12 @@
   <ItemGroup>
     <None Include="Resources\ambient_moving7.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KlangRageAudioLibrary\KlangRageAudioLibrary.csproj">
+      <Project>{e52db215-0aa9-453a-b5f3-91f3ff35c1d9}</Project>
+      <Name>KlangRageAudioLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(GTAPath)\scripts\$(TargetFileName)"

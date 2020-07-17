@@ -7,7 +7,7 @@ Public Module Manager
 
         If IsNothing(RogersSierra) Then
 
-            Dim tmpTrain = CreateMissionTrain(25, tPosition, direction)
+            Dim tmpTrain = CreateMissionTrain(26, tPosition, direction)
 
             tmpTrain.setTrainCruiseSpeed(0)
 
