@@ -1124,7 +1124,7 @@ metrotrain - carriage_vert_offset = "1.12"
 	</train_config>	
 	
 	<train_config
-		name = "sierra_config0"
+		name = "dmc_config0"
 		populate_train_dist = "40.0"
 		announce_stations = "false"
 		doors_beep = "false"
@@ -1152,7 +1152,7 @@ metrotrain - carriage_vert_offset = "1.12"
 	</train_config>
 	
 	<train_config
-		name = "sierra_config1"
+		name = "sierra_config0"
 		populate_train_dist = "40.0"
 		announce_stations = "false"
 		doors_beep = "false"
@@ -1218,9 +1218,11 @@ metrotrain - carriage_vert_offset = "1.12"
 		<train_config_ref name = "metro_config0" />
 	</train_config_group>
 	
-    <train_config_group name = "sierra_group">
-		<train_config_ref name = "sierra_config0" />
-		<train_config_ref name = "sierra_config1" />
+    <train_config_group name = "dmc_group">
+		<train_config_ref name = "dmc_config0" />
 	</train_config_group>
 	
+	<train_config_group name = "sierra_group">
+		<train_config_ref name = "sierra_config0" />
+	</train_config_group>
 </train_configs>

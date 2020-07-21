@@ -226,15 +226,12 @@ Public Class cRogersSierra
 
         AnimationProcess()
 
-        'Dim dRopeLength = Locomotive.Bones(Bones.sBellRopeStart).Position.DistanceTo(Locomotive.Bones(Bones.sBellRopeEnd).Position)
+        Dim dRopeLength = Locomotive.Bones(Bones.sBellRopeStart).Position.DistanceTo(Locomotive.Bones(Bones.sBellRopeEnd).Position)
 
-        'Dim num = dRopeLength + 0.1
-        'BellRope = World.AddRope(RopeType.ThickRope, Locomotive.Bones(Bones.sBellRopeStart).Position, DirectionToRotation(Locomotive.Bones(Bones.sBellRopeEnd).Position - Locomotive.Bones(Bones.sBellRopeStart).Position, 0.0F), num, System.Math.Min(dRopeLength, num), False)
-        'BellRope.Connect(Locomotive, Locomotive.Bones(Bones.sBellRopeStart).Position, Locomotive, Locomotive.Bones(Bones.sBellRopeEnd).Position, num)
-        'BellRope.ActivatePhysics()
-
-        BellRope = World.AddRope(RopeType.ThickRope, Locomotive.Bones(Bones.sBellRopeStart).Position, Math.Vector3.Zero, 5, 5, False)
-        BellRope.Connect(Locomotive, Locomotive.Bones(Bones.sBellRopeStart).Position, Locomotive, Locomotive.Bones(Bones.sBellRopeEnd).Position, 5)
+        Dim num = dRopeLength + 0.1
+        BellRope = World.AddRope(RopeType.ThickRope, Locomotive.Bones(Bones.sBellRopeStart).Position, DirectionToRotation(Locomotive.Bones(Bones.sBellRopeEnd).Position - Locomotive.Bones(Bones.sBellRopeStart).Position, 0.0F), num, System.Math.Min(dRopeLength, num), False)
+        BellRope.Connect(Locomotive, Locomotive.Bones(Bones.sBellRopeStart).Position, Locomotive, Locomotive.Bones(Bones.sBellRopeEnd).Position, num)
+        BellRope.ActivatePhysics()
 
         PistonSteam = True
 
@@ -324,7 +321,7 @@ Public Class cRogersSierra
 
     Public Function CheckDeLorean() As Vehicle
 
-        Dim tDel = World.GetNearbyVehicles(Locomotive.GetOffsetPosition(New Math.Vector3(0, 6.0, 0)), 2.5, Models.DMC12Model)
+        Dim tDel = World.GetNearbyVehicles(Locomotive.GetOffsetPosition(AttachedDeLoreanOffset.GetSingleOffset(Coordinate.Z, DeLoreanWheeliePosZ).GetSingleOffset(Coordinate.Y, -0.1)), 0.1, Models.DMC12Model)
 
         If tDel.Count > 0 Then
 
@@ -351,6 +348,7 @@ Public Class cRogersSierra
         ForceHandbrake = True
         VisibleLocomotive.Explode()
         Locomotive.MakeTrainDerail()
+        BellRope.Delete()
         isExploded = True
     End Sub
 
@@ -561,7 +559,7 @@ Public Class cRogersSierra
             Whistle = False
         End If
 
-        If Game.IsControlJustPressed(Control.VehicleHandbrake) AndAlso Bell = False AndAlso getCurrentCharacter.IsInVehicle(Locomotive) Then
+        If Game.IsControlJustPressed(Control.VehicleHandbrake) AndAlso Game.IsControlPressed(Control.CharacterWheel) = False AndAlso Bell = False AndAlso getCurrentCharacter.IsInVehicle(Locomotive) Then
 
             Bell = True
         End If
@@ -928,6 +926,8 @@ Public Class cRogersSierra
         aBrakePistons.Delete()
         aBrakeLevers.Delete()
         aBrakeBars.Delete()
+
+        BellRope.Delete()
 
         Locomotive.RemoveParticleEffects()
         VisibleLocomotive.RemoveParticleEffects()
