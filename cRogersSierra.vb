@@ -70,7 +70,7 @@ Public Class cRogersSierra
     ''' Modifier for the train's acceleration.
     ''' </summary>
     ''' <returns></returns>
-    Friend Property LocomotiveAccModifier As Single = 4
+    Friend Property LocomotiveAccModifier As Single = 1
 
     ''' <summary>
     ''' Setted speed of the train.
