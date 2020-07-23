@@ -55,12 +55,6 @@ Public Class cRogersSierra
     Public DeLoreanWheelie As AnimationStep = AnimationStep.Off
 
     ''' <summary>
-    ''' If true, the train tries to attach any DeLorean that founds on the front.
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property AutomaticDeLoreanAttach As Boolean = False
-
-    ''' <summary>
     ''' If true, the train is in Rocket mode.
     ''' </summary>
     ''' <returns></returns>
@@ -326,11 +320,6 @@ Public Class cRogersSierra
         If tDel.Count > 0 Then
 
             If (Int(ColDeLorean.Heading) <= Int(tDel(0).Heading) + 1 Or Int(ColDeLorean.Heading) >= Int(tDel(0).Heading) - 1) Then ' AndAlso Locomotive.Speed > 0 AndAlso Locomotive.SpeedMPH <= 5 AndAlso Locomotive.isGoingForward
-
-                If AutomaticDeLoreanAttach Then
-
-                    AttachDeLorean(tDel(0))
-                End If
 
                 Return tDel(0)
             End If
@@ -733,28 +722,14 @@ Public Class cRogersSierra
                     End If
             End Select
 
-            If DeLoreanWheelie <> AnimationStep.Off Then
+            If DeLoreanWheelie = AnimationStep.Third Then
 
-                AttachDeLorean()
-
-                If DeLoreanWheelie = AnimationStep.Third Then
-
-                    DeLoreanWheelie = AnimationStep.Off
-                End If
+                DeLoreanWheelie = AnimationStep.Off
             End If
+
+            AttachDeLorean()
 
             AttachedDeLorean.Rotation = ColDeLorean.Rotation.GetSingleOffset(Coordinate.X, DeLoreanWheelieRotX)
-
-            If AutomaticDeLoreanAttach AndAlso Locomotive.Speed = 0 AndAlso AttachedDeLorean.IsAttached Then
-
-                DetachDeLorean()
-            End If
-        Else
-
-            If AutomaticDeLoreanAttach Then
-
-                CheckDeLorean()
-            End If
         End If
     End Sub
 

@@ -24,11 +24,6 @@ Public Module Manager
 
         RogersSierra = New cRogersSierra(tmpTrain)
 
-        If IsNothing(Models.DMC12Model) Then
-
-            RogersSierra.AutomaticDeLoreanAttach = False
-        End If
-
         If warpInPlayer Then
 
             getCurrentCharacter.Task.WarpIntoVehicle(tmpTrain.GetTrainCarriage(1), VehicleSeat.Driver)
