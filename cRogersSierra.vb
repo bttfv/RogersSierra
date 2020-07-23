@@ -325,7 +325,7 @@ Public Class cRogersSierra
 
         If tDel.Count > 0 Then
 
-            If (Int(ColDeLorean.Heading) <= Int(tDel(0).Heading) + 1 Or Int(ColDeLorean.Heading) >= Int(tDel(0).Heading) - 1) AndAlso Locomotive.Speed > 0 AndAlso Locomotive.SpeedMPH <= 5 AndAlso Locomotive.isGoingForward Then
+            If (Int(ColDeLorean.Heading) <= Int(tDel(0).Heading) + 1 Or Int(ColDeLorean.Heading) >= Int(tDel(0).Heading) - 1) Then ' AndAlso Locomotive.Speed > 0 AndAlso Locomotive.SpeedMPH <= 5 AndAlso Locomotive.isGoingForward
 
                 If AutomaticDeLoreanAttach Then
 
