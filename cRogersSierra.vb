@@ -21,7 +21,7 @@ Public Class cRogersSierra
     ''' <summary>
     ''' Points to the fake DeLorean on the front.
     ''' </summary>
-    Private ColDeLorean As Vehicle
+    Public ColDeLorean As Vehicle
 
     Public VisibleLocomotive As Vehicle
 
@@ -45,14 +45,7 @@ Public Class cRogersSierra
     ''' If true, there is a DeLorean attached on the front.
     ''' </summary>
     ''' <returns></returns>
-    Public Property isDeLoreanAttached As Boolean = False
-
-    Private AttachedDeLoreanOffset As New Math.Vector3(0, 7.5, -1.0)
-
-    Private DeLoreanWheelieRotX As Single = 0
-    Private DeLoreanWheeliePosZ As Single = -0.35
-
-    Public DeLoreanWheelie As AnimationStep = AnimationStep.Off
+    Public ReadOnly Property isDeLoreanAttached As Boolean = AttachedDeLorean <> Nothing
 
     ''' <summary>
     ''' If true, the train is in Rocket mode.
@@ -64,7 +57,7 @@ Public Class cRogersSierra
     ''' Modifier for the train's acceleration.
     ''' </summary>
     ''' <returns></returns>
-    Friend Property LocomotiveAccModifier As Single = 1
+    Friend Property LocomotiveAccModifier As Single = 4
 
     ''' <summary>
     ''' Setted speed of the train.
@@ -270,63 +263,6 @@ Public Class cRogersSierra
             .Add(AudioEngine.Create("trainmoving7", My.Resources.ambient_moving7, Presets.ExteriorLoop))
         End With
     End Sub
-
-    ''' <summary>
-    ''' Attaches the <paramref name="tVehicle"/> on the front of the train.
-    ''' </summary>
-    ''' <param name="tVehicle">Vehicle to be attached.</param>
-    Public Sub AttachDeLorean(Optional tVehicle As Vehicle = Nothing)
-
-        If IsNothing(tVehicle) AndAlso IsNothing(AttachedDeLorean) Then
-
-            Exit Sub
-        End If
-
-        If IsNothing(tVehicle) = False Then
-
-            AttachedDeLorean = tVehicle
-
-            AttachedDeLorean.IsInvincible = True
-            AttachedDeLorean.CanBeVisiblyDamaged = False
-
-            VisibleLocomotive.ToggleExtra(1, True)
-        End If
-
-        'Native.Function.Call(Native.Hash.ATTACH_ENTITY_TO_ENTITY_PHYSICALLY, AttachedDeLorean, Locomotive, 0, 0, attachOffset.X, attachOffset.Y, attachOffset.Z + wheeliePosZ, 0, 0, 0, 0, 0, 0, 1000000.0, True, True, False, False, 2)
-
-        AttachedDeLorean.AttachToPhisically(Locomotive, AttachedDeLoreanOffset.GetSingleOffset(Coordinate.Z, DeLoreanWheeliePosZ), Math.Vector3.Zero, 1000000.0)
-        isDeLoreanAttached = True
-    End Sub
-
-    ''' <summary>
-    ''' Detaches the current vehicle on the front.
-    ''' </summary>
-    Public Sub DetachDeLorean()
-
-        If IsNothing(AttachedDeLorean) = False Then
-
-            Native.Function.Call(Native.Hash.DETACH_ENTITY, AttachedDeLorean.Handle, False, False)
-            AttachedDeLorean.IsInvincible = False
-            AttachedDeLorean.CanBeVisiblyDamaged = True
-            isDeLoreanAttached = False
-            DeLoreanWheelie = AnimationStep.Off
-        End If
-    End Sub
-
-    Public Function CheckDeLorean() As Vehicle
-
-        Dim tDel = World.GetNearbyVehicles(Locomotive.GetOffsetPosition(AttachedDeLoreanOffset.GetSingleOffset(Coordinate.Z, DeLoreanWheeliePosZ).GetSingleOffset(Coordinate.Y, -0.1)), 0.1, Models.DMC12Model)
-
-        If tDel.Count > 0 Then
-
-            If (Int(ColDeLorean.Heading) <= Int(tDel(0).Heading) + 1 Or Int(ColDeLorean.Heading) >= Int(tDel(0).Heading) - 1) Then ' AndAlso Locomotive.Speed > 0 AndAlso Locomotive.SpeedMPH <= 5 AndAlso Locomotive.isGoingForward
-
-                Return tDel(0)
-            End If
-        End If
-
-        Return Nothing
-    End Function
 
     Public Sub Explode()
 
@@ -679,60 +615,6 @@ Public Class cRogersSierra
         End If
     End Sub
 
-    Private Sub DeLoreanTick()
-
-        If isDeLoreanAttached Then
-
-            If AttachedDeLorean.Exists = False Then
-
-                isDeLoreanAttached = False
-            End If
-
-            If getCurrentCharacter.IsInVehicle(AttachedDeLorean) Then
-
-                If getCurrentCharacter.CanFlyThroughWindscreen Then
-
-                    getCurrentCharacter.CanFlyThroughWindscreen = False
-                End If
-            ElseIf getCurrentCharacter.CanFlyThroughWindscreen = False Then
-
-                getCurrentCharacter.CanFlyThroughWindscreen = True
-            End If
-
-            Select Case DeLoreanWheelie
-                Case AnimationStep.First
-                    DeLoreanWheelieRotX += 15 * Game.LastFrameTime
-                    DeLoreanWheeliePosZ += 0.35 * Game.LastFrameTime
-
-                    If DeLoreanWheelieRotX >= 15 AndAlso DeLoreanWheeliePosZ >= 0 Then
-
-                        DeLoreanWheelieRotX = 15
-                        DeLoreanWheeliePosZ = 0
-                        DeLoreanWheelie = AnimationStep.Third
-                    End If
-                Case AnimationStep.Second
-                    DeLoreanWheelieRotX -= 15 * Game.LastFrameTime
-                    DeLoreanWheeliePosZ -= 0.35 * Game.LastFrameTime
-
-                    If DeLoreanWheelieRotX <= 0 AndAlso DeLoreanWheeliePosZ <= -0.35 Then
-
-                        DeLoreanWheelieRotX = 0
-                        DeLoreanWheeliePosZ = -0.35
-                        DeLoreanWheelie = AnimationStep.Third
-                    End If
-            End Select
-
-            If DeLoreanWheelie = AnimationStep.Third Then
-
-                DeLoreanWheelie = AnimationStep.Off
-            End If
-
-            AttachDeLorean()
-
-            AttachedDeLorean.Rotation = ColDeLorean.Rotation.GetSingleOffset(Coordinate.X, DeLoreanWheelieRotX)
-        End If
-    End Sub
-
     Private Sub TrainSpeedTick()
 
         If getCurrentCharacter.IsInVehicle(Locomotive) Then
@@ -860,11 +742,6 @@ Public Class cRogersSierra
 
         If Locomotive.Exists = False Then
 
-            If isDeLoreanAttached Then
-
-                DetachDeLorean()
-            End If
-
             Delete()
 
             Exit Sub
@@ -877,8 +754,6 @@ Public Class cRogersSierra
         ParticlesTick()
 
         SoundsTick()
-
-        DeLoreanTick()
     End Sub
 
     ''' <summary>

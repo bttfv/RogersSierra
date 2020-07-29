@@ -20,7 +20,7 @@ Friend Class Main
             Case Keys.F9
                 If IsNothing(RogersSierra) Then
 
-                    CreateRogersSierra(getCurrentCharacter.Position.Around(5.0), True)
+                    CreateRogersSierra(getCurrentCharacter.Position, True)
                 End If
         End Select
     End Sub
