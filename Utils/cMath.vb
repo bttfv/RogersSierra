@@ -79,9 +79,9 @@ Friend Module cMath
         Return rad * (180 / System.Math.PI)
     End Function
 
-    <Runtime.CompilerServices.Extension>
-    Public Function ToVector3D(vect3 As Math.Vector3) As IrrKlang.Vector3D
+    '<Runtime.CompilerServices.Extension>
+    'Public Function ToVector3D(vect3 As Math.Vector3) As IrrKlang.Vector3D
 
-        Return New IrrKlang.Vector3D(vect3.X, vect3.Y, vect3.Z)
-    End Function
+    '    Return New IrrKlang.Vector3D(vect3.X, vect3.Y, vect3.Z)
+    'End Function
 End Module
