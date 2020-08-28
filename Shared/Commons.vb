@@ -1,8 +1,14 @@
 ﻿Imports System.Runtime.InteropServices
 Imports GTA
+Imports GTA.Math
+
 Public Module Commons
 
     Friend RndGenerator As New Random(Game.GameTime)
+
+    Friend SpawnLocations As New Dictionary(Of Integer, Vector3)
+
+    Friend MenuManager As New MenuManager
 
     Public Enum SmokeColor
         Off

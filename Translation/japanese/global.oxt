@@ -1,0 +1,15 @@
+﻿Version 2 30
+{
+	0x00000000 =
+	0xBA02364B = Sierra No.3
+	0xDD159338 = Rogers
+	RogersSierra_Menu_SpawnMenu = Spawn Menu
+	RogersSierra_Menu_SpawnMenu_Description = Opens the spawn menu.
+	RogersSierra_Menu_SpawnMenu_Subtitle = SELECT AN OPTION
+	RogersSierra_Menu_SpawnMenu_Location = Location
+	RogersSierra_Menu_SpawnMenu_Location_Description = Select where spawn train.
+	RogersSierra_Menu_SpawnMenu_Spawn = Spawn train
+	RogersSierra_Menu_SpawnMenu_Spawn_Description =  Press to spawn train.
+	RogersSierra_Menu_SpawnMenu_Delete = Delete train
+	RogersSierra_Menu_SpawnMenu_Delete_Description =  Press to delete train from map.
+}

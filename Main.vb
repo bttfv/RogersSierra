@@ -23,6 +23,8 @@ Friend Class Main
                     CreateRogersSierra(getCurrentCharacter.Position, True)
                 End If
         End Select
+
+        Commons.MenuManager.KeyDown(e)
     End Sub
 
     Private Sub Main_Tick(sender As Object, e As EventArgs) Handles Me.Tick
@@ -71,6 +73,8 @@ Friend Class Main
         End If
 
         Native.Function.Call(Native.Hash.SET_RANDOM_TRAINS, False)
+
+        Commons.MenuManager.Process()
 
         If IsNothing(RogersSierra) = False Then
 
