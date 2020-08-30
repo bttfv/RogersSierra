@@ -8,6 +8,8 @@ Public Class SpawnMenu
     Private LocationCamera As Camera
     Private LocationBlip As Blip
 
+    Private CurrentIndex As Integer = 0
+
     Private WithEvents SelectLocation As New NativeListItem(Of Integer)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Location"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Location_Description"), 1, 2, 3)
     Private WithEvents SpawnTrain As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Spawn"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Spawn_Description"))
     Private WithEvents DeleteTrain As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete_Description"))
@@ -41,8 +43,11 @@ Public Class SpawnMenu
 
     Public Sub ShowLocation(index As Integer)
 
-        Dim position = Game.Player.Character.Position 'SpawnLocations(index)
+        CurrentIndex = index - 1
 
+        Dim position = SpawnLocations(CurrentIndex).Item1
+
+        Native.Function.Call(Native.Hash.REQUEST_COLLISION_AT_COORD, position.X, position.Y, position.Z)
         Native.Function.Call(Native.Hash.LOAD_SCENE, position.X, position.Y, position.Z)
 
         LocationCamera = World.CreateCamera(position.GetSingleOffset(Coordinate.Z, 50), Vector3.Zero, 75)
@@ -61,9 +66,9 @@ Public Class SpawnMenu
 
     Private Sub SpawnTrain_Activated(sender As Object, e As EventArgs) Handles SpawnTrain.Activated
 
-        CreateRogersSierra(Game.Player.Character.Position, True)
+        CreateRogersSierra(SpawnLocations(CurrentIndex).Item1, True, SpawnLocations(CurrentIndex).Item2)
 
-        DeleteTrain.Enabled = Not IsNothing(RogersSierra)
+        Close()
     End Sub
 
     Private Sub DeleteTrain_Activated(sender As Object, e As EventArgs) Handles DeleteTrain.Activated
@@ -81,5 +86,7 @@ Public Class SpawnMenu
     Private Sub SpawnMenu_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
         DeleteTrain.Enabled = Not IsNothing(RogersSierra)
+
+        ShowLocation(CurrentIndex)
     End Sub
 End Class
