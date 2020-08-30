@@ -24,7 +24,7 @@ Friend Class Main
                 End If
         End Select
 
-        Commons.MenuManager.KeyDown(e)
+        'Commons.MenuManager.KeyDown(e)
     End Sub
 
     Private Sub Main_Tick(sender As Object, e As EventArgs) Handles Me.Tick

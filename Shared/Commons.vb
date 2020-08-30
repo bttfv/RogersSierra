@@ -6,7 +6,7 @@ Public Module Commons
 
     Friend RndGenerator As New Random(Game.GameTime)
 
-    Friend SpawnLocations As New List(Of Tuple(Of Vector3, Boolean)) From {New Tuple(Of Vector3, Boolean)(New Vector3(2416, 346, 94), True), New Tuple(Of Vector3, Boolean)(New Vector3(2348, 1182, 79), True), New Tuple(Of Vector3, Boolean)(New Vector3(2615, 2945, 39), True)}
+    Friend SpawnLocations As New List(Of Tuple(Of Vector3, Boolean)) From {New Tuple(Of Vector3, Boolean)(New Vector3(2416, -346, 94), True), New Tuple(Of Vector3, Boolean)(New Vector3(2348, 1182, 79), True), New Tuple(Of Vector3, Boolean)(New Vector3(2615, 2945, 39), True)}
 
     Friend MenuManager As New MenuManager
 
