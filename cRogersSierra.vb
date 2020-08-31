@@ -181,8 +181,8 @@ Public Class cRogersSierra
         '    .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderRear2Right, Math.Vector3.Zero, Math.Vector3.Zero))
         'End With
 
-        aRods = New AnimateProp(Models.sRods, Locomotive, Bones.sRods, New Math.Vector3(0, TrainProperties.connPointRadius, 0), New Math.Vector3(90, 0, 0))
-        aPRods = New AnimateProp(Models.sPRods, Locomotive, Bones.sRods, New Math.Vector3(0, TrainProperties.connPointRadius, 0), New Math.Vector3(0, 0, 0))
+        aRods = New AnimateProp(Models.sRods, Locomotive, Bones.sRods, New Math.Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
+        aPRods = New AnimateProp(Models.sPRods, Locomotive, Bones.sRods, New Math.Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
 
         aPistons = New AnimateProp(Models.sPistons, Locomotive, Bones.sPistons, Math.Vector3.Zero, Math.Vector3.Zero)
 
@@ -410,13 +410,13 @@ Public Class cRogersSierra
         aPRods.Position(Coordinate.Y) = dY
         aPRods.Position(Coordinate.Z) = dZ
 
-        Dim dAngle = 175 - RadToDeg(ArcCos((PistonRelativePosZ - aPRods.RelativePosition.Z) / TrainProperties.pRodsLength))
+        Dim dAngle = 90 - RadToDeg(ArcCos((PistonRelativePosZ - aPRods.RelativePosition.Z) / TrainProperties.pRodsLength))
 
         aPRods.Rotation(Coordinate.X) = dAngle
 
         aPistons.Position(Coordinate.Y) = TrainProperties.pRodsLength * System.Math.Cos(DegToRad(dAngle)) - (PistonRelativePosY - aPRods.RelativePosition.Y)
 
-        aLevValves.Rotation(Coordinate.X) = 155 + (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.Position(Coordinate.Y)
+        aLevValves.Rotation(Coordinate.X) = (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.Position(Coordinate.Y)
 
         aValvesPist.Position(Coordinate.Y) = (TrainProperties.minValvesPistPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X
 
