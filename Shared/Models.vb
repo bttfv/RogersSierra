@@ -8,15 +8,9 @@ Friend Class Models
     Public Shared TenderModel As Model
 
 #Region "Sierra Wheels"
-    Public Shared sWheelSmallLeft As Model '= LoadAndRequestModel("wheel_l3")
+    Public Shared sWheelFront As Model '= LoadAndRequestModel("rog_front_wheel")
 
-    Public Shared sWheelLeft As Model '= LoadAndRequestModel("wheel_l1")
-    Public Shared sWheelMiddleLeft As Model '= LoadAndRequestModel("wheel_l2")
-
-    Public Shared sWheelSmallRight As Model '= LoadAndRequestModel("wheel_r3")
-
-    Public Shared sWheelRight As Model '= LoadAndRequestModel("wheel_r1")
-    Public Shared sWheelMiddleRight As Model '= LoadAndRequestModel("wheel_r2")
+    Public Shared sWheelDrive As Model '= LoadAndRequestModel("rog_drive_wheel")
 #End Region
 
 #Region "Tender Wheels"

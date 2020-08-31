@@ -1,4 +1,5 @@
 ﻿Imports GTA
+Imports GTA.Math
 Imports RogersSierra
 Imports KlangRageAudioLibrary
 
@@ -145,54 +146,49 @@ Public Class cRogersSierra
         PistonRelativePosZ = Locomotive.Bones.Item(Bones.sPistons).RelativePosition.Z
 
         With aWheels
+            WheelRadius = System.Math.Abs(Models.sWheelDrive.Dimensions.frontTopRight.Z)
 
-            .Props.Add(New AnimateProp(Models.sWheelLeft, Locomotive, Bones.sWheelFirstLeft, Math.Vector3.Zero, Math.Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sWheelLeft, Locomotive, Bones.sWheelThirdLeft, Math.Vector3.Zero, Math.Vector3.Zero))
+            .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive1, Math.Vector3.Zero, Math.Vector3.Zero))
+            .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive2, Math.Vector3.Zero, Math.Vector3.Zero))
+            .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive3, Math.Vector3.Zero, Math.Vector3.Zero))
 
-            WheelRadius = System.Math.Abs(Models.sWheelMiddleLeft.Dimensions.frontTopRight.Z)
-
-            .Props.Add(New AnimateProp(Models.sWheelMiddleLeft, Locomotive, Bones.sWheelMiddleLeft, Math.Vector3.Zero, Math.Vector3.Zero))
-
-            .Props.Add(New AnimateProp(Models.sWheelRight, Locomotive, Bones.sWheelFirstRight, Math.Vector3.Zero, Math.Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sWheelRight, Locomotive, Bones.sWheelThirdRight, Math.Vector3.Zero, Math.Vector3.Zero))
-
-            .Props.Add(New AnimateProp(Models.sWheelMiddleRight, Locomotive, Bones.sWheelMiddleRight, Math.Vector3.Zero, Math.Vector3.Zero))
+            .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive1, Math.Vector3.Zero, Math.Vector3.Zero))
+            .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive2, Math.Vector3.Zero, Math.Vector3.Zero))
+            .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive3, Math.Vector3.Zero, Math.Vector3.Zero))
         End With
 
         With aSmallWheels
+            SmallWheelRadius = System.Math.Abs(Models.sWheelFront.Dimensions.frontTopRight.Z)
 
-            SmallWheelRadius = System.Math.Abs(Models.sWheelSmallLeft.Dimensions.frontTopRight.Z)
+            .Props.Add(New AnimateProp(Models.sWheelFront, Locomotive, Bones.sWheelFront1, Math.Vector3.Zero, Math.Vector3.Zero))
+            .Props.Add(New AnimateProp(Models.sWheelFront, Locomotive, Bones.sWheelFront2, Math.Vector3.Zero, Math.Vector3.Zero))
 
-            .Props.Add(New AnimateProp(Models.sWheelSmallLeft, Locomotive, Bones.sWheelFront1Left, Math.Vector3.Zero, Math.Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sWheelSmallLeft, Locomotive, Bones.sWheelFront2Left, Math.Vector3.Zero, Math.Vector3.Zero))
-
-            .Props.Add(New AnimateProp(Models.sWheelSmallRight, Locomotive, Bones.sWheelFront1Right, Math.Vector3.Zero, Math.Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sWheelSmallRight, Locomotive, Bones.sWheelFront2Right, Math.Vector3.Zero, Math.Vector3.Zero))
+            .Props.Add(New AnimateProp(Models.sWheelFront, Locomotive, Bones.sWheelFront1, Math.Vector3.Zero, Math.Vector3.Zero))
+            .Props.Add(New AnimateProp(Models.sWheelFront, Locomotive, Bones.sWheelFront2, Math.Vector3.Zero, Math.Vector3.Zero))
         End With
 
-        With aSmallWheelsTender
-            .Props.Add(New AnimateProp(Models.sWheelTenderLeft, Tender, Bones.sWheelTenderFront1Left, Math.Vector3.Zero, Math.Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sWheelTenderLeft, Tender, Bones.sWheelTenderFront2Left, Math.Vector3.Zero, Math.Vector3.Zero))
+        'With aSmallWheelsTender
+        '    .Props.Add(New AnimateProp(Models.sWheelTenderLeft, Tender, Bones.sWheelTenderFront1Left, Math.Vector3.Zero, Math.Vector3.Zero))
+        '    .Props.Add(New AnimateProp(Models.sWheelTenderLeft, Tender, Bones.sWheelTenderFront2Left, Math.Vector3.Zero, Math.Vector3.Zero))
 
-            .Props.Add(New AnimateProp(Models.sWheelTenderLeft, Tender, Bones.sWheelTenderRear1Left, Math.Vector3.Zero, Math.Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sWheelTenderLeft, Tender, Bones.sWheelTenderRear2Left, Math.Vector3.Zero, Math.Vector3.Zero))
+        '    .Props.Add(New AnimateProp(Models.sWheelTenderLeft, Tender, Bones.sWheelTenderRear1Left, Math.Vector3.Zero, Math.Vector3.Zero))
+        '    .Props.Add(New AnimateProp(Models.sWheelTenderLeft, Tender, Bones.sWheelTenderRear2Left, Math.Vector3.Zero, Math.Vector3.Zero))
 
-            .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderFront1Right, Math.Vector3.Zero, Math.Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderFront2Right, Math.Vector3.Zero, Math.Vector3.Zero))
+        '    .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderFront1Right, Math.Vector3.Zero, Math.Vector3.Zero))
+        '    .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderFront2Right, Math.Vector3.Zero, Math.Vector3.Zero))
 
-            .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderRear1Right, Math.Vector3.Zero, Math.Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderRear2Right, Math.Vector3.Zero, Math.Vector3.Zero))
-        End With
+        '    .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderRear1Right, Math.Vector3.Zero, Math.Vector3.Zero))
+        '    .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderRear2Right, Math.Vector3.Zero, Math.Vector3.Zero))
+        'End With
 
-        aRods = New AnimateProp(Models.sRods, Locomotive, Bones.sRods, New Math.Vector3(0, TrainProperties.connPointRadius, 0), Math.Vector3.Zero)
-
-        aPRods = New AnimateProp(Models.sPRods, Locomotive, Bones.sRods, New Math.Vector3(0, TrainProperties.connPointRadius, 0), Math.Vector3.Zero)
+        aRods = New AnimateProp(Models.sRods, Locomotive, Bones.sRods, New Math.Vector3(0, TrainProperties.connPointRadius, 0), New Math.Vector3(90, 0, 0))
+        aPRods = New AnimateProp(Models.sPRods, Locomotive, Bones.sRods, New Math.Vector3(0, TrainProperties.connPointRadius, 0), New Math.Vector3(0, 0, 0))
 
         aPistons = New AnimateProp(Models.sPistons, Locomotive, Bones.sPistons, Math.Vector3.Zero, Math.Vector3.Zero)
 
         aLevValves = New AnimateProp(Models.sLevValves, Locomotive, Bones.sLevValves, Math.Vector3.Zero, Math.Vector3.Zero)
 
-        aValves = New AnimateProp(Models.sValves, Locomotive, Bones.sValves, Math.Vector3.Zero, Math.Vector3.Zero)
+        aValves = New AnimateProp(Models.sValves, Locomotive, Bones.sValves, Math.Vector3.Zero, Vector3.Zero)
 
         aValvesPist = New AnimateProp(Models.sValvesPist, Locomotive, Bones.sValvesPist, Math.Vector3.Zero, Math.Vector3.Zero)
 
@@ -200,16 +196,16 @@ Public Class cRogersSierra
         aBell.setRotationSettings(Coordinate.X, True, True, -70, 70, 2, False, 1, False, 1)
         BellAnimation = AnimationStep.Off
 
-        With aBrakePads
+        'With aBrakePads
 
-            .Props.Add(New AnimateProp(Models.sBrakePadsFront, Locomotive, Bones.sBrakePadsFront, Math.Vector3.Zero, Math.Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sBrakePadsMiddle, Locomotive, Bones.sBrakePadsMiddle, Math.Vector3.Zero, Math.Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sBrakePadsRear, Locomotive, Bones.sBrakePadsRear, Math.Vector3.Zero, Math.Vector3.Zero))
-        End With
+        '    .Props.Add(New AnimateProp(Models.sBrakePadsFront, Locomotive, Bones.sBrakePadsFront, Math.Vector3.Zero, Math.Vector3.Zero))
+        '    .Props.Add(New AnimateProp(Models.sBrakePadsMiddle, Locomotive, Bones.sBrakePadsMiddle, Math.Vector3.Zero, Math.Vector3.Zero))
+        '    .Props.Add(New AnimateProp(Models.sBrakePadsRear, Locomotive, Bones.sBrakePadsRear, Math.Vector3.Zero, Math.Vector3.Zero))
+        'End With
 
-        aBrakeBars = New AnimateProp(Models.sBrakeBars, Locomotive, Bones.sBrakeBars, Math.Vector3.Zero, Math.Vector3.Zero)
-        aBrakeLevers = New AnimateProp(Models.sBrakeLevers, Locomotive, Bones.sBrakeLevers, Math.Vector3.Zero, Math.Vector3.Zero)
-        aBrakePistons = New AnimateProp(Models.sBrakePistons, Locomotive, Bones.sBrakePistons, Math.Vector3.Zero, Math.Vector3.Zero)
+        'aBrakeBars = New AnimateProp(Models.sBrakeBars, Locomotive, Bones.sBrakeBars, Math.Vector3.Zero, Math.Vector3.Zero)
+        'aBrakeLevers = New AnimateProp(Models.sBrakeLevers, Locomotive, Bones.sBrakeLevers, Math.Vector3.Zero, Math.Vector3.Zero)
+        'aBrakePistons = New AnimateProp(Models.sBrakePistons, Locomotive, Bones.sBrakePistons, Math.Vector3.Zero, Math.Vector3.Zero)
 
         AnimationProcess()
 
@@ -414,17 +410,17 @@ Public Class cRogersSierra
         aPRods.Position(Coordinate.Y) = dY
         aPRods.Position(Coordinate.Z) = dZ
 
-        Dim dAngle = 90 - RadToDeg(ArcCos((PistonRelativePosZ - aPRods.RelativePosition.Z) / TrainProperties.pRodsLength))
+        Dim dAngle = 175 - RadToDeg(ArcCos((PistonRelativePosZ - aPRods.RelativePosition.Z) / TrainProperties.pRodsLength))
 
         aPRods.Rotation(Coordinate.X) = dAngle
 
         aPistons.Position(Coordinate.Y) = TrainProperties.pRodsLength * System.Math.Cos(DegToRad(dAngle)) - (PistonRelativePosY - aPRods.RelativePosition.Y)
 
-        aLevValves.Rotation(Coordinate.X) = (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.Position(Coordinate.Y)
+        aLevValves.Rotation(Coordinate.X) = 155 + (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.Position(Coordinate.Y)
 
         aValvesPist.Position(Coordinate.Y) = (TrainProperties.minValvesPistPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X
 
-        aValves.Position(Coordinate.Y) = aValvesPist.Position(Coordinate.Y)
+        aValves.Position(Coordinate.Y) = aValvesPist.Position(Coordinate.Y) + 5
         aValves.Position(Coordinate.Z) = (TrainProperties.maxValvesPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X
         aValves.Rotation(Coordinate.X) = (TrainProperties.minValesRot / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X
     End Sub

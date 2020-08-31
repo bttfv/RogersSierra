@@ -1,19 +1,12 @@
 ﻿Friend Class Bones
 
 #Region "Sierra Wheels"
-    Public Const sWheelFront1Left As String = "wheel_lf"
-    Public Const sWheelFront2Left As String = "wheel_lm1"
+    Public Const sWheelFront1 As String = "wheel_f1"
+    Public Const sWheelFront2 As String = "wheel_f2"
 
-    Public Const sWheelFirstLeft As String = "wheel_lm2"
-    Public Const sWheelMiddleLeft As String = "wheel_lm3"
-    Public Const sWheelThirdLeft As String = "wheel_lr"
-
-    Public Const sWheelFront1Right As String = "wheel_rf"
-    Public Const sWheelFront2Right As String = "wheel_rm1"
-
-    Public Const sWheelFirstRight As String = "wheel_rm2"
-    Public Const sWheelMiddleRight As String = "wheel_rm3"
-    Public Const sWheelThirdRight As String = "wheel_rr"
+    Public Const sWheelDrive1 As String = "wheel_d1"
+    Public Const sWheelDrive2 As String = "wheel_d2"
+    Public Const sWheelDrive3 As String = "wheel_d3"
 #End Region
 
 #Region "Tender Wheels"
