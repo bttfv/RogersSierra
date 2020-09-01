@@ -27,6 +27,7 @@
 #Region "Wheels Props"
     Public Const sRods As String = "rog_rods_bone"
     Public Const sPRods As String = "rog_rods_bone"
+    Public Const sRodsEnd As String = "rog_rods_end_bone"
     Public Const sPistons As String = "rog_pistons_bone"
     Public Const sLevValves As String = "rog_lev_valves_bone"
     Public Const sValves As String = "rog_valves_bone"
