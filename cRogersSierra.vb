@@ -145,7 +145,7 @@ Public Class cRogersSierra
 
         PistonRelativePosZ = Locomotive.Bones.Item(Bones.sPistons).RelativePosition.Z
 
-        TrainProperties.connPointRadius = Locomotive.Bones.Item(Bones.sWheelDrive2).RelativePosition.DistanceTo(Locomotive.Bones.Item(Bones.sRods).RelativePosition)
+        TrainProperties.connPointRadius = Locomotive.Bones.Item(Bones.sWheelDrive2).RelativePosition.DistanceTo(Locomotive.Bones.Item(Bones.sRods).RelativePosition) * -1
 
         TrainProperties.pRodsLength = Locomotive.Bones.Item(Bones.sRodsEnd).RelativePosition.DistanceTo(Locomotive.Bones.Item(Bones.sRods).RelativePosition)
 
@@ -185,8 +185,8 @@ Public Class cRogersSierra
         '    .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderRear2Right, Vector3.Zero, Vector3.Zero))
         'End With
 
-        aRods = New AnimateProp(Models.sRods, Locomotive, Bones.sRods, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
-        aPRods = New AnimateProp(Models.sPRods, Locomotive, Bones.sRods, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
+        aRods = New AnimateProp(Models.sRods, Locomotive, Bones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
+        aPRods = New AnimateProp(Models.sPRods, Locomotive, Bones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
 
         aPistons = New AnimateProp(Models.sPistons, Locomotive, Bones.sPistons, Vector3.Zero, Vector3.Zero)
 
