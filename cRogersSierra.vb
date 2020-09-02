@@ -234,8 +234,10 @@ Public Class cRogersSierra
         sTrainStart = AudioEngine.Create("trainstart", My.Resources.TrainStart, Presets.Exterior)
 
         sTrainMove1 = AudioEngine.Create("trainmove1", My.Resources.TrainMove1, Presets.Exterior)
+        sTrainMove1.MinimumDistance = 25
 
         sTrainMove2 = AudioEngine.Create("trainmove2", My.Resources.TrainMove2, Presets.Exterior)
+        sTrainMove2.MinimumDistance = 25
 
         sWhistleSound = AudioEngine.Create("whistle", My.Resources.Whistle, Presets.Exterior)
 
@@ -251,6 +253,7 @@ Public Class cRogersSierra
             .Last.FadeInMultiplier = 0.7
             .Last.StopFadeOut = True
             .Last.FadeOutMultiplier = 0.7
+            .Last.MinimumDistance = 0.5
 
             .Add(AudioEngine.Create("trainmoving2", My.Resources.ambient_moving2, Presets.ExteriorLoop))
 
