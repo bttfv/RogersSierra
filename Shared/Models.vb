@@ -14,9 +14,7 @@ Friend Class Models
 #End Region
 
 #Region "Tender Wheels"
-    Public Shared sWheelTenderLeft As Model '= LoadAndRequestModel("wheel_l4")
-
-    Public Shared sWheelTenderRight As Model '= LoadAndRequestModel("wheel_r4")
+    Public Shared tWheel As Model '= LoadAndRequestModel("rog_tender_wheel")
 #End Region
 
 #Region "Wheels Props"

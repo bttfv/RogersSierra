@@ -43,21 +43,9 @@ Friend Class Main
             Models.DMC12ColModel = LoadAndRequestModel("dmc_debug")
             Models.RogersSierraModel = LoadAndRequestModel("sierra")
             Models.RogersSierraColModel = LoadAndRequestModel("sierra_debug")
-            'Models.TenderModel = LoadAndRequestModel("sierratender")
+            Models.TenderModel = LoadAndRequestModel("sierratender")
 
-            'Models.sWheelSmallLeft = LoadAndRequestModel("wheel_l3")
-
-            'Models.sWheelLeft = LoadAndRequestModel("wheel_l1")
-            'Models.sWheelMiddleLeft = LoadAndRequestModel("wheel_l2")
-
-            'Models.sWheelSmallRight = LoadAndRequestModel("wheel_r3")
-
-            'Models.sWheelRight = LoadAndRequestModel("wheel_r1")
-            'Models.sWheelMiddleRight = LoadAndRequestModel("wheel_r2")
-
-            'Models.sWheelTenderLeft = LoadAndRequestModel("wheel_l4")
-
-            'Models.sWheelTenderRight = LoadAndRequestModel("wheel_r4")
+            Models.tWheel = LoadAndRequestModel("rog_tender_wheel")
 
             Models.sWheelDrive = LoadAndRequestModel("rog_drive_wheel")
             Models.sWheelFront = LoadAndRequestModel("rog_front_wheel")

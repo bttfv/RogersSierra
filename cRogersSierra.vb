@@ -1,6 +1,5 @@
 ﻿Imports GTA
 Imports GTA.Math
-Imports RogersSierra
 Imports KlangRageAudioLibrary
 
 Public Class cRogersSierra
@@ -171,19 +170,13 @@ Public Class cRogersSierra
             .Props.Add(New AnimateProp(Models.sWheelFront, Locomotive, Bones.sWheelFront2, Vector3.Zero, Vector3.Zero))
         End With
 
-        'With aSmallWheelsTender
-        '    .Props.Add(New AnimateProp(Models.sWheelTenderLeft, Tender, Bones.sWheelTenderFront1Left, Vector3.Zero, Vector3.Zero))
-        '    .Props.Add(New AnimateProp(Models.sWheelTenderLeft, Tender, Bones.sWheelTenderFront2Left, Vector3.Zero, Vector3.Zero))
+        With aSmallWheelsTender
+            .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender1, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender2, Vector3.Zero, Vector3.Zero))
 
-        '    .Props.Add(New AnimateProp(Models.sWheelTenderLeft, Tender, Bones.sWheelTenderRear1Left, Vector3.Zero, Vector3.Zero))
-        '    .Props.Add(New AnimateProp(Models.sWheelTenderLeft, Tender, Bones.sWheelTenderRear2Left, Vector3.Zero, Vector3.Zero))
-
-        '    .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderFront1Right, Vector3.Zero, Vector3.Zero))
-        '    .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderFront2Right, Vector3.Zero, Vector3.Zero))
-
-        '    .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderRear1Right, Vector3.Zero, Vector3.Zero))
-        '    .Props.Add(New AnimateProp(Models.sWheelTenderRight, Tender, Bones.sWheelTenderRear2Right, Vector3.Zero, Vector3.Zero))
-        'End With
+            .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender3, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender4, Vector3.Zero, Vector3.Zero))
+        End With
 
         aRods = New AnimateProp(Models.sRods, Locomotive, Bones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
         aPRods = New AnimateProp(Models.sPRods, Locomotive, Bones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
@@ -234,12 +227,13 @@ Public Class cRogersSierra
         sTrainStart = AudioEngine.Create("trainstart", My.Resources.TrainStart, Presets.Exterior)
 
         sTrainMove1 = AudioEngine.Create("trainmove1", My.Resources.TrainMove1, Presets.Exterior)
-        sTrainMove1.MinimumDistance = 25
+        sTrainMove1.MinimumDistance = 10
 
         sTrainMove2 = AudioEngine.Create("trainmove2", My.Resources.TrainMove2, Presets.Exterior)
-        sTrainMove2.MinimumDistance = 25
+        sTrainMove2.MinimumDistance = 10
 
         sWhistleSound = AudioEngine.Create("whistle", My.Resources.Whistle, Presets.Exterior)
+        sWhistleSound.MinimumDistance = 10
 
         sPistonSteamVentSound = AudioEngine.Create("pistonsteamvent", My.Resources.PistonSteamVent, Presets.Exterior)
 
@@ -397,7 +391,7 @@ Public Class cRogersSierra
 
     Private Sub AnimationProcess()
 
-        Dim modifier As Single = If(Locomotive.Speedmph <= 10, 1 + (2.5 / 10) * Locomotive.SpeedMPH, 2.5)
+        Dim modifier As Single = If(Locomotive.SpeedMPH <= 10, 1 + (2.5 / 10) * Locomotive.SpeedMPH, 2.5)
         Dim wheelRot As Single = GetAngularSpeedRotation(Locomotive.Speed, WheelRadius, aWheels.Rotation(0).X, Locomotive.isGoingForward, modifier)
 
         aWheels.AllRotation(Coordinate.X) = wheelRot
@@ -757,6 +751,9 @@ Public Class cRogersSierra
         ParticlesTick()
 
         SoundsTick()
+
+        VisibleLocomotive.Wash()
+        Tender.Wash()
     End Sub
 
     ''' <summary>

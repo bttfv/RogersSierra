@@ -10,17 +10,10 @@
 #End Region
 
 #Region "Tender Wheels"
-    Public Const sWheelTenderFront1Left As String = "wheel_lm1"
-    Public Const sWheelTenderFront2Left As String = "wheel_lm2"
-
-    Public Const sWheelTenderRear1Left As String = "wheel_lm3"
-    Public Const sWheelTenderRear2Left As String = "wheel_lr"
-
-    Public Const sWheelTenderFront1Right As String = "wheel_rm1"
-    Public Const sWheelTenderFront2Right As String = "wheel_rm2"
-
-    Public Const sWheelTenderRear1Right As String = "wheel_rm3"
-    Public Const sWheelTenderRear2Right As String = "wheel_rr"
+    Public Const sWheelTender1 As String = "wheel_1"
+    Public Const sWheelTender2 As String = "wheel_2"
+    Public Const sWheelTender3 As String = "wheel_3"
+    Public Const sWheelTender4 As String = "wheel_4"
 
 #End Region
 
