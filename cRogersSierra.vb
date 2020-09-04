@@ -73,6 +73,12 @@ Public Class cRogersSierra
     ''' <returns></returns>
     Public Property isCruiseControlOn As Boolean = False
 
+    ''' <summary>
+    ''' Returns state of main boiler light
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property IsLightOn As Boolean = False
+
     Private WheelRadius As Single
     Private SmallWheelRadius As Single
 
@@ -90,6 +96,7 @@ Public Class cRogersSierra
     Private aValves As AnimateProp
     Private aValvesPist As AnimateProp
     Private aBell As AnimateProp
+    Private sLight As AnimateProp
 
     Private aBrakePads As New AnimatePropHandler
     Private aBrakeBars As AnimateProp
@@ -193,6 +200,8 @@ Public Class cRogersSierra
         aBell.setRotationSettings(Coordinate.X, True, True, -70, 70, 2, False, 1, False, 1)
         BellAnimation = AnimationStep.Off
 
+        sLight = New AnimateProp(Models.sLight, Locomotive, Vector3.Zero, Vector3.Zero)
+
         'With aBrakePads
 
         '    .Props.Add(New AnimateProp(Models.sBrakePadsFront, Locomotive, Bones.sBrakePadsFront, Vector3.Zero, Vector3.Zero))
@@ -273,6 +282,15 @@ Public Class cRogersSierra
         BellRope.Delete()
         isExploded = True
     End Sub
+
+    Public Property Light As Boolean
+        Get
+            Return IsLightOn
+        End Get
+        Set(value As Boolean)
+            sLight.Visible = value
+        End Set
+    End Property
 
     Public Property Bell As Boolean
         Get
@@ -484,6 +502,11 @@ Public Class cRogersSierra
         If Game.IsControlJustPressed(Control.VehicleHandbrake) AndAlso Game.IsControlPressed(Control.CharacterWheel) = False AndAlso Bell = False AndAlso getCurrentCharacter.IsInVehicle(Locomotive) Then
 
             Bell = True
+        End If
+
+        If Game.IsControlJustPressed(Control.VehicleHeadlight) Then
+            IsLightOn = Not IsLightOn
+            Light = IsLightOn
         End If
 
         Select Case BellAnimation
@@ -771,6 +794,7 @@ Public Class cRogersSierra
         aValves.Delete()
         aValvesPist.Delete()
         aBell.Delete()
+        sLight.Delete()
 
         aBrakePads.DeleteAll()
         aBrakePistons.Delete()
@@ -805,6 +829,7 @@ Public Class cRogersSierra
         aValves.CheckExists()
         aValvesPist.CheckExists()
         aBell.CheckExists()
+        sLight.CheckExists()
 
         aBrakePads.CheckExists()
         aBrakeBars.CheckExists()

@@ -58,6 +58,7 @@ Friend Class Main
             Models.sValvesPist = LoadAndRequestModel("rog_valves_pist")
 
             Models.sBell = LoadAndRequestModel("bell")
+            Models.sLight = LoadAndRequestModel("sierra_light")
 
             'Models.sBrakePadsFront = LoadAndRequestModel("brakepads_f")
             'Models.sBrakePadsMiddle = LoadAndRequestModel("brakepads_m")

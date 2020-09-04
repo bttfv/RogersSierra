@@ -28,6 +28,7 @@ Friend Class Models
 
 #Region "Other Props"
     Public Shared sBell As Model '= LoadAndRequestModel("bell")
+    Public Shared sLight As Model '= LoadAndRequestModel("sierra_light")
 #End Region
 
 #Region "Brake Props"
