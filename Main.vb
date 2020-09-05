@@ -21,6 +21,9 @@ Friend Class Main
                 If IsNothing(RogersSierra) Then
 
                     CreateRogersSierra(getCurrentCharacter.Position, True)
+                Else
+
+                    RogersSierra.Delete()
                 End If
         End Select
 
@@ -32,12 +35,6 @@ Friend Class Main
         On Error Resume Next
 
         If initialSetup Then
-
-            ' TEMP
-            Dim veh = World.GetAllVehicles("sierra", "sierra_debug")
-            For Each o As Vehicle In veh
-                o.Delete()
-            Next
 
             Models.DMC12Model = LoadAndRequestModel("dmc12")
             Models.DMC12ColModel = LoadAndRequestModel("dmc_debug")

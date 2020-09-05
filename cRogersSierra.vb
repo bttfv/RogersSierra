@@ -73,12 +73,6 @@ Public Class cRogersSierra
     ''' <returns></returns>
     Public Property isCruiseControlOn As Boolean = False
 
-    ''' <summary>
-    ''' Returns state of main boiler light
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property IsLightOn As Boolean = False
-
     Private WheelRadius As Single
     Private SmallWheelRadius As Single
 
@@ -283,9 +277,13 @@ Public Class cRogersSierra
         isExploded = True
     End Sub
 
-    Public Property Light As Boolean
+    ''' <summary>
+    ''' Returns state of main boiler light
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property IsLightOn As Boolean
         Get
-            Return IsLightOn
+            Return sLight.Visible
         End Get
         Set(value As Boolean)
             sLight.Visible = value
@@ -446,7 +444,7 @@ Public Class cRogersSierra
 
     Private Sub AnimationTick()
 
-        If Locomotive.Speed = 0 Then
+        If VisibleLocomotive.Position.DistanceToSquared(Game.Player.Character.Position) > 100 * 100 AndAlso Locomotive.Speed = 0 Then
 
             CheckPropsExists()
         Else
@@ -505,8 +503,8 @@ Public Class cRogersSierra
         End If
 
         If Game.IsControlJustPressed(Control.VehicleHeadlight) Then
+
             IsLightOn = Not IsLightOn
-            Light = IsLightOn
         End If
 
         Select Case BellAnimation
@@ -796,10 +794,10 @@ Public Class cRogersSierra
         aBell.Delete()
         sLight.Delete()
 
-        aBrakePads.DeleteAll()
-        aBrakePistons.Delete()
-        aBrakeLevers.Delete()
-        aBrakeBars.Delete()
+        'aBrakePads.DeleteAll()
+        'aBrakePistons.Delete()
+        'aBrakeLevers.Delete()
+        'aBrakeBars.Delete()
 
         BellRope.Delete()
 
@@ -831,9 +829,9 @@ Public Class cRogersSierra
         aBell.CheckExists()
         sLight.CheckExists()
 
-        aBrakePads.CheckExists()
-        aBrakeBars.CheckExists()
-        aBrakeLevers.CheckExists()
-        aBrakePistons.CheckExists()
+        'aBrakePads.CheckExists()
+        'aBrakeBars.CheckExists()
+        'aBrakeLevers.CheckExists()
+        'aBrakePistons.CheckExists()
     End Sub
 End Class
