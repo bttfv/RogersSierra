@@ -4,7 +4,7 @@ Imports KlangRageAudioLibrary
 
 Public Class cRogersSierra
 
-    Private SmokeScript As cSmokeScript
+    'Private SmokeScript As cSmokeScript
 
     Public AudioEngine As New AudioEngine()
 
@@ -72,6 +72,8 @@ Public Class cRogersSierra
     ''' </summary>
     ''' <returns></returns>
     Public Property isCruiseControlOn As Boolean = False
+
+    Private SmokeTime As Integer
 
     Private WheelRadius As Single
     Private SmallWheelRadius As Single
@@ -218,7 +220,7 @@ Public Class cRogersSierra
 
         PistonSteam = True
 
-        SmokeScript = Script.InstantiateScript(Of cSmokeScript)
+        'SmokeScript = Script.InstantiateScript(Of cSmokeScript)
 
         LoadSounds()
     End Sub
@@ -336,13 +338,13 @@ Public Class cRogersSierra
     End Property
 
     Friend Property FunnelInterval As Integer
-        Get
-            Return SmokeScript.Interval
-        End Get
-        Set(value As Integer)
-            SmokeScript.Interval = value
-        End Set
-    End Property
+    '    Get
+    '        Return SmokeScript.Interval
+    '    End Get
+    '    Set(value As Integer)
+    '        SmokeScript.Interval = value
+    '    End Set
+    'End Property
 
     Friend Property PistonSteam As Boolean
         Get
@@ -387,10 +389,10 @@ Public Class cRogersSierra
 
                         If i = 1 Or i = 3 Then
 
-                            .Last.CreateLoopedOnEntityBone(Locomotive, Bones.sSteam(i), New Vector3(-0.285, -0, -0.39), New Vector3(0, 90, 0))
+                            .Last.CreateLoopedOnEntityBone(Locomotive, Bones.sSteam(i), New Vector3(0, -0, -0.09), New Vector3(0, 90, 0))
                         Else
 
-                            .Last.CreateLoopedOnEntityBone(Locomotive, Bones.sSteam(i), New Vector3(0.285, 0, -0.39), New Vector3(0, -90, 0))
+                            .Last.CreateLoopedOnEntityBone(Locomotive, Bones.sSteam(i), New Vector3(0, 0, -0.09), New Vector3(0, -90, 0))
                         End If
                     End With
                 Next
@@ -455,11 +457,34 @@ Public Class cRogersSierra
 
     Private Sub ParticlesTick()
 
-        Dim tmpInterval = 1500 - (1450 / 51) * Locomotive.SpeedMPH
+        FunnelInterval = 1500 - (1450 / 51) * Locomotive.SpeedMPH
 
-        If tmpInterval < 50 Then tmpInterval = 50
+        If FunnelInterval < 50 Then FunnelInterval = 50
 
-        FunnelInterval = tmpInterval
+        If SmokeTime < Game.GameTime Then
+
+            If FunnelSmoke <> SmokeColor.Off Then
+
+                pFunnelSmoke.CreateOnEntityBone(Locomotive, Bones.sFunnel, New Math.Vector3(0, -1.6, -0.5), New Math.Vector3(90, 0, 0), 1)
+
+                Select Case FunnelSmoke
+                    Case SmokeColor.Default
+
+                        '.sFunnelSmoke.Color(132 / 255, 144 / 255, 118 / 255)
+                    Case SmokeColor.Green
+
+                        pFunnelSmoke.Color(132 / 255, 144 / 255, 118 / 255)
+                    Case SmokeColor.Yellow
+
+                        pFunnelSmoke.Color(217 / 255, 194 / 255, 75 / 255)
+                    Case SmokeColor.Red
+
+                        pFunnelSmoke.Color(184 / 255, 81 / 255, 94 / 255)
+                End Select
+            End If
+
+            SmokeTime = Game.GameTime + FunnelInterval
+        End If
 
         If PistonSteamVent = False AndAlso pSteamVent.Count > 0 Then
 
@@ -502,7 +527,7 @@ Public Class cRogersSierra
             Bell = True
         End If
 
-        If Game.IsControlJustPressed(Control.VehicleHeadlight) Then
+        If Game.IsControlJustPressed(Control.VehicleHeadlight) AndAlso getCurrentCharacter.IsInVehicle(Locomotive) Then
 
             IsLightOn = Not IsLightOn
         End If
