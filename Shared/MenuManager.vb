@@ -15,7 +15,7 @@ Friend Class MenuManager
     Public Sub KeyDown(Key As KeyEventArgs)
 
         Select Case Key.KeyData
-            Case Keys.F7
+            Case Keys.F9
                 SpawnMenu.Visible = True
         End Select
     End Sub

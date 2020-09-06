@@ -668,16 +668,21 @@ Public Class cRogersSierra
                 CurrentRogersSierra = Me
             End If
 
-            If Game.IsControlJustPressed(Control.VehicleExit) Then
+            If IsNothing(VisibleLocomotive.AttachedBlip) = False AndAlso VisibleLocomotive.AttachedBlip.Exists Then
 
-                If Locomotive.SpeedMPH >= 10 Then
-
-                    Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, getCurrentCharacter, Locomotive, 4160)
-                Else
-
-                    Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, getCurrentCharacter, Locomotive, 0)
-                End If
+                VisibleLocomotive.AttachedBlip.Delete()
             End If
+
+            'If Game.IsControlJustPressed(Control.VehicleExit) Then
+
+            '    If Locomotive.SpeedMPH >= 10 Then
+
+            '        Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, getCurrentCharacter, Locomotive, 4160)
+            '    Else
+
+            '        Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, getCurrentCharacter, Locomotive, 4160)
+            '    End If
+            'End If
 
             If isOnTrainMission = False Then
 
@@ -714,6 +719,11 @@ Public Class cRogersSierra
                     End If
                 End If
             End If
+        ElseIf IsNothing(VisibleLocomotive.AttachedBlip) OrElse VisibleLocomotive.AttachedBlip.Exists = False Then
+
+            VisibleLocomotive.AddBlip()
+
+            VisibleLocomotive.AttachedBlip.Sprite = 120
         End If
 
         If getCurrentCharacter.IsInVehicle(Locomotive) = False OrElse (Game.IsControlPressed(Control.VehicleAccelerate) = False AndAlso Game.IsControlPressed(Control.VehicleBrake) = False) Then
@@ -837,6 +847,8 @@ Public Class cRogersSierra
 
         AudioEngine.Dispose()
 
+        'VisibleLocomotive.AttachedBlip.Delete()
+
         Tender.Delete()
         Locomotive.Delete()
         ColDeLorean.Delete()
@@ -867,4 +879,9 @@ Public Class cRogersSierra
         'aBrakeLevers.CheckExists()
         'aBrakePistons.CheckExists()
     End Sub
+
+    Public Overrides Function ToString() As String
+
+        Return RogersSierra.IndexOf(Me)
+    End Function
 End Class

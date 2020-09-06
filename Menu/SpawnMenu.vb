@@ -2,33 +2,47 @@
 Imports GTA
 Imports GTA.Math
 Imports LemonUI.Menus
-Public Class SpawnMenu
+Friend Class SpawnMenu
     Inherits NativeMenu
+
+
+    Private SpawnMode As Boolean
 
     Private LocationCamera As Camera
     Private LocationBlip As Blip
 
-    Private CurrentIndex As Integer = 0
-
-    Private WithEvents SelectLocation As New NativeListItem(Of Integer)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Location"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Location_Description"), 1, 2, 3)
+    Private WithEvents SelectLocation As New NativeListItem(Of SpawnLocation)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Location"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Location_Description"))
     Private WithEvents SpawnTrain As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Spawn"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Spawn_Description"))
-    Private WithEvents DeleteTrain As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete_Description"))
+    Private WithEvents DeleteTrain As New NativeListItem(Of cRogersSierra)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete_Description"))
 
     Public Sub New()
         MyBase.New(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Subtitle"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Description"))
 
+        SelectLocation.Items = SpawnLocations
+
         Add(SelectLocation)
         Add(SpawnTrain)
         Add(DeleteTrain)
+
+        DeleteTrain.Items = RogersSierra
     End Sub
 
     Private Sub SpawnMenu_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
 
+        ResetCamera()
+    End Sub
+
+    Public Sub ResetCamera()
+
         If LocationCamera <> Nothing AndAlso LocationCamera.Exists Then
 
             LocationCamera.Delete()
-            World.RenderingCamera = Nothing
         End If
+
+        Native.Function.Call(Native.Hash.UNLOCK_MINIMAP_POSITION)
+
+        World.DestroyAllCameras()
+        World.RenderingCamera = Nothing
 
         If IsNothing(LocationBlip) = False AndAlso LocationBlip.Exists() Then
 
@@ -36,24 +50,28 @@ Public Class SpawnMenu
         End If
     End Sub
 
-    Private Sub SelectLocation_ItemChanged(sender As Object, e As ItemChangedEventArgs(Of Integer)) Handles SelectLocation.ItemChanged
+    Private Sub SelectLocation_ItemChanged(sender As Object, e As ItemChangedEventArgs(Of SpawnLocation)) Handles SelectLocation.ItemChanged
 
-        ShowLocation(e.Object)
+        ShowLocation()
     End Sub
 
-    Public Sub ShowLocation(index As Integer)
+    Public Sub ShowLocation()
 
-        CurrentIndex = index - 1
+        Dim position = SelectLocation.SelectedItem.Position
 
-        Dim position = SpawnLocations(CurrentIndex).Item1
+        Native.Function.Call(Native.Hash.NEW_LOAD_SCENE_START_SPHERE, position.X, position.Y, position.Z, 100, 0)
 
-        Native.Function.Call(Native.Hash.REQUEST_COLLISION_AT_COORD, position.X, position.Y, position.Z)
-        Native.Function.Call(Native.Hash.LOAD_SCENE, position.X, position.Y, position.Z)
+        If LocationCamera <> Nothing AndAlso LocationCamera.Exists Then
 
-        LocationCamera = World.CreateCamera(position.GetSingleOffset(Coordinate.Z, 50), Vector3.Zero, 75)
+            LocationCamera.Delete()
+        End If
+
+        LocationCamera = World.CreateCamera(position.GetSingleOffset(Coordinate.Z, 5).GetSingleOffset(Coordinate.Y, 5), Vector3.Zero, 75)
         LocationCamera.PointAt(position)
 
         World.RenderingCamera = LocationCamera
+
+        Native.Function.Call(Native.Hash.LOCK_MINIMAP_POSITION, position.X, position.Y)
 
         If IsNothing(LocationBlip) = False AndAlso LocationBlip.Exists() Then
 
@@ -64,29 +82,88 @@ Public Class SpawnMenu
         LocationBlip.Sprite = 120
     End Sub
 
-    Private Sub SpawnTrain_Activated(sender As Object, e As EventArgs) Handles SpawnTrain.Activated
+    Private Sub SpawnTrain_Activated(sender As Object, e As EventArgs) Handles SpawnTrain.Activated, SelectLocation.Activated
 
-        CreateRogersSierra(SpawnLocations(CurrentIndex).Item1, True, SpawnLocations(CurrentIndex).Item2)
+        CreateRogersSierra(SelectLocation.SelectedItem.Position, True, SelectLocation.SelectedItem.Direction)
 
         Close()
     End Sub
 
+    Private Sub SpawnMenu_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+
+        ShowLocation()
+
+        DeleteTrain.Enabled = RogersSierra.Count > 0
+
+        DeleteTrain.Items = RogersSierra
+    End Sub
+
     Private Sub DeleteTrain_Activated(sender As Object, e As EventArgs) Handles DeleteTrain.Activated
 
-        CurrentRogersSierra.Delete()
+        DeleteTrain.SelectedItem.Delete()
 
-        DeleteTrain.Enabled = False
+        RogersSierraToRemove.Remove(DeleteTrain.SelectedItem)
+
+        RogersSierra.Remove(DeleteTrain.SelectedItem)
+
+        Close()
     End Sub
 
     Private Sub DeleteTrain_Selected(sender As Object, e As SelectedEventArgs) Handles DeleteTrain.Selected
 
-        DeleteTrain.Enabled = getCurrentVehicle() = CurrentRogersSierra.Locomotive
+        If DeleteTrain.Enabled Then
+
+            If SpawnMode = False Then
+
+                Exit Sub
+            Else
+
+                SpawnMode = False
+            End If
+
+            ResetCamera()
+
+            ShowTrain()
+        End If
     End Sub
 
-    Private Sub SpawnMenu_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+    Public Sub ShowTrain()
 
-        DeleteTrain.Enabled = getCurrentVehicle() = CurrentRogersSierra.Locomotive
+        Dim position = DeleteTrain.SelectedItem.Locomotive.Position
 
-        ShowLocation(CurrentIndex)
+        Native.Function.Call(Native.Hash.NEW_LOAD_SCENE_START_SPHERE, position.X, position.Y, position.Z, 100, 0)
+
+        If LocationCamera <> Nothing AndAlso LocationCamera.Exists Then
+
+            LocationCamera.Delete()
+        End If
+
+        LocationCamera = World.CreateCamera(position, Vector3.Zero, 75)
+        LocationCamera.AttachTo(DeleteTrain.SelectedItem.Locomotive, New Vector3(10, 0, 10))
+        LocationCamera.PointAt(DeleteTrain.SelectedItem.Locomotive)
+
+        World.RenderingCamera = LocationCamera
+
+        Native.Function.Call(Native.Hash.LOCK_MINIMAP_POSITION, position.X, position.Y)
+    End Sub
+
+    Private Sub DeleteTrain_ItemChanged(sender As Object, e As ItemChangedEventArgs(Of cRogersSierra)) Handles DeleteTrain.ItemChanged
+
+        ShowTrain()
+    End Sub
+
+    Private Sub SelectLocation_Selected(sender As Object, e As SelectedEventArgs) Handles SelectLocation.Selected, SpawnTrain.Selected
+
+        If SpawnMode Then
+
+            Exit Sub
+        Else
+
+            SpawnMode = True
+        End If
+
+        ResetCamera()
+
+        ShowLocation()
     End Sub
 End Class

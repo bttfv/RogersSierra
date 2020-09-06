@@ -6,9 +6,25 @@ Public Module Commons
 
     Friend RndGenerator As New Random(Game.GameTime)
 
-    Friend SpawnLocations As New List(Of Tuple(Of Vector3, Boolean)) From {New Tuple(Of Vector3, Boolean)(New Vector3(2416, -346, 94), True), New Tuple(Of Vector3, Boolean)(New Vector3(2348, 1182, 79), True), New Tuple(Of Vector3, Boolean)(New Vector3(2615, 2945, 39), True)}
+    Friend SpawnLocations As New List(Of SpawnLocation) From {New SpawnLocation(New Vector3(2416, -346, 94), True), New SpawnLocation(New Vector3(2348, 1182, 79), True), New SpawnLocation(New Vector3(2615, 2945, 39), True)}
 
     Friend MenuManager As New MenuManager
+
+    Friend Class SpawnLocation
+
+        Public Position As Vector3
+        Public Direction As Boolean
+
+        Public Sub New(position As Vector3, direction As Boolean)
+            Me.Position = position
+            Me.Direction = direction
+        End Sub
+
+        Public Overrides Function ToString() As String
+
+            Return SpawnLocations.IndexOf(Me)
+        End Function
+    End Class
 
     Public Enum SmokeColor
         Off

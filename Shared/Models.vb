@@ -40,4 +40,36 @@ Friend Class Models
     Public Shared sBrakePistons As Model '= LoadAndRequestModel("brakepistons")
 #End Region
 
+    Public Shared Sub LoadModels()
+
+        DMC12Model = LoadAndRequestModel("dmc12")
+        DMC12ColModel = LoadAndRequestModel("dmc_debug")
+        RogersSierraModel = LoadAndRequestModel("sierra")
+        RogersSierraColModel = LoadAndRequestModel("sierra_debug")
+        TenderModel = LoadAndRequestModel("sierratender")
+
+        tWheel = LoadAndRequestModel("rog_tender_wheel")
+
+        sWheelDrive = LoadAndRequestModel("rog_drive_wheel")
+        sWheelFront = LoadAndRequestModel("rog_front_wheel")
+
+        sRods = LoadAndRequestModel("rog_rods")
+        sPRods = LoadAndRequestModel("rog_prods")
+        sPistons = LoadAndRequestModel("rog_pistons")
+        sLevValves = LoadAndRequestModel("rog_lev_valves")
+        sValves = LoadAndRequestModel("rog_valves")
+        sValvesPist = LoadAndRequestModel("rog_valves_pist")
+
+        sBell = LoadAndRequestModel("bell")
+        sLight = LoadAndRequestModel("sierra_light")
+
+        'sBrakePadsFront = LoadAndRequestModel("brakepads_f")
+        'sBrakePadsMiddle = LoadAndRequestModel("brakepads_m")
+        'sBrakePadsRear = LoadAndRequestModel("brakepads_r")
+        'sBrakeBars = LoadAndRequestModel("brakebars")
+        'sBrakeLevers = LoadAndRequestModel("brakelevers")
+        'sBrakePistons = LoadAndRequestModel("brakepistons")
+
+    End Sub
+
 End Class
