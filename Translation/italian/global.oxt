@@ -12,4 +12,6 @@
 	RogersSierra_Menu_SpawnMenu_Spawn_Description =  Premere per creare il treno.
 	RogersSierra_Menu_SpawnMenu_Delete = Elimina treno
 	RogersSierra_Menu_SpawnMenu_Delete_Description =  Premere per eliminare il treno.
+	RogersSierra_Menu_SpawnMenu_DeleteAll = Elimina tutti treni
+	RogersSierra_Menu_SpawnMenu_DeleteAll_Description =  Premere per eliminare tutti i treni.
 }

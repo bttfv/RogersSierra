@@ -14,17 +14,18 @@ Friend Class SpawnMenu
     Private WithEvents SelectLocation As New NativeListItem(Of SpawnLocation)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Location"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Location_Description"))
     Private WithEvents SpawnTrain As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Spawn"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Spawn_Description"))
     Private WithEvents DeleteTrain As New NativeListItem(Of cRogersSierra)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete_Description"))
+    Private WithEvents DeleteAllTrains As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_DeleteAll"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_DeleteAll_Description"))
 
     Public Sub New()
         MyBase.New(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Subtitle"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Description"))
 
         SelectLocation.Items = SpawnLocations
+        DeleteTrain.Items = RogersSierra
 
         Add(SelectLocation)
         Add(SpawnTrain)
         Add(DeleteTrain)
-
-        DeleteTrain.Items = RogersSierra
+        Add(DeleteAllTrains)
     End Sub
 
     Private Sub SpawnMenu_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
@@ -165,5 +166,14 @@ Friend Class SpawnMenu
         ResetCamera()
 
         ShowLocation()
+    End Sub
+
+    Private Sub DeleteAllTrains_Activated(sender As Object, e As EventArgs) Handles DeleteAllTrains.Activated
+
+        RogersSierra.ForEach(Sub(x)
+                                 x.Delete()
+                             End Sub)
+
+        Close()
     End Sub
 End Class

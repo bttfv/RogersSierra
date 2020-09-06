@@ -14,15 +14,17 @@ Public Module Commons
 
         Public Position As Vector3
         Public Direction As Boolean
+        Public Name As String
 
         Public Sub New(position As Vector3, direction As Boolean)
             Me.Position = position
             Me.Direction = direction
+            Name = World.GetZoneLocalizedName(position)
         End Sub
 
         Public Overrides Function ToString() As String
 
-            Return SpawnLocations.IndexOf(Me)
+            Return Name
         End Function
     End Class
 
