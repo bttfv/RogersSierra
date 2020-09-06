@@ -1132,7 +1132,7 @@ metrotrain - carriage_vert_offset = "1.12"
 		carriages_swing = "false"
 		link_tracks_with_adjacent_stations = "true"
 		no_random_spawn = "true"
-		carriage_gap = "0.1">
+		carriage_gap = "0.01">
 		
 		<carriage
 				model_name = "dmc_debug"
@@ -1160,22 +1160,22 @@ metrotrain - carriage_vert_offset = "1.12"
 		carriages_swing = "false"
 		link_tracks_with_adjacent_stations = "true"
 		no_random_spawn = "true"
-		carriage_gap = "0.1">
+		carriage_gap = "-10.038">
 		
 		<carriage
 				model_name = "dmc_debug"
 				max_peds_per_carriage = "0"
 				flip_model_dir = "false"
 				do_interior_lights = "false"
-				carriage_vert_offset = "1.65"
+				carriage_vert_offset = "0"
 		repeat_count = "1" />
 		
 		<carriage
 				model_name = "sierra_debug"
 				max_peds_per_carriage = "0"
 				flip_model_dir = "false"
-				do_interior_lights = "false"
-				carriage_vert_offset = "1.65"
+				do_interior_lights = "true"
+				carriage_vert_offset = "0.1"
 		repeat_count = "1" />
 		
 		<carriage
@@ -1183,7 +1183,35 @@ metrotrain - carriage_vert_offset = "1.12"
 				max_peds_per_carriage = "0"
 				flip_model_dir = "false"
 				do_interior_lights = "false"
-				carriage_vert_offset = "1.65"
+				carriage_vert_offset = "0.1"
+		repeat_count = "1" />
+	</train_config>
+	
+	<train_config
+		name = "sierra_config1"
+		populate_train_dist = "40.0"
+		announce_stations = "false"
+		doors_beep = "false"
+		carriages_hang = "false"
+		carriages_swing = "false"
+		link_tracks_with_adjacent_stations = "true"
+		no_random_spawn = "true"
+		carriage_gap = "-10.038">
+		
+		<carriage
+				model_name = "dmc_debug"
+				max_peds_per_carriage = "0"
+				flip_model_dir = "false"
+				do_interior_lights = "false"
+				carriage_vert_offset = "0"
+		repeat_count = "1" />
+		
+		<carriage
+				model_name = "sierra_debug"
+				max_peds_per_carriage = "0"
+				flip_model_dir = "false"
+				do_interior_lights = "true"
+				carriage_vert_offset = "0.1"
 		repeat_count = "1" />
 	</train_config>
 	
@@ -1224,5 +1252,6 @@ metrotrain - carriage_vert_offset = "1.12"
 	
 	<train_config_group name = "sierra_group">
 		<train_config_ref name = "sierra_config0" />
+		<train_config_ref name = "sierra_config1" />
 	</train_config_group>
 </train_configs>

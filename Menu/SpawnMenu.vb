@@ -15,6 +15,7 @@ Friend Class SpawnMenu
     Private WithEvents SpawnTrain As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Spawn"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Spawn_Description"))
     Private WithEvents DeleteTrain As New NativeListItem(Of cRogersSierra)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete_Description"))
     Private WithEvents DeleteAllTrains As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_DeleteAll"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_DeleteAll_Description"))
+    Private WithEvents NoTender As New NativeCheckboxItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_NoTender"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_NoTender_Description"), False)
 
     Public Sub New()
         MyBase.New(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Subtitle"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Description"))
@@ -23,6 +24,7 @@ Friend Class SpawnMenu
         DeleteTrain.Items = RogersSierra
 
         Add(SelectLocation)
+        Add(NoTender)
         Add(SpawnTrain)
         Add(DeleteTrain)
         Add(DeleteAllTrains)
@@ -85,7 +87,7 @@ Friend Class SpawnMenu
 
     Private Sub SpawnTrain_Activated(sender As Object, e As EventArgs) Handles SpawnTrain.Activated, SelectLocation.Activated
 
-        CreateRogersSierra(SelectLocation.SelectedItem.Position, True, SelectLocation.SelectedItem.Direction)
+        CreateRogersSierra(SelectLocation.SelectedItem.Position, True, SelectLocation.SelectedItem.Direction, NoTender.Checked)
 
         Close()
     End Sub

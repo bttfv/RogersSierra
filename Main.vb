@@ -9,7 +9,8 @@ Friend Class Main
     Private Sub Main_Aborted(sender As Object, e As EventArgs) Handles Me.Aborted
 
         RogersSierra.ForEach(Sub(x)
-                                 x.Delete()
+
+                                 x.Delete(False)
                              End Sub)
     End Sub
 
@@ -32,6 +33,14 @@ Friend Class Main
         Native.Function.Call(Native.Hash.SET_RANDOM_TRAINS, False)
 
         Commons.MenuManager.Process()
+
+        World.GetAllVehicles(Models.RogersSierraColModel).ToList.ForEach(Sub(x)
+
+                                                                             If IsNothing(GetRogersSierraFromVehicle(x)) Then
+
+                                                                                 RogersSierra.Add(New cRogersSierra(x))
+                                                                             End If
+                                                                         End Sub)
 
         If RogersSierraToRemove.Count > 0 Then
 

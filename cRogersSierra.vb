@@ -25,6 +25,8 @@ Public Class cRogersSierra
 
     Public VisibleLocomotive As Vehicle
 
+    Public ReadOnly Property Type As TrainType
+
     Public ReadOnly Property isExploded As Boolean
 
     ''' <summary>
@@ -123,15 +125,39 @@ Public Class cRogersSierra
 
         _ID = RndGenerator.Next
 
-        ColDeLorean = mTrain
-        ColDeLorean.IsVisible = False
-        ColDeLorean.IsCollisionEnabled = False
+        Select Case mTrain.Model
+            Case Models.DMC12ColModel
+                ColDeLorean = mTrain
+                Locomotive = ColDeLorean.GetTrainCarriage(1)
 
-        Locomotive = ColDeLorean.GetTrainCarriage(1)
+                ColDeLorean.IsVisible = False
+                ColDeLorean.IsCollisionEnabled = False
+
+                Tender = ColDeLorean.GetTrainCarriage(2)
+
+                If IsNothing(Tender) OrElse Tender.Exists = False Then
+
+                    Type = TrainType.NoTender
+                Else
+
+                    Type = TrainType.Complete
+                End If
+            Case Models.RogersSierraColModel
+                Locomotive = mTrain
+
+                Tender = Locomotive.GetTrainCarriage(1)
+
+                If IsNothing(Tender) OrElse Tender.Exists = False Then
+
+                    Type = TrainType.OnlyLocomotive
+                Else
+
+                    Type = TrainType.NoColDelorean
+                End If
+        End Select
+
         Native.Function.Call(Native.Hash.SET_HORN_ENABLED, Locomotive.Handle, False)
         Locomotive.IsVisible = False
-
-        Tender = ColDeLorean.GetTrainCarriage(2)
 
         VisibleLocomotive = World.CreateVehicle(Models.RogersSierraModel, Locomotive.Position)
         VisibleLocomotive.IsCollisionEnabled = False
@@ -168,13 +194,16 @@ Public Class cRogersSierra
             .Props.Add(New AnimateProp(Models.sWheelFront, Locomotive, Bones.sWheelFront2, Vector3.Zero, Vector3.Zero))
         End With
 
-        With aSmallWheelsTender
-            .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender1, Vector3.Zero, Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender2, Vector3.Zero, Vector3.Zero))
+        If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
 
-            .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender3, Vector3.Zero, Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender4, Vector3.Zero, Vector3.Zero))
-        End With
+            With aSmallWheelsTender
+                .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender1, Vector3.Zero, Vector3.Zero))
+                .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender2, Vector3.Zero, Vector3.Zero))
+
+                .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender3, Vector3.Zero, Vector3.Zero))
+                .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender4, Vector3.Zero, Vector3.Zero))
+            End With
+        End If
 
         aRods = New AnimateProp(Models.sRods, Locomotive, Bones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
         aPRods = New AnimateProp(Models.sPRods, Locomotive, Bones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
@@ -417,7 +446,10 @@ Public Class cRogersSierra
 
         aSmallWheels.AllRotation(Coordinate.X) = GetAngularSpeedRotation(Locomotive.Speed, SmallWheelRadius, aSmallWheels.Rotation(0).X, Locomotive.isGoingForward, modifier)
 
-        aSmallWheelsTender.AllRotation(Coordinate.X) = aSmallWheels.AllRotation(Coordinate.X)
+        If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
+
+            aSmallWheelsTender.AllRotation(Coordinate.X) = aSmallWheels.AllRotation(Coordinate.X)
+        End If
 
         wheelRot = PositiveAngle(wheelRot)
 
@@ -673,16 +705,16 @@ Public Class cRogersSierra
                 VisibleLocomotive.AttachedBlip.Delete()
             End If
 
-            'If Game.IsControlJustPressed(Control.VehicleExit) Then
+            If Game.IsControlJustPressed(Control.VehicleExit) Then
 
-            '    If Locomotive.SpeedMPH >= 10 Then
+                If Locomotive.SpeedMPH >= 10 Then
 
-            '        Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, getCurrentCharacter, Locomotive, 4160)
-            '    Else
+                    getCurrentCharacter.Task.LeaveVehicle(LeaveVehicleFlags.BailOut)
+                Else
 
-            '        Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, getCurrentCharacter, Locomotive, 4160)
-            '    End If
-            'End If
+                    getCurrentCharacter.Task.LeaveVehicle()
+                End If
+            End If
 
             If isOnTrainMission = False Then
 
@@ -815,17 +847,26 @@ Public Class cRogersSierra
         SoundsTick()
 
         VisibleLocomotive.Wash()
-        Tender.Wash()
+
+        If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
+
+            Tender.Wash()
+        End If
     End Sub
 
     ''' <summary>
     ''' Deletes the train from the world.
     ''' </summary>
-    Public Sub Delete()
+    Public Sub Delete(Optional deleteVeh As Boolean = True)
 
         aWheels.DeleteAll()
         aSmallWheels.DeleteAll()
-        aSmallWheelsTender.DeleteAll()
+
+        If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
+
+            aSmallWheelsTender.DeleteAll()
+        End If
+
         aRods.Delete()
         aPRods.Delete()
         aPistons.Delete()
@@ -847,12 +888,22 @@ Public Class cRogersSierra
 
         AudioEngine.Dispose()
 
-        'VisibleLocomotive.AttachedBlip.Delete()
-
-        Tender.Delete()
-        Locomotive.Delete()
-        ColDeLorean.Delete()
         VisibleLocomotive.Delete()
+
+        If deleteVeh Then
+
+            If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
+
+                Tender.Delete()
+            End If
+
+            Locomotive.Delete()
+
+            If Type <> TrainType.NoColDelorean AndAlso Type <> TrainType.OnlyLocomotive Then
+
+                ColDeLorean.Delete()
+            End If
+        End If
 
         RemoveRogersSierra(Me)
 
@@ -863,7 +914,11 @@ Public Class cRogersSierra
 
         aWheels.CheckExists()
         aSmallWheels.CheckExists()
-        aSmallWheelsTender.CheckExists()
+
+        If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
+
+            aSmallWheelsTender.CheckExists()
+        End If
 
         aRods.CheckExists()
         aPRods.CheckExists()
@@ -884,4 +939,19 @@ Public Class cRogersSierra
 
         Return RogersSierra.IndexOf(Me)
     End Function
+
+    Public Shared Widening Operator CType(ByVal t As cRogersSierra) As Vehicle
+
+        Return t.Locomotive
+    End Operator
+
+    Public Shared Operator =(ByVal t As cRogersSierra, ByVal v As Vehicle) As Boolean
+
+        Return t.Locomotive = v
+    End Operator
+
+    Public Shared Operator <>(ByVal t As cRogersSierra, ByVal v As Vehicle) As Boolean
+
+        Return t.Locomotive <> v
+    End Operator
 End Class

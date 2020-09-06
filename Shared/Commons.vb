@@ -36,6 +36,13 @@ Public Module Commons
         Red
     End Enum
 
+    Public Enum TrainType
+        Complete
+        OnlyLocomotive
+        NoTender
+        NoColDelorean
+    End Enum
+
     Friend Enum Coordinate
         X
         Y

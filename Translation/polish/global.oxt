@@ -14,4 +14,6 @@
 	RogersSierra_Menu_SpawnMenu_Delete_Description =  Press to delete train from map.
 	RogersSierra_Menu_SpawnMenu_DeleteAll = Delete all trains
 	RogersSierra_Menu_SpawnMenu_DeleteAll_Description =  Press to delete all trains from map.
+	RogersSierra_Menu_SpawnMenu_NoTender = Only locomotive
+	RogersSierra_Menu_SpawnMenu_NoTender_Description =  If enabled, spawns only the locomotive.
 }
