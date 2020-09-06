@@ -1,5 +1,9 @@
 ﻿Friend Class Bones
 
+#Region "Sierra Others"
+    Public Const sDriverSeat As String = "seat_dside_f"
+#End Region
+
 #Region "Sierra Wheels"
     Public Const sWheelFront1 As String = "wheel_f1"
     Public Const sWheelFront2 As String = "wheel_f2"

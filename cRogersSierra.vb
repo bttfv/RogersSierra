@@ -4,9 +4,9 @@ Imports KlangRageAudioLibrary
 
 Public Class cRogersSierra
 
-    'Private SmokeScript As cSmokeScript
-
     Public AudioEngine As New AudioEngine()
+
+    Public ReadOnly Property ID As Integer
 
     ''' <summary>
     ''' Points to the Rogers Sierra vehicle.
@@ -25,16 +25,7 @@ Public Class cRogersSierra
 
     Public VisibleLocomotive As Vehicle
 
-    Private _isExploded As Boolean = False
-
-    Public Property isExploded As Boolean
-        Get
-            Return _isExploded
-        End Get
-        Friend Set(value As Boolean)
-            _isExploded = value
-        End Set
-    End Property
+    Public ReadOnly Property isExploded As Boolean
 
     ''' <summary>
     ''' Points to the real DeLorean, if it is attached.
@@ -72,6 +63,8 @@ Public Class cRogersSierra
     ''' </summary>
     ''' <returns></returns>
     Public Property isCruiseControlOn As Boolean = False
+
+    Public ReadOnly Property Deleted As Boolean
 
     Private SmokeTime As Integer
 
@@ -127,6 +120,8 @@ Public Class cRogersSierra
     Private PistonOldPos As Single
     Private PistonGoingForward As Boolean = False
     Public Sub New(mTrain As Vehicle)
+
+        _ID = RndGenerator.Next
 
         ColDeLorean = mTrain
         ColDeLorean.IsVisible = False
@@ -220,8 +215,6 @@ Public Class cRogersSierra
 
         PistonSteam = True
 
-        'SmokeScript = Script.InstantiateScript(Of cSmokeScript)
-
         LoadSounds()
     End Sub
 
@@ -229,40 +222,40 @@ Public Class cRogersSierra
 
         AudioEngine.DefaultSourceEntity = Locomotive
 
-        sTrainStart = AudioEngine.Create("trainstart", My.Resources.TrainStart, Presets.Exterior)
+        sTrainStart = AudioEngine.Create("trainstart" & _ID, My.Resources.TrainStart, Presets.Exterior)
 
-        sTrainMove1 = AudioEngine.Create("trainmove1", My.Resources.TrainMove1, Presets.Exterior)
+        sTrainMove1 = AudioEngine.Create("trainmove1" & _ID, My.Resources.TrainMove1, Presets.Exterior)
         sTrainMove1.MinimumDistance = 10
 
-        sTrainMove2 = AudioEngine.Create("trainmove2", My.Resources.TrainMove2, Presets.Exterior)
+        sTrainMove2 = AudioEngine.Create("trainmove2" & _ID, My.Resources.TrainMove2, Presets.Exterior)
         sTrainMove2.MinimumDistance = 10
 
-        sWhistleSound = AudioEngine.Create("whistle", My.Resources.Whistle, Presets.Exterior)
+        sWhistleSound = AudioEngine.Create("whistle" & _ID, My.Resources.Whistle, Presets.Exterior)
         sWhistleSound.MinimumDistance = 10
 
-        sPistonSteamVentSound = AudioEngine.Create("pistonsteamvent", My.Resources.PistonSteamVent, Presets.Exterior)
+        sPistonSteamVentSound = AudioEngine.Create("pistonsteamvent" & _ID, My.Resources.PistonSteamVent, Presets.Exterior)
 
-        sBellSound = AudioEngine.Create("bell", My.Resources.Bell, Presets.Exterior)
+        sBellSound = AudioEngine.Create("bell" & _ID, My.Resources.Bell, Presets.Exterior)
 
         sTrainMoving.Clear()
 
         With sTrainMoving
-            .Add(AudioEngine.Create("trainmoving1", My.Resources.ambient_moving1, Presets.ExteriorLoop))
+            .Add(AudioEngine.Create("trainmoving1" & _ID, My.Resources.ambient_moving1, Presets.ExteriorLoop))
             .Last.StartFadeIn = True
             .Last.FadeInMultiplier = 0.7
             .Last.StopFadeOut = True
             .Last.FadeOutMultiplier = 0.7
             .Last.MinimumDistance = 0.5
 
-            .Add(AudioEngine.Create("trainmoving2", My.Resources.ambient_moving2, Presets.ExteriorLoop))
+            .Add(AudioEngine.Create("trainmoving2" & _ID, My.Resources.ambient_moving2, Presets.ExteriorLoop))
 
-            .Add(AudioEngine.Create("trainmoving3", My.Resources.ambient_moving3, Presets.ExteriorLoop))
+            .Add(AudioEngine.Create("trainmoving3" & _ID, My.Resources.ambient_moving3, Presets.ExteriorLoop))
 
-            .Add(AudioEngine.Create("trainmoving5", My.Resources.ambient_moving5, Presets.ExteriorLoop))
+            .Add(AudioEngine.Create("trainmoving5" & _ID, My.Resources.ambient_moving5, Presets.ExteriorLoop))
 
-            .Add(AudioEngine.Create("trainmoving6", My.Resources.ambient_moving6, Presets.ExteriorLoop))
+            .Add(AudioEngine.Create("trainmoving6" & _ID, My.Resources.ambient_moving6, Presets.ExteriorLoop))
 
-            .Add(AudioEngine.Create("trainmoving7", My.Resources.ambient_moving7, Presets.ExteriorLoop))
+            .Add(AudioEngine.Create("trainmoving7" & _ID, My.Resources.ambient_moving7, Presets.ExteriorLoop))
         End With
     End Sub
 
@@ -276,8 +269,23 @@ Public Class cRogersSierra
         VisibleLocomotive.Explode()
         Locomotive.MakeTrainDerail()
         BellRope.Delete()
-        isExploded = True
+        _isExploded = True
     End Sub
+
+    Public Function GetBonePosition(boneName As String) As Vector3
+
+        Return Locomotive.Bones(boneName).Position
+    End Function
+
+    Public Function GetBoneDistanceSquared(boneName As String, entity As Entity) As Single
+
+        Return Locomotive.Bones(boneName).Position.DistanceToSquared(entity.Position)
+    End Function
+
+    Public Function GetBoneDistanceSquared(boneName As String, pos As Vector3) As Single
+
+        Return Locomotive.Bones(boneName).Position.DistanceToSquared(pos)
+    End Function
 
     ''' <summary>
     ''' Returns state of main boiler light
@@ -338,13 +346,6 @@ Public Class cRogersSierra
     End Property
 
     Friend Property FunnelInterval As Integer
-    '    Get
-    '        Return SmokeScript.Interval
-    '    End Get
-    '    Set(value As Integer)
-    '        SmokeScript.Interval = value
-    '    End Set
-    'End Property
 
     Friend Property PistonSteam As Boolean
         Get
@@ -580,7 +581,7 @@ Public Class cRogersSierra
         End Select
     End Sub
 
-    Friend Sub SoundsTick()
+    Private Sub SoundsTick()
 
         If Locomotive.Speed > 0 Then
 
@@ -661,6 +662,11 @@ Public Class cRogersSierra
     Private Sub TrainSpeedTick()
 
         If getCurrentCharacter.IsInVehicle(Locomotive) Then
+
+            If CurrentRogersSierra IsNot Me Then
+
+                CurrentRogersSierra = Me
+            End If
 
             If Game.IsControlJustPressed(Control.VehicleExit) Then
 
@@ -836,7 +842,9 @@ Public Class cRogersSierra
         ColDeLorean.Delete()
         VisibleLocomotive.Delete()
 
-        RogersSierra = Nothing
+        RemoveRogersSierra(Me)
+
+        _Deleted = True
     End Sub
 
     Private Sub CheckPropsExists()

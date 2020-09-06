@@ -1,20 +1,13 @@
 ﻿Imports GTA
 Public Module Manager
 
-    Public RogersSierra As cRogersSierra
+    Public CurrentRogersSierra As cRogersSierra
+
+    Public RogersSierra As New List(Of cRogersSierra)
+
+    Friend RogersSierraToRemove As New List(Of cRogersSierra)
 
     Public Sub CreateRogersSierra(tPosition As Math.Vector3, Optional warpInPlayer As Boolean = False, Optional direction As Boolean = False)
-
-        If IsNothing(RogersSierra) = False Then
-
-            If RogersSierra.isExploded Then
-
-                RogersSierra.Delete()
-            Else
-
-                Return
-            End If
-        End If
 
         Dim tmpTrain = CreateMissionTrain(26, tPosition, direction)
 
@@ -22,11 +15,19 @@ Public Module Manager
 
         tmpTrain.setTrainSpeed(0)
 
-        RogersSierra = New cRogersSierra(tmpTrain)
+        RogersSierra.Add(New cRogersSierra(tmpTrain))
 
         If warpInPlayer Then
 
             getCurrentCharacter.Task.WarpIntoVehicle(tmpTrain.GetTrainCarriage(1), VehicleSeat.Driver)
+        End If
+    End Sub
+
+    Friend Sub RemoveRogersSierra(RogersSierra As cRogersSierra)
+
+        If RogersSierraToRemove.Contains(RogersSierra) = False Then
+
+            RogersSierraToRemove.Add(RogersSierra)
         End If
     End Sub
 End Module

@@ -73,19 +73,19 @@ Public Class SpawnMenu
 
     Private Sub DeleteTrain_Activated(sender As Object, e As EventArgs) Handles DeleteTrain.Activated
 
-        RogersSierra.Delete()
+        CurrentRogersSierra.Delete()
 
-        DeleteTrain.Enabled = Not IsNothing(RogersSierra)
+        DeleteTrain.Enabled = False
     End Sub
 
     Private Sub DeleteTrain_Selected(sender As Object, e As SelectedEventArgs) Handles DeleteTrain.Selected
 
-        DeleteTrain.Enabled = Not IsNothing(RogersSierra)
+        DeleteTrain.Enabled = getCurrentVehicle() = CurrentRogersSierra.Locomotive
     End Sub
 
     Private Sub SpawnMenu_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
-        DeleteTrain.Enabled = Not IsNothing(RogersSierra)
+        DeleteTrain.Enabled = getCurrentVehicle() = CurrentRogersSierra.Locomotive
 
         ShowLocation(CurrentIndex)
     End Sub
