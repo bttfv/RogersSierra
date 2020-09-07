@@ -16,4 +16,6 @@
 	RogersSierra_Menu_SpawnMenu_DeleteAll_Description =  Premere per eliminare tutti i treni.
 	RogersSierra_Menu_SpawnMenu_NoTender = Solo locomotiva
 	RogersSierra_Menu_SpawnMenu_NoTender_Description =  Se abilitato crea soltanto la locomotiva.
+	RogersSierra_Menu_SpawnMenu_WarpPlayer = Teletrasporta giocatore
+	RogersSierra_Menu_SpawnMenu_WarpPlayer_Description =  Se abilitato teletrasporta il giocatore dentro la locomotiva.
 }

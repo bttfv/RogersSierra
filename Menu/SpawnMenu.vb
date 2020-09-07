@@ -1,10 +1,10 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing
 Imports GTA
 Imports GTA.Math
 Imports LemonUI.Menus
 Friend Class SpawnMenu
     Inherits NativeMenu
-
 
     Private SpawnMode As Boolean
 
@@ -16,15 +16,19 @@ Friend Class SpawnMenu
     Private WithEvents DeleteTrain As New NativeListItem(Of cRogersSierra)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete_Description"))
     Private WithEvents DeleteAllTrains As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_DeleteAll"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_DeleteAll_Description"))
     Private WithEvents NoTender As New NativeCheckboxItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_NoTender"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_NoTender_Description"), False)
+    Private WithEvents WarpPlayer As New NativeCheckboxItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_WarpPlayer"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_WarpPlayer_Description"), True)
 
     Public Sub New()
-        MyBase.New(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Subtitle"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Description"))
+        MyBase.New("", Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Subtitle"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Description"))
+
+        Banner = New LemonUI.Elements.ScaledTexture(New PointF(0, 0), New SizeF(200, 200), "sierra", "sierra_livery")
 
         SelectLocation.Items = SpawnLocations
         DeleteTrain.Items = RogersSierra
 
         Add(SelectLocation)
         Add(NoTender)
+        Add(WarpPlayer)
         Add(SpawnTrain)
         Add(DeleteTrain)
         Add(DeleteAllTrains)
@@ -87,7 +91,7 @@ Friend Class SpawnMenu
 
     Private Sub SpawnTrain_Activated(sender As Object, e As EventArgs) Handles SpawnTrain.Activated, SelectLocation.Activated
 
-        CreateRogersSierra(SelectLocation.SelectedItem.Position, True, SelectLocation.SelectedItem.Direction, NoTender.Checked)
+        CreateRogersSierra(SelectLocation.SelectedItem.Position, WarpPlayer.Checked, SelectLocation.SelectedItem.Direction, NoTender.Checked)
 
         Close()
     End Sub

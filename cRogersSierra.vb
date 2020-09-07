@@ -693,6 +693,14 @@ Public Class cRogersSierra
 
     Private Sub TrainSpeedTick()
 
+        If IsNothing(Locomotive.GetPedOnSeat(VehicleSeat.Driver)) = False Then
+
+            If Locomotive.GetPedOnSeat(VehicleSeat.Driver) <> getCurrentCharacter() Then
+
+                Exit Sub
+            End If
+        End If
+
         If getCurrentCharacter.IsInVehicle(Locomotive) Then
 
             If CurrentRogersSierra IsNot Me Then

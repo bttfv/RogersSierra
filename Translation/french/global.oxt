@@ -16,4 +16,6 @@
 	RogersSierra_Menu_SpawnMenu_DeleteAll_Description =  Press to delete all trains from map.
 	RogersSierra_Menu_SpawnMenu_NoTender = Only locomotive
 	RogersSierra_Menu_SpawnMenu_NoTender_Description =  If enabled, spawns only the locomotive.
+	RogersSierra_Menu_SpawnMenu_WarpPlayer = Warp player inside
+	RogersSierra_Menu_SpawnMenu_WarpPlayer_Description =  If enabled, warps player inside the locomotive.
 }
