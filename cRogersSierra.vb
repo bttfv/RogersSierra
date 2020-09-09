@@ -50,7 +50,7 @@ Public Class cRogersSierra
     ''' Modifier for the train's acceleration.
     ''' </summary>
     ''' <returns></returns>
-    Friend Property LocomotiveAccModifier As Single = 4
+    Friend Property LocomotiveAccModifier As Single = 2
 
     ''' <summary>
     ''' Setted speed of the train.
@@ -853,6 +853,9 @@ Public Class cRogersSierra
         ParticlesTick()
 
         SoundsTick()
+
+        VisibleLocomotive.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
+        VisibleLocomotive.Mods.SecondaryColor = Locomotive.Mods.SecondaryColor
 
         VisibleLocomotive.Wash()
 
