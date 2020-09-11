@@ -763,7 +763,8 @@ Public Class cRogersSierra
 
             VisibleLocomotive.AddBlip()
 
-            VisibleLocomotive.AttachedBlip.Sprite = 120
+            VisibleLocomotive.AttachedBlip.Sprite = 609
+            VisibleLocomotive.AttachedBlip.Name = "Rogers Sierra No. 3"
         End If
 
         If getCurrentCharacter.IsInVehicle(Locomotive) = False OrElse (Game.IsControlPressed(Control.VehicleAccelerate) = False AndAlso Game.IsControlPressed(Control.VehicleBrake) = False) Then
