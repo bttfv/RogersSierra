@@ -245,6 +245,9 @@ Public Class cRogersSierra
         PistonSteam = True
 
         LoadSounds()
+
+        VisibleLocomotive.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
+        VisibleLocomotive.Mods.SecondaryColor = Locomotive.Mods.SecondaryColor
     End Sub
 
     Private Sub LoadSounds()
@@ -713,7 +716,7 @@ Public Class cRogersSierra
                 VisibleLocomotive.AttachedBlip.Delete()
             End If
 
-            If Game.IsControlJustPressed(Control.VehicleExit) Then
+            If Game.IsControlJustPressed(Control.VehicleExit) AndAlso IsVisible = False Then
 
                 If Locomotive.SpeedMPH >= 10 Then
 
@@ -848,14 +851,14 @@ Public Class cRogersSierra
 
         TrainSpeedTick()
 
-        AnimationTick()
+        If IsVisible Then
 
-        ParticlesTick()
+            AnimationTick()
 
-        SoundsTick()
+            ParticlesTick()
 
-        VisibleLocomotive.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
-        VisibleLocomotive.Mods.SecondaryColor = Locomotive.Mods.SecondaryColor
+            SoundsTick()
+        End If
 
         VisibleLocomotive.Wash()
 
@@ -864,6 +867,27 @@ Public Class cRogersSierra
             Tender.Wash()
         End If
     End Sub
+
+    Public Property IsVisible As Boolean
+        Get
+            Return VisibleLocomotive.IsVisible
+        End Get
+        Set(value As Boolean)
+
+            VisibleLocomotive.IsVisible = value
+            Tender.IsVisible = value
+
+            ForceHandbrake = value
+
+            If value Then
+
+                LocomotiveSpeed = 0
+
+                Locomotive.RemoveParticleEffects()
+                VisibleLocomotive.RemoveParticleEffects()
+            End If
+        End Set
+    End Property
 
     ''' <summary>
     ''' Deletes the train from the world.
