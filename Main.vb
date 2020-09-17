@@ -25,6 +25,11 @@ Friend Class Main
 
         If initialSetup Then
 
+            Dim version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
+            Dim buildDate = New DateTime(2000, 1, 1).AddDays(version.Build).AddSeconds(version.Revision * 2)
+
+            IO.File.AppendAllText(".\ScriptHookVDotNet.log", $"RogersSierra - {version} ({buildDate})" & Environment.NewLine)
+
             Models.LoadModels()
 
             initialSetup = False
