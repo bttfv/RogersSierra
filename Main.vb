@@ -35,8 +35,6 @@ Friend Class Main
             initialSetup = False
         End If
 
-        Native.Function.Call(Native.Hash.SET_RANDOM_TRAINS, False)
-
         Commons.MenuManager.Process()
 
         World.GetAllVehicles(Models.RogersSierraColModel).ToList.ForEach(Sub(x)
