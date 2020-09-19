@@ -245,9 +245,6 @@ Public Class cRogersSierra
         PistonSteam = True
 
         LoadSounds()
-
-        VisibleLocomotive.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
-        VisibleLocomotive.Mods.SecondaryColor = Locomotive.Mods.SecondaryColor
     End Sub
 
     Private Sub LoadSounds()
@@ -861,6 +858,9 @@ Public Class cRogersSierra
         End If
 
         VisibleLocomotive.Wash()
+
+        VisibleLocomotive.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
+        VisibleLocomotive.Mods.SecondaryColor = Locomotive.Mods.SecondaryColor
 
         If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
 
