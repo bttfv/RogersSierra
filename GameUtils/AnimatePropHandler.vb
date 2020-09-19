@@ -20,6 +20,13 @@
                       End Sub)
     End Sub
 
+    Public Sub Detach()
+
+        Props.ForEach(Sub(x)
+                          x.Detach()
+                      End Sub)
+    End Sub
+
     Public Sub Play()
 
         Props.ForEach(Sub(x)
@@ -66,6 +73,17 @@
                           x.setRotationSettings(pCord, cUpdate, cIncreasing, cMinimum, cMaximum, cStep, cFullCircle, cStepRatio)
                       End Sub)
     End Sub
+
+    Public Property Visible() As Boolean
+        Get
+            Return Props.First.Visible
+        End Get
+        Set(value As Boolean)
+            Props.ForEach(Sub(x)
+                              x.Visible = value
+                          End Sub)
+        End Set
+    End Property
 
 #Region "Position properties"
     Public Property Position(index As Integer) As GTA.Math.Vector3

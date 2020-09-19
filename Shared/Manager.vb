@@ -31,7 +31,7 @@ Public Module Manager
         End If
     End Sub
 
-    Friend Function GetRogersSierraFromVehicle(veh As Vehicle) As cRogersSierra
+    Public Function GetRogersSierraFromVehicle(veh As Vehicle) As cRogersSierra
 
         For Each t In RogersSierraToRemove
 

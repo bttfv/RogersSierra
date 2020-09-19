@@ -76,6 +76,8 @@ Public Class cRogersSierra
     Private PistonRelativePosY As Single
     Private PistonRelativePosZ As Single
 
+    Private aAllProps As New AnimatePropHandler
+
     Private aSmallWheelsTender As New AnimatePropHandler
 
     Private aWheels As New AnimatePropHandler
@@ -157,12 +159,19 @@ Public Class cRogersSierra
         End Select
 
         Native.Function.Call(Native.Hash.SET_HORN_ENABLED, Locomotive.Handle, False)
+
         Locomotive.IsVisible = False
+
+        Locomotive.Mods.PrimaryColor = VehicleColor.MetallicShadowSilver
+        Locomotive.Mods.SecondaryColor = VehicleColor.MetallicAnthraciteGray
 
         VisibleLocomotive = World.CreateVehicle(Models.RogersSierraModel, Locomotive.Position)
         VisibleLocomotive.IsCollisionEnabled = False
         VisibleLocomotive.AttachTo(Locomotive)
         VisibleLocomotive.ToggleExtra(1, False)
+
+        VisibleLocomotive.Mods.PrimaryColor = VehicleColor.MetallicShadowSilver
+        VisibleLocomotive.Mods.SecondaryColor = VehicleColor.MetallicAnthraciteGray
 
         PistonRelativePosY = Locomotive.Bones.Item(Bones.sPistons).RelativePosition.Y
 
@@ -176,51 +185,60 @@ Public Class cRogersSierra
             WheelRadius = System.Math.Abs(Models.sWheelDrive.Dimensions.frontTopRight.Z)
 
             .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive1, Vector3.Zero, Vector3.Zero))
+            aAllProps.Props.Add(.Props.Last)
             .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive2, Vector3.Zero, Vector3.Zero))
+            aAllProps.Props.Add(.Props.Last)
             .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive3, Vector3.Zero, Vector3.Zero))
-
-            .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive1, Vector3.Zero, Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive2, Vector3.Zero, Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive3, Vector3.Zero, Vector3.Zero))
+            aAllProps.Props.Add(.Props.Last)
         End With
 
         With aSmallWheels
             SmallWheelRadius = System.Math.Abs(Models.sWheelFront.Dimensions.frontTopRight.Z)
 
             .Props.Add(New AnimateProp(Models.sWheelFront, Locomotive, Bones.sWheelFront1, Vector3.Zero, Vector3.Zero))
+            aAllProps.Props.Add(.Props.Last)
             .Props.Add(New AnimateProp(Models.sWheelFront, Locomotive, Bones.sWheelFront2, Vector3.Zero, Vector3.Zero))
-
-            .Props.Add(New AnimateProp(Models.sWheelFront, Locomotive, Bones.sWheelFront1, Vector3.Zero, Vector3.Zero))
-            .Props.Add(New AnimateProp(Models.sWheelFront, Locomotive, Bones.sWheelFront2, Vector3.Zero, Vector3.Zero))
+            aAllProps.Props.Add(.Props.Last)
         End With
 
         If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
 
             With aSmallWheelsTender
-                .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender1, Vector3.Zero, Vector3.Zero))
-                .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender2, Vector3.Zero, Vector3.Zero))
 
+                .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender1, Vector3.Zero, Vector3.Zero))
+                aAllProps.Props.Add(.Props.Last)
+                .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender2, Vector3.Zero, Vector3.Zero))
+                aAllProps.Props.Add(.Props.Last)
                 .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender3, Vector3.Zero, Vector3.Zero))
+                aAllProps.Props.Add(.Props.Last)
                 .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender4, Vector3.Zero, Vector3.Zero))
+                aAllProps.Props.Add(.Props.Last)
             End With
         End If
 
         aRods = New AnimateProp(Models.sRods, Locomotive, Bones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
+        aAllProps.Props.Add(aRods)
         aPRods = New AnimateProp(Models.sPRods, Locomotive, Bones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
-
+        aAllProps.Props.Add(aPRods)
         aPistons = New AnimateProp(Models.sPistons, Locomotive, Bones.sPistons, Vector3.Zero, Vector3.Zero)
+        aAllProps.Props.Add(aPistons)
 
         aLevValves = New AnimateProp(Models.sLevValves, Locomotive, Bones.sLevValves, Vector3.Zero, Vector3.Zero)
+        aAllProps.Props.Add(aLevValves)
 
         aValves = New AnimateProp(Models.sValves, Locomotive, Bones.sValves, Vector3.Zero, Vector3.Zero)
+        aAllProps.Props.Add(aValves)
 
         aValvesPist = New AnimateProp(Models.sValvesPist, Locomotive, Bones.sValvesPist, Vector3.Zero, Vector3.Zero)
+        aAllProps.Props.Add(aValvesPist)
 
         aBell = New AnimateProp(Models.sBell, Locomotive, Bones.sBell, Vector3.Zero, Vector3.Zero, True)
         aBell.setRotationSettings(Coordinate.X, True, True, -70, 70, 2, False, 1, False, 1)
         BellAnimation = AnimationStep.Off
+        aAllProps.Props.Add(aBell)
 
         sLight = New AnimateProp(Models.sLight, Locomotive, Vector3.Zero, Vector3.Zero)
+        aAllProps.Props.Add(sLight)
 
         'With aBrakePads
 
@@ -288,17 +306,24 @@ Public Class cRogersSierra
         End With
     End Sub
 
+    Public Sub Derail()
+
+        Locomotive.MakeTrainDerail()
+        BellRope.Delete()
+
+        ForceHandbrake = True
+        _isExploded = True
+    End Sub
+
     Public Sub Explode()
 
         pTrainExpl.Create(Locomotive, Vector3.Zero)
 
         pTrainExpl.Create(Locomotive, Vector3.Zero, New Vector3(0, 0, 180))
 
-        ForceHandbrake = True
         VisibleLocomotive.Explode()
-        Locomotive.MakeTrainDerail()
-        BellRope.Delete()
-        _isExploded = True
+
+        Derail()
     End Sub
 
     Public Function GetBonePosition(boneName As String) As Vector3
@@ -724,7 +749,7 @@ Public Class cRogersSierra
                 End If
             End If
 
-            If isOnTrainMission = False Then
+            If isOnTrainMission = False And ForceHandbrake = False Then
 
                 If Game.IsControlJustPressed(Control.VehicleDuck) Then
 
@@ -817,7 +842,7 @@ Public Class cRogersSierra
 
         If LocomotiveSpeed > 0 Then
 
-            Dim maxSpeed As Integer = If(isDeLoreanAttached, 90, 51)
+            Dim maxSpeed As Integer = If(isDeLoreanAttached, 90, 90)
 
             If MsToMph(LocomotiveSpeed) > maxSpeed Then
 
@@ -877,14 +902,18 @@ Public Class cRogersSierra
             VisibleLocomotive.IsVisible = value
             Tender.IsVisible = value
 
-            ForceHandbrake = value
+            aAllProps.Visible = value
 
-            If value Then
+            ForceHandbrake = Not value
+
+            If value = False Then
 
                 LocomotiveSpeed = 0
 
                 Locomotive.RemoveParticleEffects()
                 VisibleLocomotive.RemoveParticleEffects()
+
+                SoundsTick()
             End If
         End Set
     End Property
@@ -894,29 +923,12 @@ Public Class cRogersSierra
     ''' </summary>
     Public Sub Delete(Optional deleteVeh As Boolean = True)
 
-        aWheels.DeleteAll()
-        aSmallWheels.DeleteAll()
-
-        If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
-
-            aSmallWheelsTender.DeleteAll()
-        End If
-
-        aRods.Delete()
-        aPRods.Delete()
-        aPistons.Delete()
-        aLevValves.Delete()
-        aValves.Delete()
-        aValvesPist.Delete()
-        aBell.Delete()
-        sLight.Delete()
+        aAllProps.DeleteAll()
 
         'aBrakePads.DeleteAll()
         'aBrakePistons.Delete()
         'aBrakeLevers.Delete()
         'aBrakeBars.Delete()
-
-        BellRope.Delete()
 
         Locomotive.RemoveParticleEffects()
         VisibleLocomotive.RemoveParticleEffects()
@@ -947,22 +959,7 @@ Public Class cRogersSierra
 
     Private Sub CheckPropsExists()
 
-        aWheels.CheckExists()
-        aSmallWheels.CheckExists()
-
-        If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
-
-            aSmallWheelsTender.CheckExists()
-        End If
-
-        aRods.CheckExists()
-        aPRods.CheckExists()
-        aPistons.CheckExists()
-        aLevValves.CheckExists()
-        aValves.CheckExists()
-        aValvesPist.CheckExists()
-        aBell.CheckExists()
-        sLight.CheckExists()
+        aAllProps.CheckExists()
 
         'aBrakePads.CheckExists()
         'aBrakeBars.CheckExists()

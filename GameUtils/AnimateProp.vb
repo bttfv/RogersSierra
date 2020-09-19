@@ -17,6 +17,8 @@ Friend Class AnimateProp
 
     Private toBone As Boolean
 
+    Private isDetached As Boolean = False
+
     ''' <summary>
     ''' Spawns a new prop with <paramref name="pModel"/> attached to <paramref name="boneName"/> of <paramref name="pEntity"/> with <paramref name="pOffset"/> and <paramref name="pRotation"/>
     ''' </summary>
@@ -59,6 +61,8 @@ Friend Class AnimateProp
 
     Private Sub Attach()
 
+        If isDetached Then Exit Sub
+
         If toBone Then
 
             'aProp.AttachTo(pEntity, eBone.GetRelativeOffsetPosition(pOffset), pRotation)
@@ -69,6 +73,15 @@ Friend Class AnimateProp
 
             aProp.AttachTo(pEntity, pOffset, pRotation)
         End If
+    End Sub
+
+    Public Sub Detach()
+
+        Native.Function.Call(Native.Hash.DETACH_ENTITY, Prop, False, True)
+
+        Native.Function.Call(Native.Hash.SET_ENTITY_COLLISION, Prop, True, False)
+
+        isDetached = True
     End Sub
 
     Public Sub TransferTo(newEntity As Entity, boneName As String)
@@ -421,6 +434,8 @@ Friend Class AnimateProp
     End Sub
 
     Public Sub Play()
+
+        If isDetached Then Exit Sub
 
         If isAnimationOn = False Then Exit Sub
 
