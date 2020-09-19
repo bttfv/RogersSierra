@@ -30,15 +30,15 @@ Public Class cRogersSierra
     Public ReadOnly Property isExploded As Boolean
 
     ''' <summary>
-    ''' Points to the real DeLorean, if it is attached.
+    ''' Points to the vehicle, if it is attached.
     ''' </summary>
-    Public AttachedDeLorean As Vehicle
+    Public AttachedVehicle As Vehicle
 
     ''' <summary>
-    ''' If true, there is a DeLorean attached on the front.
+    ''' If true, there is a vehicle attached on the front.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property isDeLoreanAttached As Boolean = AttachedDeLorean <> Nothing
+    Public ReadOnly Property isVehicleAttached As Boolean = AttachedVehicle <> Nothing
 
     ''' <summary>
     ''' If true, the train is in Rocket mode.
@@ -842,7 +842,7 @@ Public Class cRogersSierra
 
         If LocomotiveSpeed > 0 Then
 
-            Dim maxSpeed As Integer = If(isDeLoreanAttached, 90, 90)
+            Dim maxSpeed As Integer = If(isVehicleAttached, 90, 90)
 
             If MsToMph(LocomotiveSpeed) > maxSpeed Then
 
