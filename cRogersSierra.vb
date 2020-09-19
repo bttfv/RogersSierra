@@ -50,7 +50,7 @@ Public Class cRogersSierra
     ''' Modifier for the train's acceleration.
     ''' </summary>
     ''' <returns></returns>
-    Friend Property LocomotiveAccModifier As Single = 2
+    Friend Property LocomotiveAccModifier As Single = 1
 
     ''' <summary>
     ''' Setted speed of the train.
@@ -720,10 +720,10 @@ Public Class cRogersSierra
 
                 If Locomotive.SpeedMPH >= 10 Then
 
-                    getCurrentCharacter.Task.LeaveVehicle(LeaveVehicleFlags.BailOut)
+                    Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, getCurrentCharacter, Locomotive, 4160)
                 Else
 
-                    getCurrentCharacter.Task.LeaveVehicle()
+                    Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, getCurrentCharacter, Locomotive, 16)
                 End If
             End If
 

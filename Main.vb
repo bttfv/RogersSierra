@@ -70,7 +70,7 @@ Friend Class Main
 
                                          If x.isExploded = False AndAlso x.GetBoneDistanceSquared(Bones.sDriverSeat, getCurrentCharacter) < 1.1 Then
 
-                                             getCurrentCharacter.Task.WarpIntoVehicle(x.Locomotive, VehicleSeat.Driver)
+                                             getCurrentCharacter.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver,,, EnterVehicleFlags.WarpIn)
                                          End If
                                      End If
                                  End If
