@@ -873,6 +873,8 @@ Public Class cRogersSierra
 
         TrainSpeedTick()
 
+        LightHandler.Draw(Me)
+
         If IsVisible Then
 
             AnimationTick()
