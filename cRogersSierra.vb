@@ -68,6 +68,8 @@ Public Class cRogersSierra
 
     Public ReadOnly Property Deleted As Boolean
 
+    Private CustomCamera As New CustomerCameraManager
+
     Private SmokeTime As Integer
 
     Private WheelRadius As Single
@@ -262,6 +264,11 @@ Public Class cRogersSierra
 
         PistonSteam = True
 
+        CustomCamera.Add(Locomotive, New Vector3(0, 15, 5), New Vector3(0, 0, 0), 75)
+        CustomCamera.Add(Locomotive, New Vector3(-7.5, 0, 8), New Vector3(0, 0, 0), 75)
+        CustomCamera.Add(Locomotive, New Vector3(7.5, 0, 8), New Vector3(0, 0, 0), 75)
+        CustomCamera.Add(Locomotive, New Vector3(0, 10, 1), New Vector3(0, 20, 1), 75)
+
         LoadSounds()
     End Sub
 
@@ -340,6 +347,23 @@ Public Class cRogersSierra
 
         Return Locomotive.Bones(boneName).Position.DistanceToSquared(pos)
     End Function
+
+    Public Property Camera As TrainCamera
+        Get
+
+            Return CustomCamera.CurrentCameraIndex
+        End Get
+        Set(value As TrainCamera)
+
+            If value = TrainCamera.Off Then
+
+                CustomCamera.Stop()
+            Else
+
+                CustomCamera.Show(value)
+            End If
+        End Set
+    End Property
 
     ''' <summary>
     ''' Returns state of main boiler light
@@ -859,6 +883,14 @@ Public Class cRogersSierra
         Locomotive.setTrainSpeed(LocomotiveSpeed)
     End Sub
 
+    Public Sub KeyDown(e As Windows.Forms.Keys)
+
+        Select Case e
+            Case Windows.Forms.Keys.L
+                CustomCamera.ShowNext()
+        End Select
+    End Sub
+
     ''' <summary>
     ''' Where all the magic happens.
     ''' </summary>
@@ -874,6 +906,8 @@ Public Class cRogersSierra
         TrainSpeedTick()
 
         LightHandler.Draw(Me)
+
+        CustomCamera.Check()
 
         If IsVisible Then
 
