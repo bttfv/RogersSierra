@@ -3,15 +3,19 @@ Imports GTA.Math
 
 Public Class CustomerCameraManager
 
-    Private Camera As Camera
-
     Public ReadOnly Property Cameras As New List(Of CustomCamera)
     Public ReadOnly Property CurrentCameraIndex As Integer = -1
 
     Public ReadOnly Property CurrentCamera As CustomCamera
         Get
 
-            Return IIf(CurrentCameraIndex = -1, Nothing, Cameras(CurrentCameraIndex))
+            If CurrentCameraIndex = -1 Then
+
+                Return Nothing
+            Else
+
+                Return Cameras(CurrentCameraIndex)
+            End If
         End Get
     End Property
 
@@ -36,7 +40,7 @@ Public Class CustomerCameraManager
             Exit Sub
         End If
 
-        Cameras(index).Show(Camera)
+        Cameras(index).Show(CurrentCamera)
         _CurrentCameraIndex = index
     End Sub
 
@@ -49,11 +53,11 @@ Public Class CustomerCameraManager
 
         If CurrentCameraIndex = Cameras.Count - 1 Then
 
-            [Stop]()
+            Abort()
         Else
 
+            Cameras(CurrentCameraIndex + 1).Show(CurrentCamera)
             _CurrentCameraIndex += 1
-            CurrentCamera.Show(Camera)
         End If
     End Sub
 
@@ -66,11 +70,11 @@ Public Class CustomerCameraManager
 
         If CurrentCameraIndex <= 0 Then
 
-            [Stop]()
+            Abort()
         Else
 
+            Cameras(CurrentCameraIndex - 1).Show(CurrentCamera)
             _CurrentCameraIndex -= 1
-            CurrentCamera.Show(Camera)
         End If
     End Sub
 
@@ -78,21 +82,35 @@ Public Class CustomerCameraManager
 
         If CurrentCameraIndex > -1 Then
 
-            CurrentCamera.Stop(Camera)
-
+            CurrentCamera.Stop()
             _CurrentCameraIndex = -1
         End If
     End Sub
 
+    Public Sub Abort()
+
+        [Stop]()
+
+        Cameras.ForEach(Sub(x)
+
+                            x.Abort()
+                        End Sub)
+
+        World.DestroyAllCameras()
+    End Sub
+
     Public Sub Check()
+
+        Exit Sub
 
         If CurrentCameraIndex > 0 Then
 
-            If IsNothing(Camera) OrElse Camera.Exists = False Or Camera <> World.RenderingCamera Then
+            If IsNothing(CurrentCamera.Camera) OrElse CurrentCamera.Camera.Exists = False OrElse CurrentCamera.Camera <> World.RenderingCamera Then
 
-                Camera = Nothing
                 World.RenderingCamera = Nothing
                 _CurrentCameraIndex = -1
+
+                World.DestroyAllCameras()
             End If
         End If
     End Sub

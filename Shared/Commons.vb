@@ -45,10 +45,17 @@ Public Module Commons
 
     Public Enum TrainCamera
         Off = -1
+        TopCabin
         Front
-        LeftSide
-        RightSide
         TowardsRail
+        Pilot
+        LeftSide
+        LeftWheels
+        LeftFrontWheels
+        RightSide
+        RightWheels
+        RightFrontWheels
+        Inside
     End Enum
 
     Friend Enum Coordinate

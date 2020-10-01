@@ -264,10 +264,38 @@ Public Class cRogersSierra
 
         PistonSteam = True
 
+        'TopCabin
+        CustomCamera.Add(Locomotive, New Vector3(0, -2, 7), New Vector3(0, 7, 5), 75)
+
+        'Front
         CustomCamera.Add(Locomotive, New Vector3(0, 15, 5), New Vector3(0, 0, 0), 75)
-        CustomCamera.Add(Locomotive, New Vector3(-7.5, 0, 8), New Vector3(0, 0, 0), 75)
-        CustomCamera.Add(Locomotive, New Vector3(7.5, 0, 8), New Vector3(0, 0, 0), 75)
+
+        'TowardsRail
         CustomCamera.Add(Locomotive, New Vector3(0, 10, 1), New Vector3(0, 20, 1), 75)
+
+        'Pilot
+        CustomCamera.Add(Locomotive, New Vector3(0, 12, 0.1), New Vector3(0, 10, 1.1), 75)
+
+        'LeftSide
+        CustomCamera.Add(Locomotive, New Vector3(-7.5, 0, 8), New Vector3(0, 0, 0), 75)
+
+        'LeftWheels
+        CustomCamera.Add(Locomotive, New Vector3(-2, 6.5, 1), New Vector3(-2, -6.5, 1), 50)
+
+        'LeftFrontWheels
+        CustomCamera.Add(Locomotive, New Vector3(-3, -4, 1), New Vector3(-2, 6.5, 1), 50)
+
+        'RightSide
+        CustomCamera.Add(Locomotive, New Vector3(7.5, 0, 8), New Vector3(0, 0, 0), 75)
+
+        'RightWheels
+        CustomCamera.Add(Locomotive, New Vector3(2, 6.5, 1), New Vector3(2, -6.5, 1), 50)
+
+        'RightFrontWheels
+        CustomCamera.Add(Locomotive, New Vector3(3, -4, 1), New Vector3(2, 6.5, 1), 50)
+
+        'Inside
+        CustomCamera.Add(Locomotive, New Vector3(0, -2, 2.5), New Vector3(0, 1, 2.5), 75)
 
         LoadSounds()
     End Sub
@@ -357,7 +385,7 @@ Public Class cRogersSierra
 
             If value = TrainCamera.Off Then
 
-                CustomCamera.Stop()
+                CustomCamera.Abort()
             Else
 
                 CustomCamera.Show(value)
@@ -987,6 +1015,8 @@ Public Class cRogersSierra
                 ColDeLorean.Delete()
             End If
         End If
+
+        CustomCamera.Abort()
 
         RemoveRogersSierra(Me)
 

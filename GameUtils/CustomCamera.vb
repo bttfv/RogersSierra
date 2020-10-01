@@ -8,6 +8,8 @@ Public Class CustomCamera
     Public ReadOnly PointAtOffset As Vector3
     Public ReadOnly FieldOfView As Single
 
+    Public ReadOnly Property Camera As Camera
+
     Public Sub New(entity As Entity, positionOffset As Vector3, pointAtOffset As Vector3, fieldOfView As Single)
 
         Me.Entity = entity
@@ -16,27 +18,41 @@ Public Class CustomCamera
         Me.FieldOfView = fieldOfView
     End Sub
 
-    Public Sub Show(ByRef Camera As Camera)
+    Public Sub Show(ByRef OldCamera As CustomCamera)
 
         If IsNothing(Camera) OrElse Camera.Exists = False Then
 
-            Camera = World.CreateCamera(Entity.Position, Entity.Rotation, FieldOfView)
-        Else
+            _Camera = World.CreateCamera(Entity.Position, Entity.Rotation, FieldOfView)
 
-            Camera.FieldOfView = FieldOfView
+            Camera.AttachTo(Entity, PositionOffset)
+            Camera.PointAt(Entity, PointAtOffset)
         End If
 
-        Camera.AttachTo(Entity, PositionOffset)
-        Camera.PointAt(Entity, PointAtOffset)
+        If IsNothing(OldCamera) OrElse IsNothing(OldCamera.Camera) OrElse OldCamera.Camera.Exists = False Then
 
-        World.RenderingCamera = Camera
+            World.RenderingCamera = Camera
+        Else
+
+            Camera.IsActive = True
+            OldCamera.Camera.IsActive = False
+
+            OldCamera.Camera.InterpTo(Camera, 900, 1, 1)
+        End If
     End Sub
 
-    Public Sub [Stop](ByRef Camera As Camera)
+    Public Sub [Stop]()
 
-        Camera.Delete()
-        Camera = Nothing
+        Camera.IsActive = False
 
         World.RenderingCamera = Nothing
+    End Sub
+
+    Public Sub Abort()
+
+        If Not IsNothing(Camera) Then
+
+            Camera.Delete()
+            _Camera = Nothing
+        End If
     End Sub
 End Class
