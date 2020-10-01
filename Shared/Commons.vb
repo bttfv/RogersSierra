@@ -45,13 +45,13 @@ Public Module Commons
 
     Public Enum TrainCamera
         Off = -1
-        TopCabin
-        Front
         TowardsRail
         Pilot
-        LeftSide
+        Front
         LeftWheels
         LeftFrontWheels
+        LeftSide
+        TopCabin
         RightSide
         RightWheels
         RightFrontWheels
