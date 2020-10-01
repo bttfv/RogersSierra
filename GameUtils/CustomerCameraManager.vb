@@ -6,6 +6,28 @@ Public Class CustomerCameraManager
     Public ReadOnly Property Cameras As New List(Of CustomCamera)
     Public ReadOnly Property CurrentCameraIndex As Integer = -1
 
+    Public Property CycleCameras As Boolean = False
+
+    Private _CycleInterval As Integer = 10000
+
+    Public Property CycleInterval As Integer
+        Get
+            Return _CycleInterval
+        End Get
+        Set(value As Integer)
+
+            If CycleCameras Then
+
+                nextChange -= _CycleInterval
+                nextChange += value
+            End If
+
+            _CycleInterval = value
+        End Set
+    End Property
+
+    Private nextChange As Integer = 0
+
     Public ReadOnly Property CurrentCamera As CustomCamera
         Get
 
@@ -99,18 +121,14 @@ Public Class CustomerCameraManager
         World.DestroyAllCameras()
     End Sub
 
-    Public Sub Check()
+    Public Sub Process()
 
-        Exit Sub
+        If CycleCameras Then
 
-        If CurrentCameraIndex > 0 Then
+            If nextChange < Game.GameTime Then
 
-            If IsNothing(CurrentCamera.Camera) OrElse CurrentCamera.Camera.Exists = False OrElse CurrentCamera.Camera <> World.RenderingCamera Then
-
-                World.RenderingCamera = Nothing
-                _CurrentCameraIndex = -1
-
-                World.DestroyAllCameras()
+                ShowNext()
+                nextChange = Game.GameTime + CycleInterval
             End If
         End If
     End Sub

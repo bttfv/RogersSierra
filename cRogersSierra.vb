@@ -393,6 +393,24 @@ Public Class cRogersSierra
         End Set
     End Property
 
+    Public Property CycleCameras As Boolean
+        Get
+            Return CustomCamera.CycleCameras
+        End Get
+        Set(value As Boolean)
+            CustomCamera.CycleCameras = value
+        End Set
+    End Property
+
+    Public Property CycleCamerasInterval As Integer
+        Get
+            Return CustomCamera.CycleInterval
+        End Get
+        Set(value As Integer)
+            CustomCamera.CycleInterval = value
+        End Set
+    End Property
+
     ''' <summary>
     ''' Returns state of main boiler light
     ''' </summary>
@@ -916,6 +934,8 @@ Public Class cRogersSierra
         Select Case e
             Case Windows.Forms.Keys.L
                 CustomCamera.ShowNext()
+            Case Windows.Forms.Keys.K
+                CycleCameras = Not CycleCameras
         End Select
     End Sub
 
@@ -935,7 +955,7 @@ Public Class cRogersSierra
 
         LightHandler.Draw(Me)
 
-        CustomCamera.Check()
+        CustomCamera.Process()
 
         If IsVisible Then
 
