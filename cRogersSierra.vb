@@ -72,6 +72,8 @@ Public Class cRogersSierra
 
     Private CustomCamera As New CustomerCameraManager
 
+    Private CustomLights As LightHandler
+
     Private SmokeTime As Integer
 
     Private WheelRadius As Single
@@ -266,21 +268,23 @@ Public Class cRogersSierra
 
         PistonSteam = True
 
-        Dim rightWindowLight = new Light(1.505823, -0.8163379, 2.993675, -0.9864501, 0.09655763, -0.1326379, Color.White, 18, 6, 0, 100, 100)
-
-        Dim leftBoilerLight = new Light(-10.21394, -0.04113722, 5.636269, 0.7291078, 0.6141885, -0.3019508, Color.White, 85, 12, 0, 100, 100)
- 
-        Dim rightBoilerLight = new Light(11.13646, 0.7100044, 5.407509, -0.7580729, 0.6161212, -0.2138226, Color.White, 85, 12, 0, 100, 100)
-
-        Dim cabLight = new Light(-0.0152235, 8.436013, 3.378627, 0.6139234, 0.7880148, 0.04615904, Color.White, 34, 5, 0, 75, 100)
-
-        LightHandler.Lights.Add(rightWindowLight)
-        LightHandler.Lights.Add(leftBoilerLight)
-        LightHandler.Lights.Add(rightBoilerLight)
-        LightHandler.Lights.Add(cabLight)
-
         Locomotive.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
         Locomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
+
+        CustomLights = New LightHandler(Locomotive)
+
+        'Right window
+        CustomLights.Add(1.505823, -0.8163379, 2.993675, -0.9864501, 0.09655763, -0.1326379, Color.White, 18, 6, 0, 100, 100)
+
+        'Left boiler
+        CustomLights.Add(-10.21394, -0.04113722, 5.636269, 0.7291078, 0.6141885, -0.3019508, Color.White, 85, 12, 0, 100, 100)
+
+        'Right boiler
+        CustomLights.Add(11.13646, 0.7100044, 5.407509, -0.7580729, 0.6161212, -0.2138226, Color.White, 85, 12, 0, 100, 100)
+
+        'Cab
+        CustomLights.Add(-0.0152235, 8.436013, 3.378627, 0.6139234, 0.7880148, 0.04615904, Color.White, 34, 5, 0, 75, 100)
+
         'TowardsRail
         CustomCamera.Add(Locomotive, New Vector3(0, 10, 1), New Vector3(0, 20, 1), 75)
 
@@ -970,7 +974,7 @@ Public Class cRogersSierra
 
         TrainSpeedTick()
 
-        LightHandler.Draw(Me)
+        CustomLights.Draw()
 
         CustomCamera.Process()
 

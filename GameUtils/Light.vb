@@ -8,7 +8,8 @@ Public Class Light
                    positionX As Single, positionY As Single, positionZ As Single,
                    directionX As Single, directionY As Single, directionZ As Single,
                    color As Color,
-                   distance As Single, brightness As Single, roundness As Single, radius As Single, fadeout As Single, optional timeDep As Boolean = true)
+                   distance As Single, brightness As Single, roundness As Single, radius As Single, fadeout As Single, Optional timeDep As Boolean = True)
+
         Me.PositionX = positionX
         Me.PositionY = positionY
         Me.PositionZ = positionZ
@@ -43,6 +44,7 @@ Public Class Light
     Public Property TimeDep As Boolean
 
     Public Sub Draw(Entity As Entity, shadowId As Single, brightness As Single)
+
         Dim pos = New Vector3(PositionX, PositionY, PositionZ)
         Dim dir = New Vector3(DirectionX, DirectionY, DirectionZ)
 
@@ -50,11 +52,11 @@ Public Class Light
 
         If TimeDep Then
             Distance = brightness - 30
-            Brightness = brightness - 30
+            brightness = brightness - 30
         End If
 
-        [Function].Call(Hash._DRAW_SPOT_LIGHT_WITH_SHADOW, 
-                        pos.X, pos.Y, pos.Z, dir.X, dir.Y, dir.Z, Color.R, Color.G, Color.B, 
-                        Distance, Brightness, Roundness, Radius, Fadeout, shadowId)
+        [Function].Call(Hash._DRAW_SPOT_LIGHT_WITH_SHADOW,
+                        pos.X, pos.Y, pos.Z, dir.X, dir.Y, dir.Z, Color.R, Color.G, Color.B,
+                        Distance, brightness, Roundness, Radius, Fadeout, shadowId)
     End Sub
 End Class
