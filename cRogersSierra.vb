@@ -271,7 +271,7 @@ Public Class cRogersSierra
         Locomotive.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
         Locomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
 
-        CustomLights = New LightHandler(Locomotive)
+        CustomLights = New LightHandler(Locomotive, RogersSierra.Count + 1)
 
         'Right window
         CustomLights.Add(1.505823, -0.8163379, 2.993675, -0.9864501, 0.09655763, -0.1326379, Color.White, 18, 6, 0, 100, 100)

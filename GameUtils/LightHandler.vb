@@ -7,9 +7,12 @@ Public Class LightHandler
 
     Private Entity As Entity
 
-    Sub New(entity As Entity)
+    Private ShadowMulti As Integer
+
+    Sub New(entity As Entity, shadowMulti As Integer)
 
         Me.Entity = entity
+        Me.ShadowMulti = shadowMulti * 10
     End Sub
 
     Public Sub Add(
@@ -29,19 +32,19 @@ Public Class LightHandler
         Dim brightness As Single
 
         Select Case hour
-            Case < 8, >= 20
+            Case <= 8, >= 20
                 brightness = 0
-            Case <= 12
-                brightness = ((mills - 28800000) / 15200000) * 100
+            Case < 12
+                brightness = ((mills - 28740000) / 15140000) * 100
             Case < 20
                 brightness = ((72000000 - mills) / 28800000) * 100
         End Select
 
-        GTA.UI.Screen.ShowSubtitle($"{brightness}")
+        GTA.UI.Screen.ShowSubtitle($"{brightness} {Lights.Count * ShadowMulti}")
 
         Lights.ForEach(Sub(x)
 
-                           x.Draw(Entity, Lights.IndexOf(x), brightness)
+                           x.Draw(Entity, (Lights.IndexOf(x) + 1) * ShadowMulti, brightness)
                        End Sub)
     End Sub
 End Class
