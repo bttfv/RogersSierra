@@ -17,6 +17,11 @@ Friend Class Main
     Private Sub Main_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
 
         Commons.MenuManager.KeyDown(e)
+
+        If Not IsNothing(CurrentRogersSierra) Then
+
+            CurrentRogersSierra.KeyDown(e.KeyCode)
+        End If
     End Sub
 
     Private Sub Main_Tick(sender As Object, e As EventArgs) Handles Me.Tick
@@ -75,5 +80,15 @@ Friend Class Main
 
                                  x.Tick()
                              End Sub)
+
+        If Not IsNothing(CurrentRogersSierra) AndAlso Not getCurrentCharacter.IsInVehicle Then
+
+            If CurrentRogersSierra.Camera <> TrainCamera.Off Then
+
+                CurrentRogersSierra.Camera = TrainCamera.Off
+            End If
+
+            CurrentRogersSierra = Nothing
+        End If
     End Sub
 End Class

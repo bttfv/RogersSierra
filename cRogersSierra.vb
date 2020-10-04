@@ -70,6 +70,8 @@ Public Class cRogersSierra
 
     Public ReadOnly Property Deleted As Boolean
 
+    Private CustomCamera As New CustomerCameraManager
+
     Private SmokeTime As Integer
 
     Private WheelRadius As Single
@@ -279,6 +281,38 @@ Public Class cRogersSierra
 
         Locomotive.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
         Locomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
+        'TowardsRail
+        CustomCamera.Add(Locomotive, New Vector3(0, 10, 1), New Vector3(0, 20, 1), 75)
+
+        'Pilot
+        CustomCamera.Add(Locomotive, New Vector3(0, 12, 0.1), New Vector3(0, 10, 1.1), 75)
+
+        'Front
+        CustomCamera.Add(Locomotive, New Vector3(0, 15, 5), New Vector3(0, 0, 0), 75)
+
+        'LeftWheels
+        CustomCamera.Add(Locomotive, New Vector3(-2, 6.5, 1), New Vector3(-2, -6.5, 1), 50)
+
+        'LeftFrontWheels
+        CustomCamera.Add(Locomotive, New Vector3(-3, -4, 1), New Vector3(-2, 6.5, 1), 50)
+
+        'LeftSide
+        CustomCamera.Add(Locomotive, New Vector3(-7.5, 0, 8), New Vector3(0, 0, 0), 75)
+
+        'TopCabin
+        CustomCamera.Add(Locomotive, New Vector3(0, -2, 7), New Vector3(0, 7, 5), 75)
+
+        'RightSide
+        CustomCamera.Add(Locomotive, New Vector3(7.5, 0, 8), New Vector3(0, 0, 0), 75)
+
+        'RightWheels
+        CustomCamera.Add(Locomotive, New Vector3(2, 6.5, 1), New Vector3(2, -6.5, 1), 50)
+
+        'RightFrontWheels
+        CustomCamera.Add(Locomotive, New Vector3(3, -4, 1), New Vector3(2, 6.5, 1), 50)
+
+        'Inside
+        CustomCamera.Add(Locomotive, New Vector3(0, -2, 2.5), New Vector3(0, 1, 2.5), 75)
 
         LoadSounds()
     End Sub
@@ -358,6 +392,41 @@ Public Class cRogersSierra
 
         Return Locomotive.Bones(boneName).Position.DistanceToSquared(pos)
     End Function
+
+    Public Property Camera As TrainCamera
+        Get
+
+            Return CustomCamera.CurrentCameraIndex
+        End Get
+        Set(value As TrainCamera)
+
+            If value = TrainCamera.Off Then
+
+                CustomCamera.Abort()
+            Else
+
+                CustomCamera.Show(value)
+            End If
+        End Set
+    End Property
+
+    Public Property CycleCameras As Boolean
+        Get
+            Return CustomCamera.CycleCameras
+        End Get
+        Set(value As Boolean)
+            CustomCamera.CycleCameras = value
+        End Set
+    End Property
+
+    Public Property CycleCamerasInterval As Integer
+        Get
+            Return CustomCamera.CycleInterval
+        End Get
+        Set(value As Integer)
+            CustomCamera.CycleInterval = value
+        End Set
+    End Property
 
     ''' <summary>
     ''' Returns state of main boiler light
@@ -877,6 +946,16 @@ Public Class cRogersSierra
         Locomotive.setTrainSpeed(LocomotiveSpeed)
     End Sub
 
+    Public Sub KeyDown(e As Windows.Forms.Keys)
+
+        Select Case e
+            Case Windows.Forms.Keys.L
+                CustomCamera.ShowNext()
+            Case Windows.Forms.Keys.K
+                CycleCameras = Not CycleCameras
+        End Select
+    End Sub
+
     ''' <summary>
     ''' Where all the magic happens.
     ''' </summary>
@@ -892,6 +971,8 @@ Public Class cRogersSierra
         TrainSpeedTick()
 
         LightHandler.Draw(Me)
+
+        CustomCamera.Process()
 
         If IsVisible Then
 
@@ -976,6 +1057,8 @@ Public Class cRogersSierra
                 ColDeLorean.Delete()
             End If
         End If
+
+        CustomCamera.Abort()
 
         RemoveRogersSierra(Me)
 

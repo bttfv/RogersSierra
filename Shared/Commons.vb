@@ -43,6 +43,21 @@ Public Module Commons
         NoColDelorean
     End Enum
 
+    Public Enum TrainCamera
+        Off = -1
+        TowardsRail
+        Pilot
+        Front
+        LeftWheels
+        LeftFrontWheels
+        LeftSide
+        TopCabin
+        RightSide
+        RightWheels
+        RightFrontWheels
+        Inside
+    End Enum
+
     Friend Enum Coordinate
         X
         Y
