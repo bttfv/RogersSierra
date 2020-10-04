@@ -49,8 +49,6 @@ Public Class LightHandler
                 brightness = ((72000000 - mills) / 28800000) * 100
         End Select
 
-        GTA.UI.Screen.ShowSubtitle($"{brightness} {Lights.Count * ShadowMulti}")
-
         Lights.ForEach(Sub(x)
 
                            x.Draw(Entity, (Lights.IndexOf(x) + 1) * ShadowMulti, brightness)
