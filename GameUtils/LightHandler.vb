@@ -16,12 +16,21 @@ Public Class LightHandler
     End Sub
 
     Public Sub Add(
+                   sourceBone As String,
+                   directionBone As String,
+                   color As Color,
+                   distance As Single, brightness As Single, roundness As Single, radius As Single, fadeout As Single)
+
+        Lights.Add(New Light(sourceBone, directionBone, color, distance, brightness, roundness, radius, fadeout))
+    End Sub
+
+    Public Sub Add(
                    positionX As Single, positionY As Single, positionZ As Single,
                    directionX As Single, directionY As Single, directionZ As Single,
                    color As Color,
-                   distance As Single, brightness As Single, roundness As Single, radius As Single, fadeout As Single, Optional timeDep As Boolean = True)
+                   distance As Single, brightness As Single, roundness As Single, radius As Single, fadeout As Single)
 
-        Lights.Add(New Light(positionX, positionY, positionZ, directionX, directionY, directionZ, color, distance, brightness, roundness, radius, fadeout, timeDep))
+        Lights.Add(New Light(positionX, positionY, positionZ, directionX, directionY, directionZ, color, distance, brightness, roundness, radius, fadeout))
     End Sub
 
     Public Sub Draw()
@@ -32,7 +41,7 @@ Public Class LightHandler
         Dim brightness As Single
 
         Select Case hour
-            Case <= 8, >= 20
+            Case < 8, >= 20
                 brightness = 0
             Case < 12
                 brightness = ((mills - 28740000) / 15140000) * 100

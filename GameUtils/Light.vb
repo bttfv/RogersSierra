@@ -8,7 +8,7 @@ Public Class Light
                    positionX As Single, positionY As Single, positionZ As Single,
                    directionX As Single, directionY As Single, directionZ As Single,
                    color As Color,
-                   distance As Single, brightness As Single, roundness As Single, radius As Single, fadeout As Single, Optional timeDep As Boolean = True)
+                   distance As Single, brightness As Single, roundness As Single, radius As Single, fadeout As Single)
 
         Me.PositionX = positionX
         Me.PositionY = positionY
@@ -25,9 +25,32 @@ Public Class Light
         Me.Fadeout = fadeout
 
         Me.Color = color
-
-        Me.TimeDep = timeDep
     End Sub
+
+    Public Sub New(
+                   sourceBone As String,
+                   directionBone As String,
+                   color As Color,
+                   distance As Single, brightness As Single, roundness As Single, radius As Single, fadeout As Single)
+
+        Me.SourceBone = sourceBone
+        Me.DirectionBone = directionBone
+
+        Me.Distance = distance
+        Me.Brightness = brightness
+        Me.Roundness = roundness
+        Me.Radius = radius
+        Me.Fadeout = fadeout
+
+        Me.Color = color
+
+        useBones = True
+    End Sub
+
+    Private useBones As Boolean
+
+    Public Property SourceBone As String
+    Public Property DirectionBone As String
 
     Public Property PositionX As Single
     Public Property PositionY As Single
@@ -41,18 +64,25 @@ Public Class Light
     Public Property Radius As Single
     Public Property Fadeout As Single
     Public Property Color As Color
-    Public Property TimeDep As Boolean
 
-    Public Sub Draw(Entity As Entity, shadowId As Single, brightness As Single)
+    Public Sub Draw(Entity As Entity, shadowId As Single, Optional brightness As Single = -1)
 
-        Dim pos = New Vector3(PositionX, PositionY, PositionZ)
-        Dim dir = New Vector3(DirectionX, DirectionY, DirectionZ)
+        Dim pos As Vector3
+        Dim dir As Vector3
 
-        pos = Entity.GetOffsetPosition(pos)
+        If useBones Then
 
-        If TimeDep Then
-            Distance = brightness - 30
-            brightness = brightness - 30
+            pos = Entity.Bones(SourceBone).Position
+            dir = Entity.Bones(SourceBone).GetPositionOffset(Entity.Bones(DirectionBone).Position)
+        Else
+
+            pos = Entity.GetOffsetPosition(New Vector3(PositionX, PositionY, PositionZ))
+            dir = New Vector3(DirectionX, DirectionY, DirectionZ)
+        End If
+
+        If brightness = -1 Then
+
+            brightness = Me.Brightness
         End If
 
         [Function].Call(Hash._DRAW_SPOT_LIGHT_WITH_SHADOW,
