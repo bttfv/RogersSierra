@@ -1,5 +1,7 @@
-﻿Imports GTA
+﻿Imports System.Drawing
+Imports GTA
 Imports GTA.Math
+Imports GTA.UI
 Imports KlangRageAudioLibrary
 
 Public Class cRogersSierra
@@ -261,6 +263,22 @@ Public Class cRogersSierra
         BellRope.ActivatePhysics()
 
         PistonSteam = True
+
+        Dim rightWindowLight = new Light(1.505823, -0.8163379, 2.993675, -0.9864501, 0.09655763, -0.1326379, Color.White, 18, 6, 0, 100, 100)
+
+        Dim leftBoilerLight = new Light(-10.21394, -0.04113722, 5.636269, 0.7291078, 0.6141885, -0.3019508, Color.White, 85, 12, 0, 100, 100)
+ 
+        Dim rightBoilerLight = new Light(11.13646, 0.7100044, 5.407509, -0.7580729, 0.6161212, -0.2138226, Color.White, 85, 12, 0, 100, 100)
+
+        Dim cabLight = new Light(-0.0152235, 8.436013, 3.378627, 0.6139234, 0.7880148, 0.04615904, Color.White, 34, 5, 0, 75, 100)
+
+        LightHandler.Lights.Add(rightWindowLight)
+        LightHandler.Lights.Add(leftBoilerLight)
+        LightHandler.Lights.Add(rightBoilerLight)
+        LightHandler.Lights.Add(cabLight)
+
+        Locomotive.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
+        Locomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
 
         LoadSounds()
     End Sub
@@ -892,6 +910,11 @@ Public Class cRogersSierra
         If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
 
             Tender.Wash()
+        End If
+
+        if Game.Player.Character.IsInVehicle(Locomotive) Then
+
+            'World.DrawSpotLightWithShadow(1.470611, -0.6565136, 3.028564, -0.9940964, 0.02596331, -0.1053485, Color.White, 16, 6, 0, 100, 100);
         End If
     End Sub
 
