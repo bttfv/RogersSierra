@@ -71,8 +71,8 @@
     <Reference Include="KlangRageAudioLibrary">
       <HintPath>..\..\SteamLibrary\steamapps\common\Grand Theft Auto V\Scripts\KlangRageAudioLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="LemonUI.SHVDN3, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\..\SteamLibrary\steamapps\common\Grand Theft Auto V\Scripts\LemonUI.SHVDN3.dll</HintPath>
+    <Reference Include="LemonUI.SHVDN3, Version=1.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\LemonUI.SHVDN3.1.1.0\lib\net48\LemonUI.SHVDN3.dll</HintPath>
     </Reference>
     <Reference Include="ScriptHookVDotNet3, Version=3.0.4.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\..\SteamLibrary\steamapps\common\Grand Theft Auto V\ScriptHookVDotNet3.dll</HintPath>

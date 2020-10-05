@@ -16,7 +16,7 @@ Friend Class MenuManager
 
         Select Case Key.KeyData
             Case Keys.F9
-                SpawnMenu.Visible = True
+                SpawnMenu.Open()
         End Select
     End Sub
 
