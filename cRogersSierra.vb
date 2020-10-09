@@ -987,7 +987,7 @@ Public Class cRogersSierra
         VisibleLocomotive.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
         VisibleLocomotive.Mods.SecondaryColor = Locomotive.Mods.SecondaryColor
         
-        Tender.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor;
+        Tender.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
 
         If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
 
