@@ -129,6 +129,9 @@ Public Class cRogersSierra
 
     Private PistonOldPos As Single
     Private PistonGoingForward As Boolean = False
+
+    Private CabLight As Light
+
     Public Sub New(mTrain As Vehicle)
 
         _ID = RndGenerator.Next
@@ -272,18 +275,9 @@ Public Class cRogersSierra
         Locomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
 
         CustomLights = New LightHandler(Locomotive, RogersSierra.Count + 1)
-
-        'Right window
-        CustomLights.Add(1.505823, -0.8163379, 2.993675, -0.9864501, 0.09655763, -0.1326379, Color.White, 18, 6, 0, 100, 100)
-
-        'Left boiler
-        CustomLights.Add(-10.21394, -0.04113722, 5.636269, 0.7291078, 0.6141885, -0.3019508, Color.White, 85, 12, 0, 100, 100)
-
-        'Right boiler
-        CustomLights.Add(11.13646, 0.7100044, 5.407509, -0.7580729, 0.6161212, -0.2138226, Color.White, 85, 12, 0, 100, 100)
-
         'Cab
-        CustomLights.Add(-0.0152235, 8.436013, 3.378627, 0.6139234, 0.7880148, 0.04615904, Color.White, 34, 5, 0, 75, 100)
+        CustomLights.Add("boilerlight", "boilerlightdir", Color.White, 34, 5, 0, 45, 100)
+        CabLight = CustomLights.Lights.Last
 
         'TowardsRail
         CustomCamera.Add(Locomotive, New Vector3(0, 10, 1), New Vector3(0, 20, 1), 75)
@@ -442,6 +436,7 @@ Public Class cRogersSierra
         End Get
         Set(value As Boolean)
             sLight.Visible = value
+            CabLight.IsEnabled = value
         End Set
     End Property
 
@@ -991,15 +986,12 @@ Public Class cRogersSierra
 
         VisibleLocomotive.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
         VisibleLocomotive.Mods.SecondaryColor = Locomotive.Mods.SecondaryColor
+        
+        Tender.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor;
 
         If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
 
             Tender.Wash()
-        End If
-
-        if Game.Player.Character.IsInVehicle(Locomotive) Then
-
-            'World.DrawSpotLightWithShadow(1.470611, -0.6565136, 3.028564, -0.9940964, 0.02596331, -0.1053485, Color.White, 16, 6, 0, 100, 100);
         End If
     End Sub
 

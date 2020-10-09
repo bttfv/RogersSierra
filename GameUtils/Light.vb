@@ -64,8 +64,13 @@ Public Class Light
     Public Property Radius As Single
     Public Property Fadeout As Single
     Public Property Color As Color
+    Public Property IsEnabled As Boolean = True
 
-    Public Sub Draw(Entity As Entity, shadowId As Single, Optional brightness As Single = -1)
+    Public Sub Draw(Entity As Entity, shadowId As Single)
+
+        If Not IsEnabled Then
+            Return
+        End If
 
         Dim pos As Vector3
         Dim dir As Vector3
@@ -73,20 +78,23 @@ Public Class Light
         If useBones Then
 
             pos = Entity.Bones(SourceBone).Position
-            dir = Entity.Bones(SourceBone).GetPositionOffset(Entity.Bones(DirectionBone).Position)
+
+            dir = Vector3.Subtract(Entity.Bones(DirectionBone).Position, Entity.Bones(SourceBone).Position)
+            dir.Normalize()
+            
         Else
 
             pos = Entity.GetOffsetPosition(New Vector3(PositionX, PositionY, PositionZ))
             dir = New Vector3(DirectionX, DirectionY, DirectionZ)
         End If
 
-        If brightness = -1 Then
+        'If brightness = -1 Then
 
-            brightness = Me.Brightness
-        End If
+        '    brightness = Me.Brightness
+        'End If
 
         [Function].Call(Hash._DRAW_SPOT_LIGHT_WITH_SHADOW,
                         pos.X, pos.Y, pos.Z, dir.X, dir.Y, dir.Z, Color.R, Color.G, Color.B,
-                        Distance, brightness, Roundness, Radius, Fadeout, shadowId)
+                        Distance, Brightness, Roundness, Radius, Fadeout, shadowId)
     End Sub
 End Class

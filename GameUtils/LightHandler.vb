@@ -35,23 +35,23 @@ Public Class LightHandler
 
     Public Sub Draw()
 
-        Dim hour = World.CurrentDate.TimeOfDay.Hours
-        Dim mills = World.CurrentDate.TimeOfDay.TotalMilliseconds
+        'Dim hour = World.CurrentDate.TimeOfDay.Hours
+        'Dim mills = World.CurrentDate.TimeOfDay.TotalMilliseconds
 
-        Dim brightness As Single
+        'Dim brightness As Single
 
-        Select Case hour
-            Case < 8, >= 20
-                brightness = 0
-            Case < 12
-                brightness = ((mills - 28740000) / 15140000) * 100
-            Case < 20
-                brightness = ((72000000 - mills) / 28800000) * 100
-        End Select
+        'Select Case hour
+        '    Case < 8, >= 20
+        '        brightness = 0
+        '    Case < 12
+        '        brightness = ((mills - 28740000) / 15140000) * 100
+        '    Case < 20
+        '        brightness = ((72000000 - mills) / 28800000) * 100
+        'End Select
 
         Lights.ForEach(Sub(x)
 
-                           x.Draw(Entity, (Lights.IndexOf(x) + 1) * ShadowMulti, brightness)
+                           x.Draw(Entity, (Lights.IndexOf(x) + 1) * ShadowMulti)
                        End Sub)
     End Sub
 End Class
