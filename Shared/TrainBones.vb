@@ -1,4 +1,4 @@
-﻿Friend Class Bones
+﻿Friend Class TrainBones
 
 #Region "Sierra Others"
     Public Const sDriverSeat As String = "seat_dside_f"
