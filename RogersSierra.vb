@@ -4,9 +4,9 @@ Imports GTA.Math
 Imports GTA.UI
 Imports KlangRageAudioLibrary
 
-Public Class cRogersSierra
+Public Class RogersSierra
 
-    Public AudioEngine As New AudioEngine()
+    Private AudioEngine As New AudioEngine()
 
     Public ReadOnly Property ID As Integer
 
@@ -70,6 +70,8 @@ Public Class cRogersSierra
 
     Public ReadOnly Property Deleted As Boolean
 
+    Public Property FunnelSmoke As SmokeColor = SmokeColor.Default
+
     Private CustomCamera As New CustomerCameraManager
 
     Private CustomLights As LightHandler
@@ -108,7 +110,7 @@ Public Class cRogersSierra
     Private BellAnimationLength As Integer = 10
     Private BellAnimationChangedDirection As Boolean = True
 
-    Private pWhistle As New PTFX(Particles.sWhistle)
+    Private pWhistle As New PTFX(TrainParticles.sWhistle)
     Private pSteam As New List(Of PTFX)
     Private pSteamVent As New List(Of PTFX)
 
@@ -121,11 +123,11 @@ Public Class cRogersSierra
     Private sTrainMoving As New List(Of AudioPlayer)
     Private sTrainMovingIndex As Integer = -1
 
-    Public Property FunnelSmoke As SmokeColor = SmokeColor.Default
-    Friend pFunnelSmoke As New PTFX(Particles.sColoredSmoke)
-    Private pFunnelFire As New PTFX(Particles.sFunnelFire)
+    Private pFunnelSmoke As New PTFX(TrainParticles.sColoredSmoke)
+    Private pFunnelFire As New PTFX(TrainParticles.sFunnelFire)
+    Private FunnelInterval As Integer
 
-    Private pTrainExpl As New PTFX(Particles.sTrainExpl)
+    Private pTrainExpl As New PTFX(TrainParticles.sTrainExpl)
 
     Private PistonOldPos As Single
     Private PistonGoingForward As Boolean = False
@@ -137,7 +139,7 @@ Public Class cRogersSierra
         _ID = RndGenerator.Next
 
         Select Case mTrain.Model
-            Case Models.DMC12ColModel
+            Case TrainModels.DMC12ColModel
                 ColDeLorean = mTrain
                 Locomotive = ColDeLorean.GetTrainCarriage(1)
 
@@ -153,7 +155,7 @@ Public Class cRogersSierra
 
                     Type = TrainType.Complete
                 End If
-            Case Models.RogersSierraColModel
+            Case TrainModels.RogersSierraColModel
                 Locomotive = mTrain
 
                 Tender = Locomotive.GetTrainCarriage(1)
@@ -174,7 +176,7 @@ Public Class cRogersSierra
         Locomotive.Mods.PrimaryColor = VehicleColor.MetallicShadowSilver
         Locomotive.Mods.SecondaryColor = VehicleColor.MetallicAnthraciteGray
 
-        VisibleLocomotive = World.CreateVehicle(Models.RogersSierraModel, Locomotive.Position)
+        VisibleLocomotive = World.CreateVehicle(TrainModels.RogersSierraModel, Locomotive.Position)
         VisibleLocomotive.IsCollisionEnabled = False
         VisibleLocomotive.AttachTo(Locomotive)
         VisibleLocomotive.ToggleExtra(1, False)
@@ -182,31 +184,31 @@ Public Class cRogersSierra
         VisibleLocomotive.Mods.PrimaryColor = VehicleColor.MetallicShadowSilver
         VisibleLocomotive.Mods.SecondaryColor = VehicleColor.MetallicAnthraciteGray
 
-        PistonRelativePosY = Locomotive.Bones.Item(Bones.sPistons).RelativePosition.Y
+        PistonRelativePosY = Locomotive.Bones.Item(TrainBones.sPistons).RelativePosition.Y
 
-        PistonRelativePosZ = Locomotive.Bones.Item(Bones.sPistons).RelativePosition.Z
+        PistonRelativePosZ = Locomotive.Bones.Item(TrainBones.sPistons).RelativePosition.Z
 
-        TrainProperties.connPointRadius = Locomotive.Bones.Item(Bones.sWheelDrive2).RelativePosition.DistanceTo(Locomotive.Bones.Item(Bones.sRods).RelativePosition) * -1
+        TrainProperties.connPointRadius = Locomotive.Bones.Item(TrainBones.sWheelDrive2).RelativePosition.DistanceTo(Locomotive.Bones.Item(TrainBones.sRods).RelativePosition) * -1
 
-        TrainProperties.pRodsLength = Locomotive.Bones.Item(Bones.sRodsEnd).RelativePosition.DistanceTo(Locomotive.Bones.Item(Bones.sRods).RelativePosition)
+        TrainProperties.pRodsLength = Locomotive.Bones.Item(TrainBones.sRodsEnd).RelativePosition.DistanceTo(Locomotive.Bones.Item(TrainBones.sRods).RelativePosition)
 
         With aWheels
-            WheelRadius = System.Math.Abs(Models.sWheelDrive.Dimensions.frontTopRight.Z)
+            WheelRadius = System.Math.Abs(TrainModels.sWheelDrive.Dimensions.frontTopRight.Z)
 
-            .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive1, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive1, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
-            .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive2, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive2, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
-            .Props.Add(New AnimateProp(Models.sWheelDrive, Locomotive, Bones.sWheelDrive3, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive3, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
         End With
 
         With aSmallWheels
-            SmallWheelRadius = System.Math.Abs(Models.sWheelFront.Dimensions.frontTopRight.Z)
+            SmallWheelRadius = System.Math.Abs(TrainModels.sWheelFront.Dimensions.frontTopRight.Z)
 
-            .Props.Add(New AnimateProp(Models.sWheelFront, Locomotive, Bones.sWheelFront1, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp(TrainModels.sWheelFront, Locomotive, TrainBones.sWheelFront1, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
-            .Props.Add(New AnimateProp(Models.sWheelFront, Locomotive, Bones.sWheelFront2, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp(TrainModels.sWheelFront, Locomotive, TrainBones.sWheelFront2, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
         End With
 
@@ -214,39 +216,39 @@ Public Class cRogersSierra
 
             With aSmallWheelsTender
 
-                .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender1, Vector3.Zero, Vector3.Zero))
+                .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender1, Vector3.Zero, Vector3.Zero))
                 aAllProps.Props.Add(.Props.Last)
-                .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender2, Vector3.Zero, Vector3.Zero))
+                .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender2, Vector3.Zero, Vector3.Zero))
                 aAllProps.Props.Add(.Props.Last)
-                .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender3, Vector3.Zero, Vector3.Zero))
+                .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender3, Vector3.Zero, Vector3.Zero))
                 aAllProps.Props.Add(.Props.Last)
-                .Props.Add(New AnimateProp(Models.tWheel, Tender, Bones.sWheelTender4, Vector3.Zero, Vector3.Zero))
+                .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender4, Vector3.Zero, Vector3.Zero))
                 aAllProps.Props.Add(.Props.Last)
             End With
         End If
 
-        aRods = New AnimateProp(Models.sRods, Locomotive, Bones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
+        aRods = New AnimateProp(TrainModels.sRods, Locomotive, TrainBones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
         aAllProps.Props.Add(aRods)
-        aPRods = New AnimateProp(Models.sPRods, Locomotive, Bones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
+        aPRods = New AnimateProp(TrainModels.sPRods, Locomotive, TrainBones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
         aAllProps.Props.Add(aPRods)
-        aPistons = New AnimateProp(Models.sPistons, Locomotive, Bones.sPistons, Vector3.Zero, Vector3.Zero)
+        aPistons = New AnimateProp(TrainModels.sPistons, Locomotive, TrainBones.sPistons, Vector3.Zero, Vector3.Zero)
         aAllProps.Props.Add(aPistons)
 
-        aLevValves = New AnimateProp(Models.sLevValves, Locomotive, Bones.sLevValves, Vector3.Zero, Vector3.Zero)
+        aLevValves = New AnimateProp(TrainModels.sLevValves, Locomotive, TrainBones.sLevValves, Vector3.Zero, Vector3.Zero)
         aAllProps.Props.Add(aLevValves)
 
-        aValves = New AnimateProp(Models.sValves, Locomotive, Bones.sValves, Vector3.Zero, Vector3.Zero)
+        aValves = New AnimateProp(TrainModels.sValves, Locomotive, TrainBones.sValves, Vector3.Zero, Vector3.Zero)
         aAllProps.Props.Add(aValves)
 
-        aValvesPist = New AnimateProp(Models.sValvesPist, Locomotive, Bones.sValvesPist, Vector3.Zero, Vector3.Zero)
+        aValvesPist = New AnimateProp(TrainModels.sValvesPist, Locomotive, TrainBones.sValvesPist, Vector3.Zero, Vector3.Zero)
         aAllProps.Props.Add(aValvesPist)
 
-        aBell = New AnimateProp(Models.sBell, Locomotive, Bones.sBell, Vector3.Zero, Vector3.Zero, True)
+        aBell = New AnimateProp(TrainModels.sBell, Locomotive, TrainBones.sBell, Vector3.Zero, Vector3.Zero, True)
         aBell.setRotationSettings(Coordinate.X, True, True, -70, 70, 2, False, 1, False, 1)
         BellAnimation = AnimationStep.Off
         aAllProps.Props.Add(aBell)
 
-        sLight = New AnimateProp(Models.sLight, Locomotive, Vector3.Zero, Vector3.Zero)
+        sLight = New AnimateProp(TrainModels.sLight, Locomotive, Vector3.Zero, Vector3.Zero)
         aAllProps.Props.Add(sLight)
 
         'With aBrakePads
@@ -262,11 +264,11 @@ Public Class cRogersSierra
 
         AnimationProcess()
 
-        Dim dRopeLength = Locomotive.Bones(Bones.sBellRopeStart).Position.DistanceTo(Locomotive.Bones(Bones.sBellRopeEnd).Position)
+        Dim dRopeLength = Locomotive.Bones(TrainBones.sBellRopeStart).Position.DistanceTo(Locomotive.Bones(TrainBones.sBellRopeEnd).Position)
 
         Dim num = dRopeLength + 0.1
-        BellRope = World.AddRope(RopeType.ThickRope, Locomotive.Bones(Bones.sBellRopeStart).Position, DirectionToRotation(Locomotive.Bones(Bones.sBellRopeEnd).Position - Locomotive.Bones(Bones.sBellRopeStart).Position, 0.0F), num, System.Math.Min(dRopeLength, num), False)
-        BellRope.Connect(Locomotive, Locomotive.Bones(Bones.sBellRopeStart).Position, Locomotive, Locomotive.Bones(Bones.sBellRopeEnd).Position, num)
+        BellRope = World.AddRope(RopeType.ThickRope, Locomotive.Bones(TrainBones.sBellRopeStart).Position, DirectionToRotation(Locomotive.Bones(TrainBones.sBellRopeEnd).Position - Locomotive.Bones(TrainBones.sBellRopeStart).Position, 0.0F), num, System.Math.Min(dRopeLength, num), False)
+        BellRope.Connect(Locomotive, Locomotive.Bones(TrainBones.sBellRopeStart).Position, Locomotive, Locomotive.Bones(TrainBones.sBellRopeEnd).Position, num)
         BellRope.ActivatePhysics()
 
         PistonSteam = True
@@ -274,7 +276,7 @@ Public Class cRogersSierra
         Locomotive.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
         Locomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
 
-        CustomLights = New LightHandler(Locomotive, RogersSierra.Count + 1)
+        CustomLights = New LightHandler(Locomotive, RogersSierraList.Count + 1)
 
         'Cab
         CustomLights.Add("boilerlight", "boilerlightdir", Color.White, 34, 5, 0, 45, 100)
@@ -326,6 +328,11 @@ Public Class cRogersSierra
         CustomCamera.Add(Locomotive, New Vector3(0, -2, 2.5), New Vector3(0, 1, 2.5), 75)
 
         LoadSounds()
+
+        If PlayerPed.IsInVehicle(Locomotive) AndAlso Not PlayerPed.IsVisible Then
+
+            PlayerPed.IsVisible = True
+        End If
     End Sub
 
     Private Sub LoadSounds()
@@ -473,7 +480,7 @@ Public Class cRogersSierra
             If value Then
 
                 sWhistleSound.Play()
-                pWhistle.CreateLoopedOnEntityBone(Locomotive, Bones.sWhistle, Vector3.Zero)
+                pWhistle.CreateLoopedOnEntityBone(Locomotive, TrainBones.sWhistle, Vector3.Zero)
             Else
 
                 sWhistleSound.Stop()
@@ -489,7 +496,7 @@ Public Class cRogersSierra
         Set(value As Boolean)
             If value Then
 
-                pFunnelFire.CreateLoopedOnEntityBone(Locomotive, Bones.sFunnel, New Vector3(0, -0.5, -0.25),, 0.75)
+                pFunnelFire.CreateLoopedOnEntityBone(Locomotive, TrainBones.sFunnel, New Vector3(0, -0.5, -0.25),, 0.75)
                 pFunnelFire.setLoopedEvolution("fade", 1)
             Else
 
@@ -497,8 +504,6 @@ Public Class cRogersSierra
             End If
         End Set
     End Property
-
-    Friend Property FunnelInterval As Integer
 
     Friend Property PistonSteam As Boolean
         Get
@@ -511,8 +516,8 @@ Public Class cRogersSierra
 
                     With pSteam
 
-                        .Add(New PTFX(Particles.sSteam))
-                        .Last.CreateLoopedOnEntityBone(Locomotive, Bones.sSteam(i), Vector3.Zero, New Vector3(90, 0, 0))
+                        .Add(New PTFX(TrainParticles.sSteam))
+                        .Last.CreateLoopedOnEntityBone(Locomotive, TrainBones.sSteam(i), Vector3.Zero, New Vector3(90, 0, 0))
                     End With
                 Next
             Else
@@ -539,14 +544,14 @@ Public Class cRogersSierra
 
                     With pSteamVent
 
-                        .Add(New PTFX(Particles.sWhistle))
+                        .Add(New PTFX(TrainParticles.sWhistle))
 
                         If i = 1 Or i = 3 Then
 
-                            .Last.CreateLoopedOnEntityBone(Locomotive, Bones.sSteam(i), New Vector3(0, -0, -0.09), New Vector3(0, 90, 0))
+                            .Last.CreateLoopedOnEntityBone(Locomotive, TrainBones.sSteam(i), New Vector3(0, -0, -0.09), New Vector3(0, 90, 0))
                         Else
 
-                            .Last.CreateLoopedOnEntityBone(Locomotive, Bones.sSteam(i), New Vector3(0, 0, -0.09), New Vector3(0, -90, 0))
+                            .Last.CreateLoopedOnEntityBone(Locomotive, TrainBones.sSteam(i), New Vector3(0, 0, -0.09), New Vector3(0, -90, 0))
                         End If
                     End With
                 Next
@@ -622,7 +627,7 @@ Public Class cRogersSierra
 
             If FunnelSmoke <> SmokeColor.Off Then
 
-                pFunnelSmoke.CreateOnEntityBone(Locomotive, Bones.sFunnel, New Math.Vector3(0, -1.6, -0.5), New Math.Vector3(90, 0, 0), 1)
+                pFunnelSmoke.CreateOnEntityBone(Locomotive, TrainBones.sFunnel, New Math.Vector3(0, -1.6, -0.5), New Math.Vector3(90, 0, 0), 1)
 
                 Select Case FunnelSmoke
                     Case SmokeColor.Default
@@ -669,7 +674,7 @@ Public Class cRogersSierra
             Whistle = False
         End If
 
-        If Game.IsControlJustPressed(Control.VehicleHorn) AndAlso getCurrentCharacter.IsInVehicle(Locomotive) Then
+        If Game.IsControlJustPressed(Control.VehicleHorn) AndAlso PlayerPed.IsInVehicle(Locomotive) Then
 
             Whistle = True
         End If
@@ -679,12 +684,12 @@ Public Class cRogersSierra
             Whistle = False
         End If
 
-        If Game.IsControlJustPressed(Control.VehicleHandbrake) AndAlso Game.IsControlPressed(Control.CharacterWheel) = False AndAlso Bell = False AndAlso getCurrentCharacter.IsInVehicle(Locomotive) Then
+        If Game.IsControlJustPressed(Control.VehicleHandbrake) AndAlso Game.IsControlPressed(Control.CharacterWheel) = False AndAlso Bell = False AndAlso PlayerPed.IsInVehicle(Locomotive) Then
 
             Bell = True
         End If
 
-        If Game.IsControlJustPressed(Control.VehicleHeadlight) AndAlso getCurrentCharacter.IsInVehicle(Locomotive) Then
+        If Game.IsControlJustPressed(Control.VehicleHeadlight) AndAlso PlayerPed.IsInVehicle(Locomotive) Then
 
             IsLightOn = Not IsLightOn
         End If
@@ -819,13 +824,13 @@ Public Class cRogersSierra
 
         If IsNothing(Locomotive.GetPedOnSeat(VehicleSeat.Driver)) = False Then
 
-            If Locomotive.GetPedOnSeat(VehicleSeat.Driver) <> getCurrentCharacter() Then
+            If Locomotive.GetPedOnSeat(VehicleSeat.Driver) <> PlayerPed() Then
 
                 Exit Sub
             End If
         End If
 
-        If getCurrentCharacter.IsInVehicle(Locomotive) Then
+        If PlayerPed.IsInVehicle(Locomotive) Then
 
             If CurrentRogersSierra IsNot Me Then
 
@@ -841,10 +846,10 @@ Public Class cRogersSierra
 
                 If Locomotive.SpeedMPH >= 10 Then
 
-                    Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, getCurrentCharacter, Locomotive, 4160)
+                    Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, PlayerPed, Locomotive, 4160)
                 Else
 
-                    Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, getCurrentCharacter, Locomotive, 16)
+                    Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, PlayerPed, Locomotive, 16)
                 End If
             End If
 
@@ -890,7 +895,7 @@ Public Class cRogersSierra
             VisibleLocomotive.AttachedBlip.Sprite = 120
         End If
 
-        If getCurrentCharacter.IsInVehicle(Locomotive) = False OrElse (Game.IsControlPressed(Control.VehicleAccelerate) = False AndAlso Game.IsControlPressed(Control.VehicleBrake) = False) Then
+        If PlayerPed.IsInVehicle(Locomotive) = False OrElse (Game.IsControlPressed(Control.VehicleAccelerate) = False AndAlso Game.IsControlPressed(Control.VehicleBrake) = False) Then
 
             If isCruiseControlOn = False AndAlso isOnTrainMission = False Then
 
@@ -958,13 +963,13 @@ Public Class cRogersSierra
         Locomotive.setTrainSpeed(LocomotiveSpeed)
     End Sub
 
-    Public Sub KeyDown(e As Windows.Forms.Keys)
+    Friend Sub KeyDown(e As Windows.Forms.Keys)
 
         Select Case e
             Case Windows.Forms.Keys.L
                 CustomCamera.ShowNext()
             Case Windows.Forms.Keys.K
-                CycleCameras = Not CycleCameras
+                Camera = TrainCamera.Off
         End Select
     End Sub
 
@@ -999,7 +1004,7 @@ Public Class cRogersSierra
 
         VisibleLocomotive.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
         VisibleLocomotive.Mods.SecondaryColor = Locomotive.Mods.SecondaryColor
-        
+
         Tender.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
 
         If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
@@ -1086,20 +1091,20 @@ Public Class cRogersSierra
 
     Public Overrides Function ToString() As String
 
-        Return RogersSierra.IndexOf(Me)
+        Return RogersSierraList.IndexOf(Me)
     End Function
 
-    Public Shared Widening Operator CType(ByVal t As cRogersSierra) As Vehicle
+    Public Shared Widening Operator CType(ByVal t As RogersSierra) As Vehicle
 
         Return t.Locomotive
     End Operator
 
-    Public Shared Operator =(ByVal t As cRogersSierra, ByVal v As Vehicle) As Boolean
+    Public Shared Operator =(ByVal t As RogersSierra, ByVal v As Vehicle) As Boolean
 
         Return t.Locomotive = v
     End Operator
 
-    Public Shared Operator <>(ByVal t As cRogersSierra, ByVal v As Vehicle) As Boolean
+    Public Shared Operator <>(ByVal t As RogersSierra, ByVal v As Vehicle) As Boolean
 
         Return t.Locomotive <> v
     End Operator
