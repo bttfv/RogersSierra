@@ -13,19 +13,19 @@ Public Class RogersSierra
     ''' <summary>
     ''' Points to the Rogers Sierra vehicle.
     ''' </summary>
-    Public ReadOnly Locomotive As Vehicle
+    Public Locomotive As Vehicle
 
     ''' <summary>
     ''' Points to the tender.
     ''' </summary>
-    Public ReadOnly Tender As Vehicle
+    Private Tender As Vehicle
 
     ''' <summary>
     ''' Points to the fake DeLorean on the front.
     ''' </summary>
-    Public ReadOnly ColDeLorean As Vehicle
+    Public ColDeLorean As Vehicle
 
-    Public ReadOnly VisibleLocomotive As Vehicle
+    Public VisibleLocomotive As Vehicle
 
     Public ReadOnly Property Type As TrainType
 
@@ -52,7 +52,7 @@ Public Class RogersSierra
     ''' Modifier for the train's acceleration.
     ''' </summary>
     ''' <returns></returns>
-    Private Property LocomotiveAccModifier As Single = 1
+    Friend Property LocomotiveAccModifier As Single = 1
 
     ''' <summary>
     ''' Setted speed of the train.
@@ -143,7 +143,7 @@ Public Class RogersSierra
                 ColDeLorean = mTrain
                 Locomotive = ColDeLorean.GetTrainCarriage(1)
 
-                'ColDeLorean.IsVisible = False
+                ColDeLorean.IsVisible = False
                 ColDeLorean.IsCollisionEnabled = False
 
                 Tender = ColDeLorean.GetTrainCarriage(2)
@@ -376,49 +376,6 @@ Public Class RogersSierra
         End With
     End Sub
 
-#Region "Public Methods"
-
-    ''' <summary>
-    ''' Deletes the train from the world.
-    ''' </summary>
-    Public Sub Delete(Optional deleteVeh As Boolean = True)
-
-        aAllProps.DeleteAll()
-
-        'aBrakePads.DeleteAll()
-        'aBrakePistons.Delete()
-        'aBrakeLevers.Delete()
-        'aBrakeBars.Delete()
-
-        Locomotive.RemoveParticleEffects()
-        VisibleLocomotive.RemoveParticleEffects()
-
-        AudioEngine.Dispose()
-
-        VisibleLocomotive.Delete()
-
-        If deleteVeh Then
-
-            If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
-
-                Tender.Delete()
-            End If
-
-            Locomotive.Delete()
-
-            If Type <> TrainType.NoColDelorean AndAlso Type <> TrainType.OnlyLocomotive Then
-
-                ColDeLorean.Delete()
-            End If
-        End If
-
-        CustomCamera.Abort()
-
-        RemoveRogersSierra(Me)
-
-        _Deleted = True
-    End Sub
-
     Public Sub Derail()
 
         Locomotive.MakeTrainDerail()
@@ -453,34 +410,6 @@ Public Class RogersSierra
 
         Return Locomotive.Bones(boneName).Position.DistanceToSquared(pos)
     End Function
-#End Region
-
-#Region "Public Properties"
-
-    Public Property IsVisible As Boolean
-        Get
-            Return VisibleLocomotive.IsVisible
-        End Get
-        Set(value As Boolean)
-
-            VisibleLocomotive.IsVisible = value
-            Tender.IsVisible = value
-
-            aAllProps.Visible = value
-
-            ForceHandbrake = Not value
-
-            If value = False Then
-
-                LocomotiveSpeed = 0
-
-                Locomotive.RemoveParticleEffects()
-                VisibleLocomotive.RemoveParticleEffects()
-
-                SoundsTick()
-            End If
-        End Set
-    End Property
 
     Public Property Camera As TrainCamera
         Get
@@ -576,7 +505,7 @@ Public Class RogersSierra
         End Set
     End Property
 
-    Public Property PistonSteam As Boolean
+    Friend Property PistonSteam As Boolean
         Get
             Return pSteam.Count > 0
         End Get
@@ -602,7 +531,7 @@ Public Class RogersSierra
         End Set
     End Property
 
-    Public Property PistonSteamVent As Boolean
+    Friend Property PistonSteamVent As Boolean
         Get
             Return sTrainStart.IsAnyInstancePlaying
         End Get
@@ -636,9 +565,7 @@ Public Class RogersSierra
             End If
         End Set
     End Property
-#End Region
 
-#Region "Animations, particles and sounds"
     Private Sub AnimationProcess()
 
         Dim modifier As Single = If(Locomotive.SpeedMPH <= 10, 1 + (2.5 / 10) * Locomotive.SpeedMPH, 2.5)
@@ -1086,6 +1013,72 @@ Public Class RogersSierra
         End If
     End Sub
 
+    Public Property IsVisible As Boolean
+        Get
+            Return VisibleLocomotive.IsVisible
+        End Get
+        Set(value As Boolean)
+
+            VisibleLocomotive.IsVisible = value
+            Tender.IsVisible = value
+
+            aAllProps.Visible = value
+
+            ForceHandbrake = Not value
+
+            If value = False Then
+
+                LocomotiveSpeed = 0
+
+                Locomotive.RemoveParticleEffects()
+                VisibleLocomotive.RemoveParticleEffects()
+
+                SoundsTick()
+            End If
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Deletes the train from the world.
+    ''' </summary>
+    Public Sub Delete(Optional deleteVeh As Boolean = True)
+
+        aAllProps.DeleteAll()
+
+        'aBrakePads.DeleteAll()
+        'aBrakePistons.Delete()
+        'aBrakeLevers.Delete()
+        'aBrakeBars.Delete()
+
+        Locomotive.RemoveParticleEffects()
+        VisibleLocomotive.RemoveParticleEffects()
+
+        AudioEngine.Dispose()
+
+        VisibleLocomotive.Delete()
+
+        If deleteVeh Then
+
+            If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
+
+                Tender.Delete()
+            End If
+
+            Locomotive.Delete()
+
+            If Type <> TrainType.NoColDelorean AndAlso Type <> TrainType.OnlyLocomotive Then
+
+                ColDeLorean.Delete()
+            End If
+        End If
+
+        CustomCamera.Abort()
+
+        RemoveRogersSierra(Me)
+
+        _Deleted = True
+    End Sub
+
     Private Sub CheckPropsExists()
 
         aAllProps.CheckExists()
@@ -1095,9 +1088,7 @@ Public Class RogersSierra
         'aBrakeLevers.CheckExists()
         'aBrakePistons.CheckExists()
     End Sub
-#End Region
 
-#Region "Overrides and Operators"
     Public Overrides Function ToString() As String
 
         Return RogersSierraList.IndexOf(Me)
@@ -1117,5 +1108,4 @@ Public Class RogersSierra
 
         Return t.Locomotive <> v
     End Operator
-#End Region
 End Class
