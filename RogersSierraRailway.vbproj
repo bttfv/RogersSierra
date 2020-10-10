@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EF32B843-71F4-4AF6-93E3-BEC5F727C9A3}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>RogersSierra</RootNamespace>
-    <AssemblyName>RogersSierra</AssemblyName>
+    <RootNamespace>RogersSierraRailway</RootNamespace>
+    <AssemblyName>RogersSierraRailway</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -125,6 +125,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
