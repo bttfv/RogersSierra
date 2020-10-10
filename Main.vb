@@ -8,10 +8,10 @@ Friend Class Main
 
     Private Sub Main_Aborted(sender As Object, e As EventArgs) Handles Me.Aborted
 
-        RogersSierraList.ForEach(Sub(x)
+        RogersSierra.ForEach(Sub(x)
 
-                                     x.Delete(False)
-                                 End Sub)
+                                 x.Delete(False)
+                             End Sub)
     End Sub
 
     Private Sub Main_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
@@ -35,53 +35,53 @@ Friend Class Main
 
             IO.File.AppendAllText(".\ScriptHookVDotNet.log", $"RogersSierra - {version} ({buildDate})" & Environment.NewLine)
 
-            TrainModels.LoadModels()
+            Models.LoadModels()
 
             initialSetup = False
         End If
 
         Commons.MenuManager.Process()
 
-        World.GetAllVehicles(TrainModels.RogersSierraColModel).ToList.ForEach(Sub(x)
+        World.GetAllVehicles(Models.RogersSierraColModel).ToList.ForEach(Sub(x)
 
                                                                              If IsNothing(GetRogersSierraFromVehicle(x)) Then
 
-                                                                                 RogersSierraList.Add(New RogersSierra(x))
+                                                                                 RogersSierra.Add(New cRogersSierra(x))
                                                                              End If
                                                                          End Sub)
 
         If RogersSierraToRemove.Count > 0 Then
 
             RogersSierraToRemove.ForEach(Sub(x)
-                                             RogersSierraList.Remove(x)
+                                             RogersSierra.Remove(x)
                                          End Sub)
 
             RogersSierraToRemove.Clear()
         End If
 
-        RogersSierraList.ForEach(Sub(x)
+        RogersSierra.ForEach(Sub(x)
 
-                                     If x.Deleted Then
+                                 If x.Deleted Then
 
-                                         RemoveRogersSierra(x)
-                                         Exit Sub
-                                     End If
+                                     RemoveRogersSierra(x)
+                                     Exit Sub
+                                 End If
 
-                                     If PlayerPed.IsInVehicle() = False AndAlso x.isExploded = False Then
+                                 If getCurrentCharacter.IsInVehicle() = False AndAlso x.isExploded = False Then
 
-                                         If Game.IsControlJustPressed(GTA.Control.Enter) Then
+                                     If Game.IsControlJustPressed(GTA.Control.Enter) Then
 
-                                             If x.isExploded = False AndAlso x.GetBoneDistanceSquared(TrainBones.sDriverSeat, PlayerPed) < 1.1 Then
+                                         If x.isExploded = False AndAlso x.GetBoneDistanceSquared(Bones.sDriverSeat, getCurrentCharacter) < 1.1 Then
 
-                                                 PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver,,, EnterVehicleFlags.WarpIn)
-                                             End If
+                                             getCurrentCharacter.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver,,, EnterVehicleFlags.WarpIn)
                                          End If
                                      End If
+                                 End If
 
-                                     x.Tick()
-                                 End Sub)
+                                 x.Tick()
+                             End Sub)
 
-        If Not IsNothing(CurrentRogersSierra) AndAlso Not PlayerPed.IsInVehicle Then
+        If Not IsNothing(CurrentRogersSierra) AndAlso Not getCurrentCharacter.IsInVehicle Then
 
             If CurrentRogersSierra.Camera <> TrainCamera.Off Then
 

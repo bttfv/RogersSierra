@@ -1,4 +1,4 @@
-﻿Friend Class TrainParticles
+﻿Friend Class Particles
 
     Public Shared sFunnel() As String = {"scr_sell", "scr_vehicle_damage_smoke"}
 

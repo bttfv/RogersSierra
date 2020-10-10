@@ -117,14 +117,14 @@ Public Module Commons
         Return IsNothing(cam) = False AndAlso cam.Position <> Math.Vector3.Zero
     End Function
 
-    Friend Function PlayerPed() As Ped
+    Friend Function getCurrentCharacter() As Ped
 
         Return Game.Player.Character
     End Function
 
-    Friend Function PlayerVehicle() As Vehicle
+    Friend Function getCurrentVehicle() As Vehicle
 
-        Return PlayerPed.CurrentVehicle
+        Return getCurrentCharacter.CurrentVehicle
     End Function
 
     <Runtime.CompilerServices.Extension>

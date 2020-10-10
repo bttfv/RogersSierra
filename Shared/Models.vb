@@ -1,5 +1,5 @@
 ﻿Imports GTA
-Friend Class TrainModels
+Friend Class Models
 
     Public Shared DMC12Model As Model
     Public Shared DMC12ColModel As Model

@@ -110,17 +110,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RogersSierra.vb" />
-    <Compile Include="Shared\TrainBones.vb" />
+    <Compile Include="cRogersSierra.vb" />
+    <Compile Include="Shared\Bones.vb" />
     <Compile Include="GameUtils\AnimateProp.vb" />
     <Compile Include="GameUtils\AnimatePropHandler.vb" />
     <Compile Include="GameUtils\PTFX.vb" />
     <Compile Include="Shared\Commons.vb" />
     <Compile Include="Main.vb" />
     <Compile Include="Shared\MenuManager.vb" />
-    <Compile Include="Shared\TrainModels.vb" />
-    <Compile Include="Shared\TrainParticles.vb" />
-    <Compile Include="Shared\TrainManager.vb" />
+    <Compile Include="Shared\Models.vb" />
+    <Compile Include="Shared\Particles.vb" />
+    <Compile Include="Shared\Manager.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -1,11 +1,11 @@
 ﻿Imports GTA
-Public Module TrainManager
+Public Module Manager
 
-    Public CurrentRogersSierra As RogersSierra
+    Public CurrentRogersSierra As cRogersSierra
 
-    Public RogersSierraList As New List(Of RogersSierra)
+    Public RogersSierra As New List(Of cRogersSierra)
 
-    Friend RogersSierraToRemove As New List(Of RogersSierra)
+    Friend RogersSierraToRemove As New List(Of cRogersSierra)
 
     Public Sub CreateRogersSierra(tPosition As Math.Vector3, Optional warpInPlayer As Boolean = False, Optional direction As Boolean = False, Optional noTender As Boolean = False)
 
@@ -15,15 +15,15 @@ Public Module TrainManager
 
         tmpTrain.setTrainSpeed(0)
 
-        RogersSierraList.Add(New RogersSierra(tmpTrain))
+        RogersSierra.Add(New cRogersSierra(tmpTrain))
 
         If warpInPlayer Then
 
-            PlayerPed.Task.WarpIntoVehicle(tmpTrain.GetTrainCarriage(If(noTender, 0, 1)), VehicleSeat.Driver)
+            getCurrentCharacter.Task.WarpIntoVehicle(tmpTrain.GetTrainCarriage(If(noTender, 0, 1)), VehicleSeat.Driver)
         End If
     End Sub
 
-    Friend Sub RemoveRogersSierra(RogersSierra As RogersSierra)
+    Friend Sub RemoveRogersSierra(RogersSierra As cRogersSierra)
 
         If RogersSierraToRemove.Contains(RogersSierra) = False Then
 
@@ -31,7 +31,7 @@ Public Module TrainManager
         End If
     End Sub
 
-    Public Function GetRogersSierraFromVehicle(veh As Vehicle) As RogersSierra
+    Public Function GetRogersSierraFromVehicle(veh As Vehicle) As cRogersSierra
 
         For Each t In RogersSierraToRemove
 
@@ -41,7 +41,7 @@ Public Module TrainManager
             End If
         Next
 
-        For Each t In RogersSierraList
+        For Each t In RogersSierra
 
             If t = veh Then
 
