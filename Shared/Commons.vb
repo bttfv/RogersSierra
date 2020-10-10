@@ -48,13 +48,17 @@ Public Module Commons
         TowardsRail
         Pilot
         Front
-        LeftWheels
-        LeftFrontWheels
-        LeftSide
-        TopCabin
-        RightSide
+        RightFunnel
         RightWheels
         RightFrontWheels
+        RightFront2Wheels
+        RightSide
+        TopCabin
+        LeftSide
+        LeftFunnel
+        LeftWheels
+        LeftFrontWheels
+        LeftFront2Wheels
         Inside
     End Enum
 

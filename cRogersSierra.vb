@@ -275,6 +275,7 @@ Public Class cRogersSierra
         Locomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
 
         CustomLights = New LightHandler(Locomotive, RogersSierra.Count + 1)
+
         'Cab
         CustomLights.Add("boilerlight", "boilerlightdir", Color.White, 34, 5, 0, 45, 100)
         CabLight = CustomLights.Lights.Last
@@ -288,26 +289,38 @@ Public Class cRogersSierra
         'Front
         CustomCamera.Add(Locomotive, New Vector3(0, 15, 5), New Vector3(0, 0, 0), 75)
 
-        'LeftWheels
-        CustomCamera.Add(Locomotive, New Vector3(-2, 6.5, 1), New Vector3(-2, -6.5, 1), 50)
-
-        'LeftFrontWheels
-        CustomCamera.Add(Locomotive, New Vector3(-3, -4, 1), New Vector3(-2, 6.5, 1), 50)
-
-        'LeftSide
-        CustomCamera.Add(Locomotive, New Vector3(-7.5, 0, 8), New Vector3(0, 0, 0), 75)
-
-        'TopCabin
-        CustomCamera.Add(Locomotive, New Vector3(0, -2, 7), New Vector3(0, 7, 5), 75)
-
-        'RightSide
-        CustomCamera.Add(Locomotive, New Vector3(7.5, 0, 8), New Vector3(0, 0, 0), 75)
+        'RightFunnel
+        CustomCamera.Add(Locomotive, New Vector3(1, 3.5, 3.5), New Vector3(1, 6.5, 3.5), 50)
 
         'RightWheels
         CustomCamera.Add(Locomotive, New Vector3(2, 6.5, 1), New Vector3(2, -6.5, 1), 50)
 
         'RightFrontWheels
+        CustomCamera.Add(Locomotive, New Vector3(2, 3.5, 1.25), New Vector3(2, 6.5, 1.25), 50)
+
+        'RightFront2Wheels
         CustomCamera.Add(Locomotive, New Vector3(3, -4, 1), New Vector3(2, 6.5, 1), 50)
+
+        'RightSide
+        CustomCamera.Add(Locomotive, New Vector3(7.5, 0, 8), New Vector3(0, 0, 0), 75)
+
+        'TopCabin
+        CustomCamera.Add(Locomotive, New Vector3(0, -2, 7), New Vector3(0, 7, 5), 75)
+
+        'LeftSide
+        CustomCamera.Add(Locomotive, New Vector3(-7.5, 0, 8), New Vector3(0, 0, 0), 75)
+
+        'LeftFunnel
+        CustomCamera.Add(Locomotive, New Vector3(-1, 3.5, 3.5), New Vector3(-1, 6.5, 3.5), 50)
+
+        'LeftWheels
+        CustomCamera.Add(Locomotive, New Vector3(-2, 6.5, 1), New Vector3(-2, -6.5, 1), 50)
+
+        'LeftFrontWheels
+        CustomCamera.Add(Locomotive, New Vector3(-2, 3.5, 1.25), New Vector3(-2, 6.5, 1.25), 50)
+
+        'LeftFront2Wheels
+        CustomCamera.Add(Locomotive, New Vector3(-3, -4, 1), New Vector3(-2, 6.5, 1), 50)
 
         'Inside
         CustomCamera.Add(Locomotive, New Vector3(0, -2, 2.5), New Vector3(0, 1, 2.5), 75)
