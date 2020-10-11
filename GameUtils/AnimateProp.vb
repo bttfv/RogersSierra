@@ -40,6 +40,7 @@ Friend Class AnimateProp
         isAnimationOn = cAnimationOn
 
         aProp = World.CreateProp(pModel, pEntity.Position, False, False)
+
         Attach()
     End Sub
 
@@ -56,6 +57,7 @@ Friend Class AnimateProp
         isAnimationOn = cAnimationOn
 
         aProp = World.CreateProp(pModel, pEntity.Position, False, False)
+
         Attach()
     End Sub
 
@@ -65,13 +67,10 @@ Friend Class AnimateProp
 
         If toBone Then
 
-            'aProp.AttachTo(pEntity, eBone.GetRelativeOffsetPosition(pOffset), pRotation)
-            'aProp.AttachTo(eBone, pOffset, pRotation)
-
-            Native.Function.Call(Native.Hash.ATTACH_ENTITY_TO_ENTITY, aProp.Handle, pEntity.Handle, eBone.Index, pOffset.X, pOffset.Y, pOffset.Z, pRotation.X, pRotation.Y, pRotation.Z, False, False, False, False, 2, True)
+            Native.Function.Call(Native.Hash.ATTACH_ENTITY_TO_ENTITY, aProp.Handle, pEntity.Handle, eBone.Index, pOffset.X, pOffset.Y, pOffset.Z, pRotation.X, pRotation.Y, pRotation.Z, False, False, True, False, 2, True)
         Else
 
-            aProp.AttachTo(pEntity, pOffset, pRotation)
+            Native.Function.Call(Native.Hash.ATTACH_ENTITY_TO_ENTITY, aProp.Handle, pEntity.Handle, 0, pOffset.X, pOffset.Y, pOffset.Z, pRotation.X, pRotation.Y, pRotation.Z, False, False, True, False, 2, True)
         End If
     End Sub
 

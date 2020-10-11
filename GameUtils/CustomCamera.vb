@@ -24,8 +24,8 @@ Public Class CustomCamera
 
             _Camera = World.CreateCamera(Entity.Position, Entity.Rotation, FieldOfView)
 
-            Camera.AttachTo(Entity, PositionOffset)
-            Camera.PointAt(Entity, PointAtOffset)
+            Camera.AttachTo(Entity, PositionOffset) '.GetSingleOffset(Coordinate.Y, -4.15))
+            Camera.PointAt(Entity, PointAtOffset) '.GetSingleOffset(Coordinate.Y, -4.15))
         End If
 
         If IsNothing(OldCamera) OrElse IsNothing(OldCamera.Camera) OrElse OldCamera.Camera.Exists = False Then
