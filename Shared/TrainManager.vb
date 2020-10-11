@@ -35,6 +35,11 @@ Public Module TrainManager
 
         For Each t In RogersSierraToRemove
 
+            If t.ColDeLorean = veh Then
+
+                Return t
+            End If
+
             If t = veh Then
 
                 Return t
@@ -42,6 +47,11 @@ Public Module TrainManager
         Next
 
         For Each t In RogersSierraList
+
+            If t.ColDeLorean = veh Then
+
+                Return t
+            End If
 
             If t = veh Then
 

@@ -44,11 +44,21 @@ Friend Class Main
 
         World.GetAllVehicles(TrainModels.RogersSierraColModel).ToList.ForEach(Sub(x)
 
-                                                                             If IsNothing(GetRogersSierraFromVehicle(x)) Then
+                                                                                  Try
+                                                                                      If x.GetTrainCarriage(1).Model <> TrainModels.RogersSierraColModel Then
 
-                                                                                 RogersSierraList.Add(New RogersSierra(x))
-                                                                             End If
-                                                                         End Sub)
+                                                                                          Exit Sub
+                                                                                      End If
+                                                                                  Catch ex As Exception
+
+                                                                                      Exit Sub
+                                                                                  End Try
+
+                                                                                  If IsNothing(GetRogersSierraFromVehicle(x)) Then
+
+                                                                                      RogersSierraList.Add(New RogersSierra(x))
+                                                                                  End If
+                                                                              End Sub)
 
         If RogersSierraToRemove.Count > 0 Then
 

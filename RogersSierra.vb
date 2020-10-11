@@ -915,15 +915,9 @@ Public Class RogersSierra
                 VisibleLocomotive.AttachedBlip.Delete()
             End If
 
-            If Game.IsControlJustPressed(Control.VehicleExit) AndAlso IsVisible = False Then
+            If Game.IsControlJustPressed(Control.VehicleExit) AndAlso IsVisible AndAlso Locomotive.Speed > 0 Then
 
-                If Locomotive.SpeedMPH >= 10 Then
-
-                    Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, PlayerPed, Locomotive, 4160)
-                Else
-
-                    Native.Function.Call(Native.Hash.TASK_LEAVE_VEHICLE, PlayerPed, Locomotive, 16)
-                End If
+                PlayerPed.Task.LeaveVehicle()
             End If
 
             If isOnTrainMission = False And ForceHandbrake = False Then
@@ -966,6 +960,7 @@ Public Class RogersSierra
             VisibleLocomotive.AddBlip()
 
             VisibleLocomotive.AttachedBlip.Sprite = 120
+            VisibleLocomotive.AttachedBlip.Name = "Rogers Sierra No. 3"
         End If
 
         If PlayerPed.IsInVehicle(Locomotive) = False OrElse (Game.IsControlPressed(Control.VehicleAccelerate) = False AndAlso Game.IsControlPressed(Control.VehicleBrake) = False) Then
@@ -1019,7 +1014,7 @@ Public Class RogersSierra
 
         If LocomotiveSpeed > 0 Then
 
-            Dim maxSpeed As Integer = If(isVehicleAttached, 90, 90)
+            Dim maxSpeed As Integer = If(isVehicleAttached, 90, 51)
 
             If MsToMph(LocomotiveSpeed) > maxSpeed Then
 
