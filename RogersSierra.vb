@@ -6,7 +6,7 @@ Imports KlangRageAudioLibrary
 
 Public Class RogersSierra
 
-    Private AudioEngine As New AudioEngine()
+    Public AudioEngine As New AudioEngine()
 
     Public ReadOnly Property ID As Integer
 
@@ -31,16 +31,7 @@ Public Class RogersSierra
 
     Public ReadOnly Property isExploded As Boolean
 
-    ''' <summary>
-    ''' Points to the vehicle, if it is attached.
-    ''' </summary>
-    Public AttachedVehicle As Vehicle
-
-    ''' <summary>
-    ''' If true, there is a vehicle attached on the front.
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property isVehicleAttached As Boolean = AttachedVehicle <> Nothing
+    Public Property UnlockSpeed As Boolean
 
     ''' <summary>
     ''' If true, the train is in Rocket mode.
@@ -69,6 +60,15 @@ Public Class RogersSierra
     Public Property isCruiseControlOn As Boolean = False
 
     Public ReadOnly Property Deleted As Boolean
+
+    Public Property WheelsOnPilot As Boolean
+        Get
+            Return VisibleLocomotive.Mods(VehicleModType.Aerials).Index = 0
+        End Get
+        Set(value As Boolean)
+            VisibleLocomotive.Mods(VehicleModType.Aerials).Index = If(value, 0, 1)
+        End Set
+    End Property
 
     Public Property FunnelSmoke As SmokeColor = SmokeColor.Default
 
@@ -143,7 +143,7 @@ Public Class RogersSierra
                 ColDeLorean = mTrain
                 Locomotive = ColDeLorean.GetTrainCarriage(1)
 
-                'ColDeLorean.IsVisible = False
+                ColDeLorean.IsVisible = False
                 ColDeLorean.IsCollisionEnabled = False
 
                 Tender = ColDeLorean.GetTrainCarriage(2)
@@ -179,10 +179,12 @@ Public Class RogersSierra
         VisibleLocomotive = World.CreateVehicle(TrainModels.RogersSierraModel, Locomotive.Position)
         VisibleLocomotive.IsCollisionEnabled = False
         VisibleLocomotive.AttachTo(Locomotive)
-        VisibleLocomotive.ToggleExtra(1, False)
+        VisibleLocomotive.Mods.InstallModKit()
 
         VisibleLocomotive.Mods.PrimaryColor = VehicleColor.MetallicShadowSilver
         VisibleLocomotive.Mods.SecondaryColor = VehicleColor.MetallicAnthraciteGray
+
+        WheelsOnPilot = False
 
         PistonRelativePosY = Locomotive.Bones.Item(TrainBones.sPistons).RelativePosition.Y
 
@@ -1014,7 +1016,7 @@ Public Class RogersSierra
 
         If LocomotiveSpeed > 0 Then
 
-            Dim maxSpeed As Integer = If(isVehicleAttached, 90, 51)
+            Dim maxSpeed As Integer = If(UnlockSpeed, 90, 51)
 
             If MsToMph(LocomotiveSpeed) > maxSpeed Then
 

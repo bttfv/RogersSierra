@@ -42,23 +42,23 @@ Friend Class Main
 
         Commons.MenuManager.Process()
 
-        World.GetAllVehicles(TrainModels.RogersSierraColModel).ToList.ForEach(Sub(x)
+        World.GetAllVehicles(TrainModels.DMC12ColModel).ToList.ForEach(Sub(x)
 
-                                                                                  Try
-                                                                                      If x.GetTrainCarriage(1).Model <> TrainModels.RogersSierraColModel Then
+                                                                           Try
+                                                                               If x.GetTrainCarriage(1).Model <> TrainModels.RogersSierraColModel Then
 
-                                                                                          Exit Sub
-                                                                                      End If
-                                                                                  Catch ex As Exception
+                                                                                   Exit Sub
+                                                                               End If
+                                                                           Catch ex As Exception
 
-                                                                                      Exit Sub
-                                                                                  End Try
+                                                                               Exit Sub
+                                                                           End Try
 
-                                                                                  If IsNothing(GetRogersSierraFromVehicle(x)) Then
+                                                                           If IsNothing(GetRogersSierraFromVehicle(x)) Then
 
-                                                                                      RogersSierraList.Add(New RogersSierra(x))
-                                                                                  End If
-                                                                              End Sub)
+                                                                               RogersSierraList.Add(New RogersSierra(x))
+                                                                           End If
+                                                                       End Sub)
 
         If RogersSierraToRemove.Count > 0 Then
 
