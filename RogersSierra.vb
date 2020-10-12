@@ -259,6 +259,7 @@ Public Class RogersSierra
         aAllProps.Props.Add(sLight)
 
         sCabCols = New AnimateProp(TrainModels.sCabCols, Locomotive, Vector3.Zero, Vector3.Zero)
+        sCabCols.Visible = False
         aAllProps.Props.Add(sCabCols)
 
         'With aBrakePads
@@ -443,6 +444,8 @@ Public Class RogersSierra
         pTrainExpl.Create(Locomotive, Vector3.Zero)
 
         pTrainExpl.Create(Locomotive, Vector3.Zero, New Vector3(0, 0, 180))
+
+        aAllProps.ScatterProps(25)
 
         VisibleLocomotive.Explode()
 

@@ -27,6 +27,13 @@
                       End Sub)
     End Sub
 
+    Public Sub ScatterProps(Optional ForceMultiplier As Single = 1)
+
+        Props.ForEach(Sub(x)
+                          x.ScatterProp(ForceMultiplier)
+                      End Sub)
+    End Sub
+
     Public Sub Play()
 
         Props.ForEach(Sub(x)

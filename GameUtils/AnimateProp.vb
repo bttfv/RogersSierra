@@ -1,4 +1,6 @@
 ﻿Imports GTA
+Imports GTA.Math
+
 Friend Class AnimateProp
 
     Private aProp As Prop
@@ -76,11 +78,18 @@ Friend Class AnimateProp
 
     Public Sub Detach()
 
-        Native.Function.Call(Native.Hash.DETACH_ENTITY, Prop, False, True)
+        aProp.Detach()
 
-        Native.Function.Call(Native.Hash.SET_ENTITY_COLLISION, Prop, True, False)
+        aProp.IsPositionFrozen = False
 
         isDetached = True
+    End Sub
+
+    Public Sub ScatterProp(Optional ForceMultiplier As Single = 1)
+
+        Detach()
+
+        aProp.ApplyForce(Vector3.RandomXYZ * ForceMultiplier, Vector3.RandomXYZ * ForceMultiplier)
     End Sub
 
     Public Sub TransferTo(newEntity As Entity, boneName As String)
