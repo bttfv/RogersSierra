@@ -31,6 +31,8 @@ Public Class RogersSierra
 
     Public ReadOnly Property isExploded As Boolean
 
+    Public Property AttachedVehicle As Vehicle
+
     Public Property UnlockSpeed As Boolean
 
     ''' <summary>
