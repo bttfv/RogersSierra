@@ -33,6 +33,8 @@ Public Class RogersSierra
 
     Public Property AttachedVehicle As Vehicle
 
+    Public Property RejectAttach As Boolean
+
     Public Property UnlockSpeed As Boolean
 
     ''' <summary>
