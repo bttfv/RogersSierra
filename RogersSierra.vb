@@ -98,11 +98,12 @@ Public Class RogersSierra
     Private aValvesPist As AnimateProp
     Private aBell As AnimateProp
     Private sLight As AnimateProp
+    Private sCabCols As AnimateProp
 
-    Private aBrakePads As New AnimatePropHandler
-    Private aBrakeBars As AnimateProp
-    Private aBrakeLevers As AnimateProp
-    Private aBrakePistons As AnimateProp
+    'Private aBrakePads As New AnimatePropHandler
+    'Private aBrakeBars As AnimateProp
+    'Private aBrakeLevers As AnimateProp
+    'Private aBrakePistons As AnimateProp
 
     Private BellRope As Rope
     Private BellAnimation As AnimationStep
@@ -252,6 +253,9 @@ Public Class RogersSierra
 
         sLight = New AnimateProp(TrainModels.sLight, Locomotive, Vector3.Zero, Vector3.Zero)
         aAllProps.Props.Add(sLight)
+
+        sCabCols = New AnimateProp(TrainModels.sCabCols, Locomotive, Vector3.Zero, Vector3.Zero)
+        aAllProps.Props.Add(sCabCols)
 
         'With aBrakePads
 

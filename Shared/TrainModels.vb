@@ -8,37 +8,37 @@ Friend Class TrainModels
     Public Shared TenderModel As Model
 
 #Region "Sierra Wheels"
-    Public Shared sWheelFront As Model '= LoadAndRequestModel("rog_front_wheel")
-
-    Public Shared sWheelDrive As Model '= LoadAndRequestModel("rog_drive_wheel")
+    Public Shared sWheelFront As Model
+    Public Shared sWheelDrive As Model
 #End Region
 
 #Region "Tender Wheels"
-    Public Shared tWheel As Model '= LoadAndRequestModel("rog_tender_wheel")
+    Public Shared tWheel As Model
 #End Region
 
 #Region "Wheels Props"
-    Public Shared sRods As Model '= LoadAndRequestModel("rog_rods")
-    Public Shared sPRods As Model '= LoadAndRequestModel("rog_prods")
-    Public Shared sPistons As Model '= LoadAndRequestModel("rog_pistons")
-    Public Shared sLevValves As Model '= LoadAndRequestModel("rog_lev_valves")
-    Public Shared sValves As Model '= LoadAndRequestModel("rog_valves")
-    Public Shared sValvesPist As Model '= LoadAndRequestModel("rog_valves_pist")
+    Public Shared sRods As Model
+    Public Shared sPRods As Model
+    Public Shared sPistons As Model
+    Public Shared sLevValves As Model
+    Public Shared sValves As Model
+    Public Shared sValvesPist As Model
 #End Region
 
 #Region "Other Props"
-    Public Shared sBell As Model '= LoadAndRequestModel("bell")
-    Public Shared sLight As Model '= LoadAndRequestModel("sierra_light")
+    Public Shared sBell As Model
+    Public Shared sLight As Model
+    Public Shared sCabCols As Model
 #End Region
 
-#Region "Brake Props"
-    Public Shared sBrakePadsFront As Model '= LoadAndRequestModel("brakepads_f")
-    Public Shared sBrakePadsMiddle As Model '= LoadAndRequestModel("brakepads_m")
-    Public Shared sBrakePadsRear As Model '= LoadAndRequestModel("brakepads_r")
-    Public Shared sBrakeBars As Model '= LoadAndRequestModel("brakebars")
-    Public Shared sBrakeLevers As Model '= LoadAndRequestModel("brakelevers")
-    Public Shared sBrakePistons As Model '= LoadAndRequestModel("brakepistons")
-#End Region
+    '#Region "Brake Props"
+    '    Public Shared sBrakePadsFront As Model
+    '    Public Shared sBrakePadsMiddle As Model
+    '    Public Shared sBrakePadsRear As Model
+    '    Public Shared sBrakeBars As Model
+    '    Public Shared sBrakeLevers As Model
+    '    Public Shared sBrakePistons As Model
+    '#End Region
 
     Public Shared Sub LoadModels()
 
@@ -62,6 +62,7 @@ Friend Class TrainModels
 
         sBell = LoadAndRequestModel("bell")
         sLight = LoadAndRequestModel("sierra_light")
+        sCabCols = LoadAndRequestModel("rog_cab_col")
 
         'sBrakePadsFront = LoadAndRequestModel("brakepads_f")
         'sBrakePadsMiddle = LoadAndRequestModel("brakepads_m")
