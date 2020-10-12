@@ -88,8 +88,25 @@ Friend Class Main
                                          End If
                                      End If
 
+                                     Dim tmpDist = PlayerPed.Position.DistanceToSquared(x.Locomotive.Position)
+
+                                     If ClosestRogersSierra Is x Then
+
+                                         ClosestRogersSierraDist = tmpDist
+                                     ElseIf tmpDist < ClosestRogersSierraDist OrElse ClosestRogersSierraDist = -1 Then
+
+                                         ClosestRogersSierraDist = tmpDist
+                                         ClosestRogersSierra = x
+                                     End If
+
                                      x.Tick()
                                  End Sub)
+
+        If RogersSierraList.Count = 0 AndAlso ClosestRogersSierraDist > -1 Then
+
+            ClosestRogersSierraDist = -1
+            ClosestRogersSierra = Nothing
+        End If
 
         If Not IsNothing(CurrentRogersSierra) AndAlso Not PlayerPed.IsInVehicle Then
 

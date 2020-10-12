@@ -1,9 +1,38 @@
 ﻿Imports GTA
 Public Module TrainManager
 
-    Public CurrentRogersSierra As RogersSierra
+    Private _CurrentRogersSierra As RogersSierra
+    Public Property CurrentRogersSierra As RogersSierra
+        Get
+            Return _CurrentRogersSierra
+        End Get
+        Friend Set(value As RogersSierra)
+            _CurrentRogersSierra = value
+        End Set
+    End Property
 
-    Public RogersSierraList As New List(Of RogersSierra)
+    Private _ClosestRogersSierra As RogersSierra
+    Public Property ClosestRogersSierra As RogersSierra
+        Get
+            Return _ClosestRogersSierra
+        End Get
+        Friend Set(value As RogersSierra)
+            _ClosestRogersSierra = value
+        End Set
+    End Property
+
+    Private _ClosestRogersSierraDist As Single = -1
+    Public Property ClosestRogersSierraDist As Single
+        Get
+            Return _ClosestRogersSierraDist
+        End Get
+        Friend Set(value As Single)
+            _ClosestRogersSierraDist = value
+        End Set
+    End Property
+
+
+    Public ReadOnly RogersSierraList As New List(Of RogersSierra)
 
     Friend RogersSierraToRemove As New List(Of RogersSierra)
 

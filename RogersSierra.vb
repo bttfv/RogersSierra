@@ -1111,14 +1111,9 @@ Public Class RogersSierra
         Return t.Locomotive
     End Operator
 
-    Public Shared Operator =(ByVal t As RogersSierra, ByVal v As Vehicle) As Boolean
+    Public Shared Widening Operator CType(ByVal t As RogersSierra) As Entity
 
-        Return t.Locomotive = v
-    End Operator
-
-    Public Shared Operator <>(ByVal t As RogersSierra, ByVal v As Vehicle) As Boolean
-
-        Return t.Locomotive <> v
+        Return t.Locomotive
     End Operator
 #End Region
 End Class
