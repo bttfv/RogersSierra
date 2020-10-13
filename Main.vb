@@ -22,6 +22,11 @@ Friend Class Main
 
             CurrentRogersSierra.KeyDown(e.KeyCode)
         End If
+
+        If e.KeyCode = Keys.N Then
+
+            ClosestRogersSierra.PrestoLogExplosion(SmokeColor.Red)
+        End If
     End Sub
 
     Private Sub Main_Tick(sender As Object, e As EventArgs) Handles Me.Tick

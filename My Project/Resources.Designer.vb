@@ -126,6 +126,15 @@ Namespace My.Resources
         '''<summary>
         '''  Cerca una risorsa localizzata di tipo System.IO.UnmanagedMemoryStream simile a System.IO.MemoryStream.
         '''</summary>
+        Friend ReadOnly Property funnelExplosion() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("funnelExplosion", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Cerca una risorsa localizzata di tipo System.IO.UnmanagedMemoryStream simile a System.IO.MemoryStream.
+        '''</summary>
         Friend ReadOnly Property PistonSteamVent() As System.IO.UnmanagedMemoryStream
             Get
                 Return ResourceManager.GetStream("PistonSteamVent", resourceCulture)

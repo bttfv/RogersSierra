@@ -128,6 +128,7 @@ Public Class RogersSierra
     Private sBellSound As AudioPlayer
     Private sTrainMoving As New List(Of AudioPlayer)
     Private sTrainMovingIndex As Integer = -1
+    Private sPrestoLogExpl As AudioPlayer
 
     Private pFireboxFire As New PTFX(TrainParticles.sFireboxFire)
     Private pFireboxFireSize As Single = 0.3
@@ -137,6 +138,7 @@ Public Class RogersSierra
     Private FunnelInterval As Integer
 
     Private pTrainExpl As New PTFX(TrainParticles.sTrainExpl)
+    Private pPrestoLogExpl As New PTFX(TrainParticles.sPrestoLogExpl)
 
     Private PistonOldPos As Single
     Private PistonGoingForward As Boolean = False
@@ -255,7 +257,7 @@ Public Class RogersSierra
         aAllProps.Props.Add(aValvesPist)
 
         aBell = New AnimateProp(TrainModels.sBell, Locomotive, TrainBones.sBell, Vector3.Zero, Vector3.Zero, True)
-        aBell.setRotationSettings(Coordinate.X, True, True, -70, 70, 2, False, 1, False, 1)
+        aBell.setRotationSettings(Coordinate.X, True, True, -70, 70, 3.5, False, 1, False, 1)
         BellAnimation = AnimationStep.Off
         aAllProps.Props.Add(aBell)
 
@@ -266,7 +268,10 @@ Public Class RogersSierra
         sCabCols.Visible = False
         aAllProps.Props.Add(sCabCols)
 
-        sFireboxDoor = New AnimateProp(TrainModels.sFireboxDoor, Locomotive, TrainBones.sFireboxDoor, Vector3.Zero, Vector3.Zero)
+        sFireboxDoor = New AnimateProp(TrainModels.sFireboxDoor, Locomotive, TrainBones.sFireboxDoor, Vector3.Zero, Vector3.Zero, True)
+        sFireboxDoor.setRotationSettings(Coordinate.Z, True, True, 10, 80, 7, False, 1, True, 1)
+        sFireboxDoor.Play()
+        sFireboxDoor.RotationUpdate(Coordinate.Z) = False
         aAllProps.Props.Add(sFireboxDoor)
 
         'With aBrakePads
@@ -374,6 +379,9 @@ Public Class RogersSierra
 
         sBellSound = AudioEngine.Create("bell" & _ID, My.Resources.Bell, Presets.Exterior)
 
+        sPrestoLogExpl = AudioEngine.Create("prestologexpl" & _ID, My.Resources.funnelExplosion, Presets.Exterior)
+        sPrestoLogExpl.SourceBone = TrainBones.sFunnel
+
         sTrainMoving.Clear()
 
         With sTrainMoving
@@ -459,6 +467,21 @@ Public Class RogersSierra
         VisibleLocomotive.Explode()
 
         Derail()
+    End Sub
+
+    Public Sub PrestoLogExplosion(Smoke As SmokeColor)
+
+        pPrestoLogExpl.CreateOnEntityBone(Locomotive, TrainBones.sFunnel, Vector3.Zero)
+        sPrestoLogExpl.Play()
+
+        FunnelSmoke = Smoke
+
+        If Smoke = SmokeColor.Red Then
+
+            FunnelFire = True
+            FireboxFireSize = 1
+            sFireboxDoor.RotationUpdate(Coordinate.Z) = True
+        End If
     End Sub
 
     Public Function GetBonePosition(boneName As String) As Vector3
@@ -730,6 +753,8 @@ Public Class RogersSierra
         aValves.Position(Coordinate.Y) = aValvesPist.Position(Coordinate.Y)
         aValves.Position(Coordinate.Z) = (TrainProperties.maxValvesPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X
         aValves.Rotation(Coordinate.X) = (TrainProperties.minValesRot / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X
+
+        sFireboxDoor.Play()
     End Sub
 
     Private Sub AnimationTick()
