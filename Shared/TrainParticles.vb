@@ -12,4 +12,5 @@
 
     Public Shared sTrainExpl() As String = {"des_scaffolding", "ent_ray_scaf_explosion"}
 
+    Public Shared sFireboxFire() As String = {"core", "fire_wrecked_plane_cockpit"}
 End Class

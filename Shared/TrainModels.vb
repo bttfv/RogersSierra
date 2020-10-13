@@ -29,6 +29,7 @@ Friend Class TrainModels
     Public Shared sBell As Model
     Public Shared sLight As Model
     Public Shared sCabCols As Model
+    Public Shared sFireboxDoor As Model
 #End Region
 
     '#Region "Brake Props"
@@ -63,6 +64,7 @@ Friend Class TrainModels
         sBell = LoadAndRequestModel("bell")
         sLight = LoadAndRequestModel("sierra_light")
         sCabCols = LoadAndRequestModel("rog_cab_col")
+        sFireboxDoor = LoadAndRequestModel("rog_furnace_door")
 
         'sBrakePadsFront = LoadAndRequestModel("brakepads_f")
         'sBrakePadsMiddle = LoadAndRequestModel("brakepads_m")

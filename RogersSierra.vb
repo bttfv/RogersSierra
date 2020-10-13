@@ -103,6 +103,7 @@ Public Class RogersSierra
     Private aBell As AnimateProp
     Private sLight As AnimateProp
     Private sCabCols As AnimateProp
+    Private sFireboxDoor As AnimateProp
 
     'Private aBrakePads As New AnimatePropHandler
     'Private aBrakeBars As AnimateProp
@@ -127,6 +128,9 @@ Public Class RogersSierra
     Private sBellSound As AudioPlayer
     Private sTrainMoving As New List(Of AudioPlayer)
     Private sTrainMovingIndex As Integer = -1
+
+    Private pFireboxFire As New PTFX(TrainParticles.sFireboxFire)
+    Private pFireboxFireSize As Single = 0.3
 
     Private pFunnelSmoke As New PTFX(TrainParticles.sColoredSmoke)
     Private pFunnelFire As New PTFX(TrainParticles.sFunnelFire)
@@ -262,6 +266,9 @@ Public Class RogersSierra
         sCabCols.Visible = False
         aAllProps.Props.Add(sCabCols)
 
+        sFireboxDoor = New AnimateProp(TrainModels.sFireboxDoor, Locomotive, TrainBones.sFireboxDoor, Vector3.Zero, Vector3.Zero)
+        aAllProps.Props.Add(sFireboxDoor)
+
         'With aBrakePads
 
         '    .Props.Add(New AnimateProp(Models.sBrakePadsFront, Locomotive, Bones.sBrakePadsFront, Vector3.Zero, Vector3.Zero))
@@ -283,6 +290,8 @@ Public Class RogersSierra
         BellRope.ActivatePhysics()
 
         PistonSteam = True
+
+        FireboxFire = True
 
         Locomotive.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
         Locomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
@@ -585,6 +594,37 @@ Public Class RogersSierra
             Else
 
                 pFunnelFire.Stop()
+            End If
+        End Set
+    End Property
+
+    Public Property FireboxFireSize As Single
+        Get
+            Return pFireboxFireSize
+        End Get
+        Set(value As Single)
+            pFireboxFireSize = value
+
+            If FireboxFire Then
+
+                FireboxFire = False
+                FireboxFire = True
+            End If
+        End Set
+    End Property
+
+    Public Property FireboxFire As Boolean
+        Get
+            Return pFireboxFire.Handle <> 0
+        End Get
+        Set(value As Boolean)
+            If value Then
+
+                pFireboxFire.CreateLoopedOnEntityBone(Locomotive, TrainBones.sFireboxFire, New Vector3(0, 0, 0), New Vector3(0, 0, 0), pFireboxFireSize)
+                pFunnelFire.setLoopedEvolution("fade", 1)
+            Else
+
+                pFireboxFire.Stop()
             End If
         End Set
     End Property

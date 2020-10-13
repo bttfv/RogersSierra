@@ -32,12 +32,14 @@
 #End Region
 
 #Region "Other Props"
+    Public Const sFireboxDoor As String = "furnace_door"
     Public Const sBell As String = "bell_bone"
     Public Const sBellRopeStart As String = "rope_start"
     Public Const sBellRopeEnd As String = "rope_end"
 #End Region
 
 #Region "Particles Bones"
+    Public Const sFireboxFire As String = "furnace_fire"
     Public Const sWhistle As String = "whistle_dummy"
     Public Const sFunnel As String = "funnel_dummy"
     Public Shared ReadOnly sSteam() As String = {"steam1_dummy", "steam2_dummy", "steam3_dummy", "steam4_dummy"}
