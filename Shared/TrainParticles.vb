@@ -15,4 +15,6 @@
     Public Shared ReadOnly sFireboxFire() As String = {"core", "fire_wrecked_plane_cockpit"}
 
     Public Shared ReadOnly sPrestoLogExpl() As String = {"scr_josh3", "scr_josh3_explosion"}
+
+    Public Shared ReadOnly sWaterDrop() As String = {"scr_apartment_mp", "scr_apa_jacuzzi_drips"}
 End Class

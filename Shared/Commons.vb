@@ -107,6 +107,11 @@ Public Module Commons
         Return ret
     End Function
 
+    Friend Function IsNight() As Boolean
+
+        Return World.CurrentTimeOfDay.Hours >= 20 OrElse World.CurrentTimeOfDay.Hours <= 5
+    End Function
+
     Friend Function CreateMissionTrain(var As Integer, pos As Math.Vector3, direction As Boolean) As Vehicle
 
         Return Native.Function.Call(Of Vehicle)(Native.Hash.CREATE_MISSION_TRAIN, var, pos.X, pos.Y, pos.Z, direction)

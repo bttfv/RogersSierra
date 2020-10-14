@@ -83,7 +83,7 @@ Friend Class Main
 
                                              If x.IsExploded = False AndAlso x.GetBoneDistanceSquared(TrainBones.sDriverSeat, PlayerPed) < 1.1 Then
 
-                                                 PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver,,, EnterVehicleFlags.WarpIn)
+                                                 PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver)
                                              End If
                                          End If
                                      End If

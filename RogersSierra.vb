@@ -73,7 +73,6 @@ Public Class RogersSierra
             VisibleLocomotive.Mods(VehicleModType.Aerials).Index = If(value, 0, 1)
         End Set
     End Property
-
     Public Property FunnelSmoke As SmokeColor = SmokeColor.Default
 
     Private CustomCamera As New CustomerCameraManager
@@ -118,7 +117,9 @@ Public Class RogersSierra
 
     Private pWhistle As New PTFX(TrainParticles.sWhistle)
     Private pSteam As New List(Of PTFX)
+    Private pWaterDrops As New List(Of PTFX)
     Private pSteamVent As New List(Of PTFX)
+    Private pSteamRunning As New List(Of PTFX)
 
     Private sTrainStart As AudioPlayer
     Private sTrainMove1 As AudioPlayer
@@ -306,6 +307,7 @@ Public Class RogersSierra
         'Cab
         CustomLights.Add("boilerlight", "boilerlightdir", Color.White, 34, 5, 0, 45, 100)
         CabLight = CustomLights.Lights.Last
+        IsLightOn = IsNight()
 
         'TowardsRail
         CustomCamera.Add(Locomotive, New Vector3(0, 6, 1), New Vector3(0, 16, 1), 75)
@@ -666,6 +668,12 @@ Public Class RogersSierra
                         .Add(New PTFX(TrainParticles.sSteam))
                         .Last.CreateLoopedOnEntityBone(Locomotive, TrainBones.sSteam(i), Vector3.Zero, New Vector3(90, 0, 0))
                     End With
+
+                    With pWaterDrops
+
+                        .Add(New PTFX(TrainParticles.sWaterDrop))
+                        .Last.CreateLoopedOnEntityBone(Locomotive, TrainBones.sSteam(i), Vector3.Zero, New Vector3(0, 0, 0), 3)
+                    End With
                 Next
             Else
 
@@ -673,6 +681,10 @@ Public Class RogersSierra
                                    x.Stop()
                                End Sub)
                 pSteam.Clear()
+                pWaterDrops.ForEach(Sub(x)
+                                        x.Stop()
+                                    End Sub)
+                pWaterDrops.Clear()
                 pWhistle.Stop()
             End If
         End Set
@@ -709,6 +721,31 @@ Public Class RogersSierra
                                    End Sub)
                 pSteamVent.Clear()
                 sTrainStart.Stop()
+            End If
+        End Set
+    End Property
+
+    Public Property PistonSteamRunning As Boolean
+        Get
+            Return pSteamRunning.Count > 0
+        End Get
+        Set(value As Boolean)
+            If value Then
+
+                For i = 0 To 1
+
+                    With pSteamRunning
+
+                        .Add(New PTFX(TrainParticles.sSteam))
+                        .Last.CreateLoopedOnEntityBone(Locomotive, TrainBones.sSteamRunning(i), New Vector3(If(i = 0, 0.5, -0.5), -0.5, -0.5), New Vector3(0, 0, 0), 3)
+                    End With
+                Next
+            Else
+
+                pSteamRunning.ForEach(Sub(x)
+                                          x.Stop()
+                                      End Sub)
+                pSteamRunning.Clear()
             End If
         End Set
     End Property
@@ -761,7 +798,7 @@ Public Class RogersSierra
 
         If VisibleLocomotive.Position.DistanceToSquared(Game.Player.Character.Position) > 100 * 100 AndAlso Locomotive.Speed = 0 Then
 
-            CheckPropsExists()
+            aAllProps.CheckExists()
         Else
 
             AnimationProcess()
@@ -778,7 +815,7 @@ Public Class RogersSierra
 
             If FunnelSmoke <> SmokeColor.Off Then
 
-                pFunnelSmoke.CreateOnEntityBone(Locomotive, TrainBones.sFunnel, New Math.Vector3(0, -1.6, -0.5), New Math.Vector3(90, 0, 0), 1)
+                pFunnelSmoke.CreateOnEntityBone(Locomotive, TrainBones.sFunnel, New Vector3(0, -1.6, 0), New Math.Vector3(90, 0, 0), 1)
 
                 Select Case FunnelSmoke
                     Case SmokeColor.Default
@@ -811,8 +848,16 @@ Public Class RogersSierra
 
                 PistonSteam = False
                 PistonSteamVent = True
+            ElseIf Not PistonSteamVent AndAlso Not PistonSteamRunning Then
+
+                PistonSteamRunning = True
             End If
         ElseIf PistonSteamVent = False Then
+
+            If PistonSteamRunning Then
+
+                PistonSteamRunning = False
+            End If
 
             If PistonSteam = False AndAlso IsExploded = False Then
 
@@ -939,9 +984,7 @@ Public Class RogersSierra
 
             If aPistons.Position(Coordinate.Y) > PistonOldPos AndAlso PistonGoingForward = False Then
 
-                Dim tmp = Val(Game.GameTime.ToString.Last) 'RndGenerator.Next(1, 10)
-
-                If tmp <= 4 Then
+                If Val(Game.GameTime.ToString.Last) <= 4 Then
 
                     sTrainMove1.Play()
                 Else
@@ -954,9 +997,7 @@ Public Class RogersSierra
 
             If aPistons.Position(Coordinate.Y) < PistonOldPos AndAlso PistonGoingForward Then
 
-                Dim tmp = Val(Game.GameTime.ToString.Last) 'RndGenerator.Next(1, 10)
-
-                If tmp <= 4 Then
+                If Val(Game.GameTime.ToString.Last) <= 4 Then
 
                     sTrainMove1.Play()
                 Else
@@ -993,7 +1034,7 @@ Public Class RogersSierra
                 VisibleLocomotive.AttachedBlip.Delete()
             End If
 
-            If Game.IsControlJustPressed(Control.VehicleExit) AndAlso IsVisible AndAlso Locomotive.Speed > 0 Then
+            If Game.IsControlJustPressed(Control.VehicleExit) AndAlso IsVisible Then
 
                 PlayerPed.Task.LeaveVehicle()
             End If
@@ -1157,16 +1198,6 @@ Public Class RogersSierra
 
             Tender.Wash()
         End If
-    End Sub
-
-    Private Sub CheckPropsExists()
-
-        aAllProps.CheckExists()
-
-        'aBrakePads.CheckExists()
-        'aBrakeBars.CheckExists()
-        'aBrakeLevers.CheckExists()
-        'aBrakePistons.CheckExists()
     End Sub
 #End Region
 

@@ -43,6 +43,7 @@
     Public Const sWhistle As String = "whistle_dummy"
     Public Const sFunnel As String = "funnel_dummy"
     Public Shared ReadOnly sSteam() As String = {"steam1_dummy", "steam2_dummy", "steam3_dummy", "steam4_dummy"}
+    Public Shared ReadOnly sSteamRunning() As String = {"pizza_biscotti1", "pizza_biscotti2"}
 #End Region
 
 #Region "Lights Bones"
