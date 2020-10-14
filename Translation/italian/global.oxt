@@ -18,4 +18,5 @@
 	RogersSierra_Menu_SpawnMenu_NoTender_Description =  Se abilitato crea soltanto la locomotiva.
 	RogersSierra_Menu_SpawnMenu_WarpPlayer = Teletrasporta giocatore
 	RogersSierra_Menu_SpawnMenu_WarpPlayer_Description =  Se abilitato teletrasporta il giocatore dentro la locomotiva.
+	RogersSierra_Help_InstallWheelsOnPilot = Premere ~INPUT_CONTEXT~ per installare il supporto delle ruote e poter spingere una macchina con questo treno.
 }

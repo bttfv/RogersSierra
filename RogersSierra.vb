@@ -49,7 +49,7 @@ Partial Public Class RogersSierra
     ''' Gets or sets whether train should reject new attach to it.
     ''' </summary>
     ''' <returns><seealso cref="Boolean"/></returns>
-    Public Property RejectAttach As Boolean
+    Public Property RejectAttach As Boolean = True
     ''' <summary>
     ''' Gets or sets whether train should go full speed.
     ''' </summary>
@@ -341,6 +341,22 @@ Partial Public Class RogersSierra
 
             Tender.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
             Tender.DirtLevel = 0
+        End If
+
+        If Not PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot Then
+
+            Dim tmpPos = Locomotive.GetOffsetPosition(New Vector3(0, TrainModels.RogersSierraModel.Dimensions.frontTopRight.Y, 0.5))
+
+            If PlayerPed.Position.DistanceToSquared(tmpPos) < 1.5 * 1.5 Then
+
+                UI.Screen.ShowHelpTextThisFrame(Game.GetLocalizedString("RogersSierra_Help_InstallWheelsOnPilot"))
+
+                If Game.IsControlJustPressed(Control.Context) Then
+
+                    WheelsOnPilot = True
+                    RejectAttach = False
+                End If
+            End If
         End If
     End Sub
 

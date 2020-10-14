@@ -18,4 +18,5 @@
 	RogersSierra_Menu_SpawnMenu_NoTender_Description =  If enabled, spawns only the locomotive.
 	RogersSierra_Menu_SpawnMenu_WarpPlayer = Warp player inside
 	RogersSierra_Menu_SpawnMenu_WarpPlayer_Description =  If enabled, warps player inside the locomotive.
+	RogersSierra_Help_InstallWheelsOnPilot = Press ~INPUT_CONTEXT~ to install support for wheels in order to be able to push a car with this train.
 }
