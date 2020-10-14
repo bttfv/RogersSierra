@@ -81,17 +81,11 @@ Public Class Light
 
             dir = Vector3.Subtract(Entity.Bones(DirectionBone).Position, Entity.Bones(SourceBone).Position)
             dir.Normalize()
-            
         Else
 
             pos = Entity.GetOffsetPosition(New Vector3(PositionX, PositionY, PositionZ))
             dir = New Vector3(DirectionX, DirectionY, DirectionZ)
         End If
-
-        'If brightness = -1 Then
-
-        '    brightness = Me.Brightness
-        'End If
 
         [Function].Call(Hash._DRAW_SPOT_LIGHT_WITH_SHADOW,
                         pos.X, pos.Y, pos.Z, dir.X, dir.Y, dir.Z, Color.R, Color.G, Color.B,

@@ -22,11 +22,6 @@ Friend Class Main
 
             CurrentRogersSierra.KeyDown(e.KeyCode)
         End If
-
-        If e.KeyCode = Keys.N Then
-
-            ClosestRogersSierra.PrestoLogExplosion(SmokeColor.Red)
-        End If
     End Sub
 
     Private Sub Main_Tick(sender As Object, e As EventArgs) Handles Me.Tick
@@ -82,11 +77,11 @@ Friend Class Main
                                          Exit Sub
                                      End If
 
-                                     If PlayerPed.IsInVehicle() = False AndAlso x.isExploded = False Then
+                                     If PlayerPed.IsInVehicle() = False AndAlso x.IsExploded = False Then
 
                                          If Game.IsControlJustPressed(GTA.Control.Enter) Then
 
-                                             If x.isExploded = False AndAlso x.GetBoneDistanceSquared(TrainBones.sDriverSeat, PlayerPed) < 1.1 Then
+                                             If x.IsExploded = False AndAlso x.GetBoneDistanceSquared(TrainBones.sDriverSeat, PlayerPed) < 1.1 Then
 
                                                  PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver,,, EnterVehicleFlags.WarpIn)
                                              End If
@@ -115,7 +110,7 @@ Friend Class Main
 
         If Not IsNothing(CurrentRogersSierra) AndAlso Not PlayerPed.IsInVehicle Then
 
-            If CurrentRogersSierra.Camera <> TrainCamera.Off Then
+            If CurrentRogersSierra.Camera <> TrainCamera.Off AndAlso Not CurrentRogersSierra.IsOnTrainMission Then
 
                 CurrentRogersSierra.Camera = TrainCamera.Off
             End If

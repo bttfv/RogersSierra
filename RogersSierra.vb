@@ -29,7 +29,7 @@ Public Class RogersSierra
 
     Public ReadOnly Property Type As TrainType
 
-    Public ReadOnly Property isExploded As Boolean
+    Public ReadOnly Property IsExploded As Boolean
 
     Public Property AttachedVehicle As Vehicle
 
@@ -41,7 +41,7 @@ Public Class RogersSierra
     ''' If true, the train is in Rocket mode.
     ''' </summary>
     ''' <returns></returns>
-    Public Property isOnTrainMission As Boolean = False
+    Public Property IsOnTrainMission As Boolean = False
 
     ''' <summary>
     ''' Modifier for the train's acceleration.
@@ -61,7 +61,7 @@ Public Class RogersSierra
     ''' If true, the cruise control is enabled.
     ''' </summary>
     ''' <returns></returns>
-    Public Property isCruiseControlOn As Boolean = False
+    Public Property IsCruiseControlOn As Boolean = False
 
     Public ReadOnly Property Deleted As Boolean
 
@@ -453,7 +453,7 @@ Public Class RogersSierra
         BellRope.Delete()
 
         ForceHandbrake = True
-        _isExploded = True
+        _IsExploded = True
     End Sub
 
     Public Sub Explode()
@@ -814,7 +814,7 @@ Public Class RogersSierra
             End If
         ElseIf PistonSteamVent = False Then
 
-            If PistonSteam = False AndAlso isExploded = False Then
+            If PistonSteam = False AndAlso IsExploded = False Then
 
                 PistonSteam = True
             End If
@@ -998,13 +998,13 @@ Public Class RogersSierra
                 PlayerPed.Task.LeaveVehicle()
             End If
 
-            If isOnTrainMission = False And ForceHandbrake = False Then
+            If IsOnTrainMission = False And ForceHandbrake = False Then
 
                 If Game.IsControlJustPressed(Control.VehicleDuck) Then
 
-                    isCruiseControlOn = Not isCruiseControlOn
+                    IsCruiseControlOn = Not IsCruiseControlOn
 
-                    If isCruiseControlOn Then
+                    If IsCruiseControlOn Then
 
                         ShowSubtitle("Enabled cruise control")
                     Else
@@ -1043,7 +1043,7 @@ Public Class RogersSierra
 
         If PlayerPed.IsInVehicle(Locomotive) = False OrElse (Game.IsControlPressed(Control.VehicleAccelerate) = False AndAlso Game.IsControlPressed(Control.VehicleBrake) = False) Then
 
-            If isCruiseControlOn = False AndAlso isOnTrainMission = False Then
+            If IsCruiseControlOn = False AndAlso IsOnTrainMission = False Then
 
                 If LocomotiveSpeed > 0 Then
 
@@ -1074,7 +1074,7 @@ Public Class RogersSierra
                 If LocomotiveSpeed < 0 Then
 
                     LocomotiveSpeed = 0
-                    isCruiseControlOn = False
+                    IsCruiseControlOn = False
                     ForceHandbrake = False
                 End If
             ElseIf LocomotiveSpeed < 0 Then
@@ -1084,7 +1084,7 @@ Public Class RogersSierra
                 If LocomotiveSpeed > 0 Then
 
                     LocomotiveSpeed = 0
-                    isCruiseControlOn = False
+                    IsCruiseControlOn = False
                     ForceHandbrake = False
                 End If
             End If
@@ -1109,7 +1109,7 @@ Public Class RogersSierra
         Locomotive.setTrainSpeed(LocomotiveSpeed)
     End Sub
 
-    Friend Sub KeyDown(e As Windows.Forms.Keys)
+    Public Sub KeyDown(e As Windows.Forms.Keys)
 
         Select Case e
             Case Windows.Forms.Keys.L

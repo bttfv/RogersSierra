@@ -1,7 +1,7 @@
 ﻿Imports GTA
 Friend Class TrainModels
 
-    Public Shared DMC12Model As Model
+    'Public Shared DMC12Model As Model
     Public Shared DMC12ColModel As Model
     Public Shared RogersSierraModel As Model
     Public Shared RogersSierraColModel As Model
@@ -43,7 +43,7 @@ Friend Class TrainModels
 
     Public Shared Sub LoadModels()
 
-        DMC12Model = LoadAndRequestModel("dmc12")
+        'DMC12Model = LoadAndRequestModel("dmc12")
         DMC12ColModel = LoadAndRequestModel("dmc_debug")
         RogersSierraModel = LoadAndRequestModel("sierra")
         RogersSierraColModel = LoadAndRequestModel("sierra_debug")

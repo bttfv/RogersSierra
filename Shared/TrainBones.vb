@@ -45,13 +45,18 @@
     Public Shared ReadOnly sSteam() As String = {"steam1_dummy", "steam2_dummy", "steam3_dummy", "steam4_dummy"}
 #End Region
 
-#Region "Brake Bones"
-    Public Const sBrakePadsFront As String = "brakepads_f_bone"
-    Public Const sBrakePadsMiddle As String = "brakepads_m_bone"
-    Public Const sBrakePadsRear As String = "brakepads_r_bone"
-    Public Const sBrakeBars As String = "brakebars_bone"
-    Public Const sBrakeLevers As String = "brakelevers_bone"
-    Public Const sBrakePistons As String = "brakepistons_bone"
+#Region "Lights Bones"
+    Public Const sBoilerLight As String = "boilerlight"
+    Public Const sBoilerLightDir As String = "boilerlightdir"
 #End Region
+
+    '#Region "Brake Bones"
+    '    Public Const sBrakePadsFront As String = "brakepads_f_bone"
+    '    Public Const sBrakePadsMiddle As String = "brakepads_m_bone"
+    '    Public Const sBrakePadsRear As String = "brakepads_r_bone"
+    '    Public Const sBrakeBars As String = "brakebars_bone"
+    '    Public Const sBrakeLevers As String = "brakelevers_bone"
+    '    Public Const sBrakePistons As String = "brakepistons_bone"
+    '#End Region
 
 End Class
