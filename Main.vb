@@ -56,7 +56,7 @@ Friend Class Main
 
                                                                            If IsNothing(GetRogersSierraFromVehicle(x)) Then
 
-                                                                               RogersSierraList.Add(New RogersSierra(x))
+                                                                               RogersSierraList.Add(New RogersSierra(x, True))
                                                                            End If
                                                                        End Sub)
 
@@ -83,7 +83,13 @@ Friend Class Main
 
                                              If x.IsExploded = False AndAlso x.GetBoneDistanceSquared(TrainBones.sDriverSeat, PlayerPed) < 1.1 Then
 
-                                                 PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver)
+                                                 If x.Locomotive.Speed > 0 Then
+
+                                                     PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver,,, EnterVehicleFlags.WarpIn)
+                                                 Else
+
+                                                     PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver)
+                                                 End If
                                              End If
                                          End If
                                      End If
@@ -106,6 +112,20 @@ Friend Class Main
 
             ClosestRogersSierraDist = -1
             ClosestRogersSierra = Nothing
+        End If
+
+        If Not IsNothing(ClosestRogersSierra) Then
+
+            If ClosestRogersSierraDist <= 200 AndAlso ClosestRogersSierra.LocomotiveSpeed > 0 Then
+
+                If PlayerPed.CanRagdoll Then
+
+                    PlayerPed.CanRagdoll = False
+                End If
+            ElseIf Not PlayerPed.CanRagdoll Then
+
+                PlayerPed.CanRagdoll = True
+            End If
         End If
 
         If Not IsNothing(CurrentRogersSierra) AndAlso Not PlayerPed.IsInVehicle Then

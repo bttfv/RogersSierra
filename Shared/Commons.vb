@@ -36,13 +36,6 @@ Public Module Commons
         Red
     End Enum
 
-    Public Enum TrainType
-        Complete
-        OnlyLocomotive
-        NoTender
-        NoColDelorean
-    End Enum
-
     Public Enum TrainCamera
         Off = -1
         TowardsRail

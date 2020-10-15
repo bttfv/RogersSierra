@@ -43,6 +43,8 @@ Friend Class AnimateProp
 
         aProp = World.CreateProp(pModel, pEntity.Position, False, False)
 
+        aProp.IsPersistent = True
+
         Attach()
     End Sub
 
@@ -59,6 +61,8 @@ Friend Class AnimateProp
         isAnimationOn = cAnimationOn
 
         aProp = World.CreateProp(pModel, pEntity.Position, False, False)
+
+        aProp.IsPersistent = True
 
         Attach()
     End Sub

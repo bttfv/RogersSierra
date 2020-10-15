@@ -81,20 +81,17 @@ Partial Public Class RogersSierra
             aAllProps.Props.Add(.Props.Last)
         End With
 
-        If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
+        With aSmallWheelsTender
 
-            With aSmallWheelsTender
-
-                .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender1, Vector3.Zero, Vector3.Zero))
-                aAllProps.Props.Add(.Props.Last)
-                .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender2, Vector3.Zero, Vector3.Zero))
-                aAllProps.Props.Add(.Props.Last)
-                .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender3, Vector3.Zero, Vector3.Zero))
-                aAllProps.Props.Add(.Props.Last)
-                .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender4, Vector3.Zero, Vector3.Zero))
-                aAllProps.Props.Add(.Props.Last)
-            End With
-        End If
+            .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender1, Vector3.Zero, Vector3.Zero))
+            aAllProps.Props.Add(.Props.Last)
+            .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender2, Vector3.Zero, Vector3.Zero))
+            aAllProps.Props.Add(.Props.Last)
+            .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender3, Vector3.Zero, Vector3.Zero))
+            aAllProps.Props.Add(.Props.Last)
+            .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender4, Vector3.Zero, Vector3.Zero))
+            aAllProps.Props.Add(.Props.Last)
+        End With
 
         aRods = New AnimateProp(TrainModels.sRods, Locomotive, TrainBones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
         aAllProps.Props.Add(aRods)
@@ -153,10 +150,7 @@ Partial Public Class RogersSierra
 
         aSmallWheels.AllRotation(Coordinate.X) = GetAngularSpeedRotation(Locomotive.Speed, SmallWheelRadius, aSmallWheels.Rotation(0).X, Locomotive.isGoingForward, modifier)
 
-        If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
-
-            aSmallWheelsTender.AllRotation(Coordinate.X) = aSmallWheels.AllRotation(Coordinate.X)
-        End If
+        aSmallWheelsTender.AllRotation(Coordinate.X) = aSmallWheels.AllRotation(Coordinate.X)
 
         wheelRot = PositiveAngle(wheelRot)
 

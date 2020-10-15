@@ -36,19 +36,19 @@ Public Module TrainManager
 
     Friend RogersSierraToRemove As New List(Of RogersSierra)
 
-    Public Sub CreateRogersSierra(tPosition As Math.Vector3, Optional warpInPlayer As Boolean = False, Optional direction As Boolean = False, Optional noTender As Boolean = False)
+    Public Sub CreateRogersSierra(tPosition As Math.Vector3, Optional warpInPlayer As Boolean = False, Optional direction As Boolean = False)
 
-        Dim tmpTrain = CreateMissionTrain(If(noTender, 27, 26), tPosition, direction)
+        Dim tmpTrain = CreateMissionTrain(26, tPosition, direction)
 
         tmpTrain.setTrainCruiseSpeed(0)
 
         tmpTrain.setTrainSpeed(0)
 
-        RogersSierraList.Add(New RogersSierra(tmpTrain))
+        RogersSierraList.Add(New RogersSierra(tmpTrain, False))
 
         If warpInPlayer Then
 
-            PlayerPed.Task.WarpIntoVehicle(tmpTrain.GetTrainCarriage(If(noTender, 0, 1)), VehicleSeat.Driver)
+            PlayerPed.Task.WarpIntoVehicle(tmpTrain.GetTrainCarriage(1), VehicleSeat.Driver)
         End If
     End Sub
 

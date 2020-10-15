@@ -31,11 +31,6 @@ Partial Public Class RogersSierra
     ''' </summary>
     Public ReadOnly VisibleLocomotive As Vehicle
     ''' <summary>
-    ''' Returns the <seealso cref="TrainType"/> of train.
-    ''' </summary>
-    ''' <returns><seealso cref="TrainType"/></returns>
-    Public ReadOnly Property Type As TrainType
-    ''' <summary>
     ''' Returns <c>true</c> if train is exploded.
     ''' </summary>
     ''' <returns><seealso cref="Boolean"/></returns>
@@ -98,40 +93,18 @@ Partial Public Class RogersSierra
         End Set
     End Property
 
-    Public Sub New(mTrain As Vehicle)
+    Public Property RandomTrain As Boolean = True
+    Public Sub New(mTrain As Vehicle, isRandom As Boolean)
 
         _ID = RndGenerator.Next
 
-        Select Case mTrain.Model
-            Case TrainModels.DMC12ColModel
-                ColDeLorean = mTrain
-                Locomotive = ColDeLorean.GetTrainCarriage(1)
+        ColDeLorean = mTrain
+        Locomotive = ColDeLorean.GetTrainCarriage(1)
 
-                ColDeLorean.IsVisible = False
-                ColDeLorean.IsCollisionEnabled = False
+        ColDeLorean.IsVisible = False
+        ColDeLorean.IsCollisionEnabled = False
 
-                Tender = ColDeLorean.GetTrainCarriage(2)
-
-                If IsNothing(Tender) OrElse Tender.Exists = False Then
-
-                    Type = TrainType.NoTender
-                Else
-
-                    Type = TrainType.Complete
-                End If
-            Case TrainModels.RogersSierraColModel
-                Locomotive = mTrain
-
-                Tender = Locomotive.GetTrainCarriage(1)
-
-                If IsNothing(Tender) OrElse Tender.Exists = False Then
-
-                    Type = TrainType.OnlyLocomotive
-                Else
-
-                    Type = TrainType.NoColDelorean
-                End If
-        End Select
+        Tender = ColDeLorean.GetTrainCarriage(2)
 
         Native.Function.Call(Native.Hash.SET_HORN_ENABLED, Locomotive.Handle, False)
 
@@ -146,8 +119,7 @@ Partial Public Class RogersSierra
         VisibleLocomotive.AttachTo(Locomotive)
         VisibleLocomotive.Mods.InstallModKit()
 
-        'VisibleLocomotive.Mods.PrimaryColor = VehicleColor.MetallicShadowSilver
-        'VisibleLocomotive.Mods.SecondaryColor = VehicleColor.MetallicAnthraciteGray
+        RandomTrain = isRandom
 
         WheelsOnPilot = False
 
@@ -159,9 +131,9 @@ Partial Public Class RogersSierra
 
         LoadCamera()
 
-        If PlayerPed.IsInVehicle(Locomotive) AndAlso Not PlayerPed.IsVisible Then
+        If Not IsNothing(Locomotive.GetPedOnSeat(VehicleSeat.Driver)) Then
 
-            PlayerPed.IsVisible = True
+            Locomotive.GetPedOnSeat(VehicleSeat.Driver).IsVisible = True
         End If
     End Sub
 
@@ -187,17 +159,11 @@ Partial Public Class RogersSierra
 
         If deleteVeh Then
 
-            If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
-
-                Tender.Delete()
-            End If
-
+            Tender.Delete()
             Locomotive.Delete()
+            ColDeLorean.Delete()
 
-            If Type <> TrainType.NoColDelorean AndAlso Type <> TrainType.OnlyLocomotive Then
-
-                ColDeLorean.Delete()
-            End If
+            'Native.Function.Call(Native.Hash.DELETE_MISSION_TRAIN, ColDeLorean)
         End If
 
         CustomCamera.Abort()
@@ -338,11 +304,8 @@ Partial Public Class RogersSierra
         VisibleLocomotive.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
         VisibleLocomotive.Mods.SecondaryColor = Locomotive.Mods.SecondaryColor
 
-        If Type <> TrainType.NoTender AndAlso Type <> TrainType.OnlyLocomotive Then
-
-            Tender.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
-            Tender.DirtLevel = 0
-        End If
+        Tender.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
+        Tender.DirtLevel = 0
 
         If Not PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot Then
 
@@ -373,9 +336,15 @@ Partial Public Class RogersSierra
 
     Private Sub TrainSpeedTick()
 
-        If IsNothing(Locomotive.GetPedOnSeat(VehicleSeat.Driver)) = False Then
+        If RandomTrain Then
 
-            If Locomotive.GetPedOnSeat(VehicleSeat.Driver) <> PlayerPed() Then
+            If PlayerPed.IsInVehicle(Locomotive) Then
+
+                Locomotive.setTrainCruiseSpeed(0)
+                LocomotiveSpeed = Locomotive.Speed
+
+                RandomTrain = False
+            Else
 
                 Exit Sub
             End If
@@ -507,6 +476,11 @@ Partial Public Class RogersSierra
         End If
 
         Locomotive.setTrainSpeed(LocomotiveSpeed)
+
+        If LocomotiveSpeed = 0 AndAlso Locomotive.Speed > 0 Then
+
+            Locomotive.setTrainCruiseSpeed(0)
+        End If
     End Sub
 
 #Region "Overrides and Operators"
