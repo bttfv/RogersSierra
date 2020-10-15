@@ -137,16 +137,17 @@ Partial Public Class RogersSierra
 
         Locomotive.IsVisible = False
 
-        Locomotive.Mods.PrimaryColor = VehicleColor.MetallicShadowSilver
-        Locomotive.Mods.SecondaryColor = VehicleColor.MetallicAnthraciteGray
+        Locomotive.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
+        Locomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
+        Tender.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
 
         VisibleLocomotive = World.CreateVehicle(TrainModels.RogersSierraModel, Locomotive.Position)
         VisibleLocomotive.IsCollisionEnabled = False
         VisibleLocomotive.AttachTo(Locomotive)
         VisibleLocomotive.Mods.InstallModKit()
 
-        VisibleLocomotive.Mods.PrimaryColor = VehicleColor.MetallicShadowSilver
-        VisibleLocomotive.Mods.SecondaryColor = VehicleColor.MetallicAnthraciteGray
+        'VisibleLocomotive.Mods.PrimaryColor = VehicleColor.MetallicShadowSilver
+        'VisibleLocomotive.Mods.SecondaryColor = VehicleColor.MetallicAnthraciteGray
 
         WheelsOnPilot = False
 
