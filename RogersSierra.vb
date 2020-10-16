@@ -416,7 +416,7 @@ Partial Public Class RogersSierra
 
                 If LocomotiveSpeed > 0 Then
 
-                    LocomotiveSpeed -= 2 * Game.LastFrameTime
+                    LocomotiveSpeed -= 0.2 * Game.LastFrameTime
 
                     If LocomotiveSpeed < 0 Then
 
