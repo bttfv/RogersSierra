@@ -6,7 +6,17 @@ Public Module Commons
 
     Friend RndGenerator As New Random(Game.GameTime)
 
-    Friend SpawnLocations As New List(Of SpawnLocation) From {New SpawnLocation(New Vector3(2416, -346, 94), True), New SpawnLocation(New Vector3(2348, 1182, 79), True), New SpawnLocation(New Vector3(2615, 2945, 39), True)}
+    Friend SpawnLocations As New List(Of SpawnLocation) From 
+    {
+        New SpawnLocation(New Vector3(2611, 1681, 27), True), 
+        New SpawnLocation(New Vector3(2462, -289, 93), True), 
+        New SpawnLocation(New Vector3(2014, 2493, 58), True),
+        New SpawnLocation(New Vector3(2994, 3990, 57), True),
+        New SpawnLocation(New Vector3(1807, 3510, 39), True),
+        New SpawnLocation(New Vector3(-478, 5253, 88), True),
+        New SpawnLocation(New Vector3(749, 6433, 30), True),
+        New SpawnLocation(New Vector3(2486, 5743, 64), True)
+    }
 
     Friend MenuManager As New MenuManager
 
