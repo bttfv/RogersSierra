@@ -95,6 +95,9 @@ Friend Class SpawnMenu
 
         LocationBlip = World.CreateBlip(position)
         LocationBlip.Sprite = 120
+
+        SelectLocation.Description = SelectLocation.SelectedItem.Name
+        Recalculate()
     End Sub
 
     Private Sub SpawnTrain_Activated(sender As Object, e As EventArgs) Handles SpawnTrain.Activated, SelectLocation.Activated

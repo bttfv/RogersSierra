@@ -6,10 +6,10 @@ Public Module Commons
 
     Friend RndGenerator As New Random(Game.GameTime)
 
-    Friend SpawnLocations As New List(Of SpawnLocation) From 
+    Friend SpawnLocations As New List(Of SpawnLocation) From
     {
-        New SpawnLocation(New Vector3(2611, 1681, 27), New Vector3(2601.0, 1700.2, 29.9), New Vector3(0.8, -0.6, -0.1)), 
-        New SpawnLocation(New Vector3(2462, -289, 93), New Vector3(2455.4, -276.4, 96.2), New Vector3(0.4, -0.9, 0.1)), 
+        New SpawnLocation(New Vector3(2611, 1681, 27), New Vector3(2601.0, 1700.2, 29.9), New Vector3(0.8, -0.6, -0.1)),
+        New SpawnLocation(New Vector3(2462, -289, 93), New Vector3(2455.4, -276.4, 96.2), New Vector3(0.4, -0.9, 0.1)),
         New SpawnLocation(New Vector3(2014, 2493, 58), New Vector3(2028.6, 2482.9, 67.6), New Vector3(-1.0, 0.2, 0.0)),
         New SpawnLocation(New Vector3(2994, 3990, 57), New Vector3(3004.8, 3983.3, 60.0), New Vector3(-0.5, 0.9, 0.0)),
         New SpawnLocation(New Vector3(1807, 3510, 39), New Vector3(1828.1, 3535.5, 45.2), New Vector3(-0.5, -0.9, 0.1)),
@@ -44,7 +44,7 @@ Public Module Commons
 
         Public Overrides Function ToString() As String
 
-            Return Name
+            Return SpawnLocations.IndexOf(Me)
         End Function
     End Class
 
