@@ -20,7 +20,7 @@ Friend Class SpawnMenu
     Public Sub New()
         MyBase.New("", Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Subtitle"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Description"))
 
-        Banner = New LemonUI.Elements.ScaledTexture(New PointF(0, 0), New SizeF(200, 200), "sierra", "sierra_livery")
+        Banner = New LemonUI.Elements.ScaledTexture(New PointF(0, 0), New SizeF(200, 200), "sierra_gui", "sierra_menu_logo")
 
         SelectLocation.Items = SpawnLocations
         DeleteTrain.Items = RogersSierraList
