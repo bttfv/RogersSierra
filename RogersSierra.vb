@@ -94,6 +94,9 @@ Partial Public Class RogersSierra
     End Property
 
     Public Property RandomTrain As Boolean = True
+
+    Private rejectTimer As Integer = -1
+
     Public Sub New(mTrain As Vehicle, isRandom As Boolean)
 
         _ID = RndGenerator.Next
@@ -244,6 +247,12 @@ Partial Public Class RogersSierra
 
         Return Locomotive.Bones(boneName).Position.DistanceToSquared(pos)
     End Function
+
+    Public Sub SetRejectDelay(Optional delay As Integer = 0)
+
+        rejectTimer = Game.GameTime + delay
+        RejectAttach = True
+    End Sub
 #End Region
 
     ''' <summary>
@@ -282,6 +291,12 @@ Partial Public Class RogersSierra
             Delete()
 
             Exit Sub
+        End If
+
+        If rejectTimer > 0 AndAlso rejectTimer <= Game.GameTime Then
+
+            rejectTimer = -1
+            RejectAttach = False
         End If
 
         TrainSpeedTick()
