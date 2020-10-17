@@ -122,6 +122,9 @@ Partial Public Class RogersSierra
         VisibleLocomotive.AttachTo(Locomotive)
         VisibleLocomotive.Mods.InstallModKit()
 
+        Locomotive.IsInvincible = False
+        Tender.IsInvincible = False
+
         RandomTrain = isRandom
 
         WheelsOnPilot = False
