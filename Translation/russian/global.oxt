@@ -18,5 +18,5 @@
 	RogersSierra_Menu_SpawnMenu_NoTender_Description = Если включено, поезд будет создан без прицепа.
 	RogersSierra_Menu_SpawnMenu_WarpPlayer = Перемещает игрока внутрь
 	RogersSierra_Menu_SpawnMenu_WarpPlayer_Description =  Если включено, то игрок будет перемещен внутрь локомотива.
-	RogersSierra_Help_InstallWheelsOnPilot = Press ~INPUT_CONTEXT~ to install support for wheels in order to be able to push a car with this train.
+	RogersSierra_Help_InstallWheelsOnPilot = Нажмите ~INPUT_CONTEXT~ для установки конструкции с колесами для возможности толкать машину при помощи этого поезда.
 }
