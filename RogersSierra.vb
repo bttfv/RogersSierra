@@ -322,21 +322,21 @@ Partial Public Class RogersSierra
         Tender.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
         Tender.DirtLevel = 0
 
-        If Not PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot Then
+        'If Not PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot Then
 
-            Dim tmpPos = Locomotive.GetOffsetPosition(New Vector3(0, TrainModels.RogersSierraModel.Dimensions.frontTopRight.Y, 0.5))
+        '    Dim tmpPos = Locomotive.GetOffsetPosition(New Vector3(0, TrainModels.RogersSierraModel.Dimensions.frontTopRight.Y, 0.5))
 
-            If PlayerPed.Position.DistanceToSquared(tmpPos) < 1.5 * 1.5 Then
+        '    If PlayerPed.Position.DistanceToSquared(tmpPos) < 1.5 * 1.5 Then
 
-                UI.Screen.ShowHelpTextThisFrame(Game.GetLocalizedString("RogersSierra_Help_InstallWheelsOnPilot"))
+        '        UI.Screen.ShowHelpTextThisFrame(Game.GetLocalizedString("RogersSierra_Help_InstallWheelsOnPilot"))
 
-                If Game.IsControlJustPressed(Control.Context) Then
+        '        If Game.IsControlJustPressed(Control.Context) Then
 
-                    WheelsOnPilot = True
-                    RejectAttach = False
-                End If
-            End If
-        End If
+        '            WheelsOnPilot = True
+        '            RejectAttach = False
+        '        End If
+        '    End If
+        'End If
     End Sub
 
     Public Sub KeyDown(e As Windows.Forms.Keys)
