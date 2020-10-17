@@ -293,6 +293,11 @@ Partial Public Class RogersSierra
             Exit Sub
         End If
 
+        If (VisibleLocomotive.Health = 0 Or Locomotive.Health = 0 Or Tender.Health = 0) AndAlso Not IsExploded Then
+
+            Explode()
+        End If
+
         If rejectTimer > 0 AndAlso rejectTimer <= Game.GameTime Then
 
             rejectTimer = -1
