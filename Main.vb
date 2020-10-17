@@ -10,7 +10,7 @@ Friend Class Main
 
         RogersSierraList.ForEach(Sub(x)
 
-                                     x.Delete(False)
+                                     x.Delete(x.IsExploded)
                                  End Sub)
     End Sub
 

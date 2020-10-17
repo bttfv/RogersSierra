@@ -141,11 +141,6 @@ Partial Public Class RogersSierra
 
             Locomotive.GetPedOnSeat(VehicleSeat.Driver).IsVisible = True
         End If
-
-        If Locomotive.Health = 0 OrElse Tender.Health = 0 Then
-
-            Derail()
-        End If
     End Sub
 
 #Region "Public Methods"
