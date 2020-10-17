@@ -8,14 +8,14 @@ Public Module Commons
 
     Friend SpawnLocations As New List(Of SpawnLocation) From 
     {
-        New SpawnLocation(New Vector3(2611, 1681, 27), True), 
-        New SpawnLocation(New Vector3(2462, -289, 93), True), 
-        New SpawnLocation(New Vector3(2014, 2493, 58), True),
-        New SpawnLocation(New Vector3(2994, 3990, 57), True),
-        New SpawnLocation(New Vector3(1807, 3510, 39), True),
-        New SpawnLocation(New Vector3(-478, 5253, 88), True),
-        New SpawnLocation(New Vector3(749, 6433, 30), True),
-        New SpawnLocation(New Vector3(2486, 5743, 64), True)
+        New SpawnLocation(New Vector3(2611, 1681, 27), New Vector3(2601.0, 1700.2, 29.9), New Vector3(0.8, -0.6, -0.1)), 
+        New SpawnLocation(New Vector3(2462, -289, 93), New Vector3(2455.4, -276.4, 96.2), New Vector3(0.4, -0.9, 0.1)), 
+        New SpawnLocation(New Vector3(2014, 2493, 58), New Vector3(2028.6, 2482.9, 67.6), New Vector3(-1.0, 0.2, 0.0)),
+        New SpawnLocation(New Vector3(2994, 3990, 57), New Vector3(3004.8, 3983.3, 60.0), New Vector3(-0.5, 0.9, 0.0)),
+        New SpawnLocation(New Vector3(1807, 3510, 39), New Vector3(1828.1, 3535.5, 45.2), New Vector3(-0.5, -0.9, 0.1)),
+        New SpawnLocation(New Vector3(-478, 5253, 88), New Vector3(-476.1, 5215.4, 98.9), New Vector3(-0.5, 0.8, -0.2)),
+        New SpawnLocation(New Vector3(749, 6433, 30), New Vector3(765.6, 6449.3, 34.3), New Vector3(-0.9, -0.4, 0.2)),
+        New SpawnLocation(New Vector3(2486, 5743, 64), New Vector3(2510.5, 5716.2, 68.4), New Vector3(-1.0, 0.3, 0.1))
     }
 
     Friend MenuManager As New MenuManager
@@ -34,9 +34,9 @@ Public Module Commons
             Name = World.GetZoneLocalizedName(position)
         End Sub
 
-        Public Sub New(position As Vector3, direction As Boolean, cameraPos As Vector3, cameraDir As Vector3)
+        Public Sub New(position As Vector3, cameraPos As Vector3, cameraDir As Vector3)
             Me.Position = position
-            Me.Direction = direction
+            Me.Direction = True
             Name = World.GetZoneLocalizedName(position)
             Me.CameraPos = cameraPos
             Me.CameraDir = cameraDir
