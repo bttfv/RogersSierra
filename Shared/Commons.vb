@@ -23,6 +23,8 @@ Public Module Commons
     Friend Class SpawnLocation
 
         Public Position As Vector3
+        Public CameraPos As Vector3 = Vector3.Zero
+        Public CameraDir As Vector3 = Vector3.Zero
         Public Direction As Boolean
         Public Name As String
 
@@ -30,6 +32,14 @@ Public Module Commons
             Me.Position = position
             Me.Direction = direction
             Name = World.GetZoneLocalizedName(position)
+        End Sub
+
+        Public Sub New(position As Vector3, direction As Boolean, cameraPos As Vector3, cameraDir As Vector3)
+            Me.Position = position
+            Me.Direction = direction
+            Name = World.GetZoneLocalizedName(position)
+            Me.CameraPos = cameraPos
+            Me.CameraDir = cameraDir
         End Sub
 
         Public Overrides Function ToString() As String

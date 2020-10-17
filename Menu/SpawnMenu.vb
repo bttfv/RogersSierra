@@ -71,8 +71,18 @@ Friend Class SpawnMenu
             LocationCamera.Delete()
         End If
 
-        LocationCamera = World.CreateCamera(position.GetSingleOffset(Coordinate.Z, 10).GetSingleOffset(Coordinate.Y, 10), Vector3.Zero, 75)
-        LocationCamera.PointAt(position)
+        Dim cameraPos = SelectLocation.SelectedItem.CameraPos
+        Dim cameraDir = SelectLocation.SelectedItem.CameraDir
+
+        If cameraPos <> Vector3.Zero AndAlso cameraDir <> Vector3.Zero Then
+
+            LocationCamera = World.CreateCamera(cameraPos, Vector3.Zero, 75)
+            LocationCamera.Direction = cameraDir
+        Else
+
+            LocationCamera = World.CreateCamera(position.GetSingleOffset(Coordinate.Z, 10).GetSingleOffset(Coordinate.Y, 10), Vector3.Zero, 75)
+            LocationCamera.PointAt(position)
+        End If
 
         World.RenderingCamera = LocationCamera
 
