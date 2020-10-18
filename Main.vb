@@ -37,6 +37,9 @@ Friend Class Main
 
             TrainModels.LoadModels()
 
+            Native.Function.Call(Native.Hash.SET_RANDOM_TRAINS, False)
+            Native.Function.Call(Native.Hash.DELETE_ALL_TRAINS)
+
             initialSetup = False
         End If
 
