@@ -488,12 +488,12 @@ Partial Public Class RogersSierra
             End If
         End If
 
-        If Not UnlockSpeed AndAlso Not lockSpeed AndAlso Locomotive.SpeedMPH > 51 Then
+        If UnlockSpeed AndAlso Not lockSpeed AndAlso Locomotive.SpeedMPH > 51 Then
 
             lockSpeed = True
         End If
 
-        If lockSpeed And Not UnlockSpeed AndAlso Locomotive.SpeedMPH < 51 Then
+        If UnlockSpeed AndAlso lockSpeed AndAlso Locomotive.SpeedMPH < 51 Then
 
             UnlockSpeed = False
             lockSpeed = False
