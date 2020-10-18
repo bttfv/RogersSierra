@@ -81,7 +81,7 @@ Friend Class Main
 
                                          If Game.IsControlJustPressed(GTA.Control.Enter) Then
 
-                                             If x.IsExploded = False AndAlso x.GetBoneDistanceSquared(TrainBones.sDriverSeat, PlayerPed) < 1.1 Then
+                                             If x.IsExploded = False AndAlso x.GetBoneDistanceSquared(TrainBones.sDriverSeat, PlayerPed) < 1.3 Then
 
                                                  If x.Locomotive.Speed > 0 Then
 

@@ -498,6 +498,19 @@ Partial Public Class RogersSierra
             End If
         End If
 
+        If LocomotiveSpeed > 0 Then
+
+            If sCabCols.Position = Vector3.Zero Then
+
+                sCabCols.Position = New Vector3(0, 0.75, 0)
+                sCabCols.Play()
+            End If
+        ElseIf sCabCols.Position <> Vector3.Zero Then
+
+            sCabCols.Position = Vector3.Zero
+            sCabCols.Play()
+        End If
+
         Locomotive.setTrainSpeed(LocomotiveSpeed)
 
         If LocomotiveSpeed = 0 AndAlso Locomotive.Speed > 0 Then
