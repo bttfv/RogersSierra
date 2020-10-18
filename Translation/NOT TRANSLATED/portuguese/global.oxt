@@ -17,4 +17,9 @@
 	RogersSierra_Menu_SpawnMenu_WarpPlayer = Teleportar o player dentro.
 	RogersSierra_Menu_SpawnMenu_WarpPlayer_Description =  Se ativado, o script ira teleportar o player dentro do trem.
 	RogersSierra_Help_InstallWheelsOnPilot = Aperte ~INPUT_CONTEXT~ para instalar o suporte dos pneus, para poder puxar um carro com este trem.
+	RogersSierra_Help_Whistle = Whistle
+	RogersSierra_Help_Bell = Bell
+	RogersSierra_Help_CruiseControl = Cruise control
+	RogersSierra_Enabled = enabled
+	RogersSierra_Disabled = disabled
 }

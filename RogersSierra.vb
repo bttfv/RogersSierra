@@ -384,6 +384,8 @@ Partial Public Class RogersSierra
             If CurrentRogersSierra IsNot Me Then
 
                 CurrentRogersSierra = Me
+
+                Screen.ShowHelpTextThisFrame($"{Game.GetLocalizedString("RogersSierra_Help_Whistle")}: ~INPUT_VEH_HORN~{vbCr}{Game.GetLocalizedString("RogersSierra_Help_Bell")}: ~INPUT_VEH_HANDBRAKE~{vbCr}{Game.GetLocalizedString("RogersSierra_Help_CruiseControl")}: ~INPUT_VEH_DUCK~")
             End If
 
             If IsNothing(VisibleLocomotive.AttachedBlip) = False AndAlso VisibleLocomotive.AttachedBlip.Exists Then
@@ -402,13 +404,7 @@ Partial Public Class RogersSierra
 
                     IsCruiseControlOn = Not IsCruiseControlOn
 
-                    If IsCruiseControlOn Then
-
-                        ShowSubtitle("Enabled cruise control")
-                    Else
-
-                        ShowSubtitle("Disabled cruise control")
-                    End If
+                    Screen.ShowHelpTextThisFrame($"{Game.GetLocalizedString("RogersSierra_Help_CruiseControl")} {If(IsCruiseControlOn, Game.GetLocalizedString("RogersSierra_Enabled"), Game.GetLocalizedString("RogersSierra_Disabled"))}")
                 End If
 
                 If Game.IsControlPressed(Control.VehicleAccelerate) Then

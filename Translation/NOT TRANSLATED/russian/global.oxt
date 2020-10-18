@@ -19,4 +19,9 @@
 	RogersSierra_Menu_SpawnMenu_WarpPlayer = Перемещает игрока внутрь
 	RogersSierra_Menu_SpawnMenu_WarpPlayer_Description =  Если включено, то игрок будет перемещен внутрь локомотива.
 	RogersSierra_Help_InstallWheelsOnPilot = Нажмите ~INPUT_CONTEXT~ для установки конструкции с колесами для возможности толкать машину при помощи этого поезда.
+	RogersSierra_Help_Whistle = Whistle
+	RogersSierra_Help_Bell = Bell
+	RogersSierra_Help_CruiseControl = Cruise control
+	RogersSierra_Enabled = enabled
+	RogersSierra_Disabled = disabled
 }
