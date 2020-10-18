@@ -336,13 +336,13 @@ Partial Public Class RogersSierra
         Tender.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
         Tender.DirtLevel = 0
 
-        If Not PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot Then
+        If Not PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot AndAlso Not IsExploded Then
 
             Dim tmpPos = Locomotive.GetOffsetPosition(New Vector3(0, TrainModels.RogersSierraModel.Dimensions.frontTopRight.Y, 0.5))
 
             If PlayerPed.Position.DistanceToSquared(tmpPos) < 1.5 * 1.5 Then
 
-                UI.Screen.ShowHelpTextThisFrame(Game.GetLocalizedString("RogersSierra_Help_InstallWheelsOnPilot"))
+                Screen.ShowHelpTextThisFrame(Game.GetLocalizedString("RogersSierra_Help_InstallWheelsOnPilot"))
 
                 If Game.IsControlJustPressed(Control.Context) Then
 
@@ -386,6 +386,8 @@ Partial Public Class RogersSierra
                 CurrentRogersSierra = Me
 
                 Screen.ShowHelpTextThisFrame($"{Game.GetLocalizedString("RogersSierra_Help_Whistle")}: ~INPUT_VEH_HORN~{vbCr}{Game.GetLocalizedString("RogersSierra_Help_Bell")}: ~INPUT_VEH_HANDBRAKE~{vbCr}{Game.GetLocalizedString("RogersSierra_Help_CruiseControl")}: ~INPUT_VEH_DUCK~")
+
+                PlayerPed.Task.PlayAnimation("amb@code_human_in_bus_passenger_idles@female@sit@base", "base", 900, -1, AnimationFlags.Loop)
             End If
 
             If IsNothing(VisibleLocomotive.AttachedBlip) = False AndAlso VisibleLocomotive.AttachedBlip.Exists Then
@@ -395,6 +397,7 @@ Partial Public Class RogersSierra
 
             If Game.IsControlJustPressed(Control.VehicleExit) AndAlso IsVisible Then
 
+                PlayerPed.Task.ClearAnimation("amb@code_human_in_bus_passenger_idles@female@sit@base", "base")
                 PlayerPed.Task.LeaveVehicle()
             End If
 
