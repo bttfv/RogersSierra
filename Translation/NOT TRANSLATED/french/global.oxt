@@ -7,7 +7,7 @@
 	RogersSierra_Enabled = enabled
 	RogersSierra_Help_Bell = Bell
 	RogersSierra_Help_CruiseControl = Cruise control
-	RogersSierra_Help_InstallWheelsOnPilot = Press ~INPUT_CONTEXT~ to install support for wheels in order to be able to push a car with this train.
+	RogersSierra_Help_InstallWheelsOnPilot = Press ~INPUT_CONTEXT~ to install push bar for pushing a car with this train.
 	RogersSierra_Help_Whistle = Whistle	
 	RogersSierra_Menu_SpawnMenu = Spawn Menu
 	RogersSierra_Menu_SpawnMenu_Delete = Delete train
@@ -16,7 +16,7 @@
 	RogersSierra_Menu_SpawnMenu_Delete_Description = Press to delete train from map.
 	RogersSierra_Menu_SpawnMenu_Description = Opens the spawn menu.
 	RogersSierra_Menu_SpawnMenu_Location = Spawn location
-	RogersSierra_Menu_SpawnMenu_Location_Description = Select where spawn train.
+	RogersSierra_Menu_SpawnMenu_Location_Description = Select train spawn location.
 	RogersSierra_Menu_SpawnMenu_RandomTrains = Random trains
 	RogersSierra_Menu_SpawnMenu_RandomTrains_Description = If random trains are spawned or not.
 	RogersSierra_Menu_SpawnMenu_Spawn = Spawn train
