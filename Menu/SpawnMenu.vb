@@ -16,6 +16,7 @@ Friend Class SpawnMenu
     Private WithEvents DeleteTrain As New NativeListItem(Of RogersSierra)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete_Description"))
     Private WithEvents DeleteAllTrains As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_DeleteAll"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_DeleteAll_Description"))
     Private WithEvents WarpPlayer As New NativeCheckboxItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_WarpPlayer"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_WarpPlayer_Description"), True)
+    Private WithEvents RandomTrains As New NativeCheckboxItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_RandomTrains"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_RandomTrains_Description"), False)
 
     Public Sub New()
         MyBase.New("", Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Subtitle"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Description"))
@@ -28,6 +29,7 @@ Friend Class SpawnMenu
         Add(SelectLocation)
         Add(WarpPlayer)
         Add(SpawnTrain)
+        Add(RandomTrains)
         Add(DeleteTrain)
         Add(DeleteAllTrains)
     End Sub
@@ -192,5 +194,15 @@ Friend Class SpawnMenu
                              End Sub)
 
         Close()
+    End Sub
+
+    Private Sub RandomTrains_CheckboxChanged(sender As Object, e As EventArgs) Handles RandomTrains.CheckboxChanged
+
+        Native.Function.Call(Native.Hash.SET_RANDOM_TRAINS, RandomTrains.Checked)
+
+        If Not RandomTrains.Checked Then
+
+            Native.Function.Call(Native.Hash.DELETE_ALL_TRAINS)
+        End If
     End Sub
 End Class
