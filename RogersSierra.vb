@@ -114,11 +114,6 @@ Partial Public Class RogersSierra
 
         Locomotive.IsVisible = False
 
-        Locomotive.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
-        Locomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
-        Tender.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
-        Tender.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
-
         VisibleLocomotive = World.CreateVehicle(TrainModels.RogersSierraModel, Locomotive.Position)
         VisibleLocomotive.IsCollisionEnabled = False
         VisibleLocomotive.AttachTo(Locomotive)
@@ -126,6 +121,8 @@ Partial Public Class RogersSierra
 
         VisibleLocomotive.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
         VisibleLocomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
+        Tender.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
+        Tender.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
 
         Locomotive.IsInvincible = False
         Tender.IsInvincible = False
@@ -329,11 +326,11 @@ Partial Public Class RogersSierra
         End If
 
         VisibleLocomotive.DirtLevel = 0
+        
+        ' TEMPORARY DISABLED BECAUSE IT DOESNT FUCKING WORK IT ASSIGNS RANDOM COLORS!!!
+        'VisibleLocomotive.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
+        'VisibleLocomotive.Mods.SecondaryColor = Locomotive.Mods.SecondaryColor
 
-        VisibleLocomotive.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
-        VisibleLocomotive.Mods.SecondaryColor = Locomotive.Mods.SecondaryColor
-
-        Tender.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
         Tender.DirtLevel = 0
 
         If Not PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot AndAlso Not IsExploded Then
