@@ -18,7 +18,6 @@
     Public Const sWheelTender2 As String = "wheel_2"
     Public Const sWheelTender3 As String = "wheel_3"
     Public Const sWheelTender4 As String = "wheel_4"
-
 #End Region
 
 #Region "Wheels Props"

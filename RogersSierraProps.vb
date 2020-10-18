@@ -117,7 +117,7 @@ Partial Public Class RogersSierra
         sLight = New AnimateProp(TrainModels.sLight, Locomotive, Vector3.Zero, Vector3.Zero)
         aAllProps.Props.Add(sLight)
 
-        sCabCols = New AnimateProp(TrainModels.sCabCols, Locomotive, Vector3.Zero, Vector3.Zero)
+        sCabCols = New AnimateProp(TrainModels.sCabCols, Locomotive, Vector3.Zero, Vector3.Zero, True)
         sCabCols.Visible = False
         aAllProps.Props.Add(sCabCols)
 
