@@ -116,11 +116,15 @@ Partial Public Class RogersSierra
         Locomotive.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
         Locomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
         Tender.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
+        Tender.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
 
         VisibleLocomotive = World.CreateVehicle(TrainModels.RogersSierraModel, Locomotive.Position)
         VisibleLocomotive.IsCollisionEnabled = False
         VisibleLocomotive.AttachTo(Locomotive)
         VisibleLocomotive.Mods.InstallModKit()
+
+        VisibleLocomotive.Mods.PrimaryColor = VehicleColor.MetallicStoneSilver
+        VisibleLocomotive.Mods.SecondaryColor = VehicleColor.MetallicStoneSilver
 
         Locomotive.IsInvincible = False
         Tender.IsInvincible = False
@@ -168,8 +172,6 @@ Partial Public Class RogersSierra
             Tender.Delete()
             Locomotive.Delete()
             ColDeLorean.Delete()
-
-            'Native.Function.Call(Native.Hash.DELETE_MISSION_TRAIN, ColDeLorean)
         End If
 
         CustomCamera.Abort()
@@ -250,7 +252,10 @@ Partial Public Class RogersSierra
 
         Return Locomotive.Bones(boneName).Position.DistanceToSquared(pos)
     End Function
-
+    ''' <summary>
+    ''' Set a <paramref name="delay"/> for permit attach to train again.
+    ''' </summary>
+    ''' <param name="delay"><seealso cref="Integer"/></param>
     Public Sub SetRejectDelay(Optional delay As Integer = 0)
 
         rejectTimer = Game.GameTime + delay
