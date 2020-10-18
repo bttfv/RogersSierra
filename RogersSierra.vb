@@ -96,6 +96,7 @@ Partial Public Class RogersSierra
     Public Property RandomTrain As Boolean = True
 
     Private rejectTimer As Integer = -1
+    Private lockSpeed As Boolean
 
     Public Sub New(mTrain As Vehicle, isRandom As Boolean)
 
@@ -335,21 +336,21 @@ Partial Public Class RogersSierra
         Tender.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
         Tender.DirtLevel = 0
 
-        'If Not PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot Then
+        If Not PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot Then
 
-        '    Dim tmpPos = Locomotive.GetOffsetPosition(New Vector3(0, TrainModels.RogersSierraModel.Dimensions.frontTopRight.Y, 0.5))
+            Dim tmpPos = Locomotive.GetOffsetPosition(New Vector3(0, TrainModels.RogersSierraModel.Dimensions.frontTopRight.Y, 0.5))
 
-        '    If PlayerPed.Position.DistanceToSquared(tmpPos) < 1.5 * 1.5 Then
+            If PlayerPed.Position.DistanceToSquared(tmpPos) < 1.5 * 1.5 Then
 
-        '        UI.Screen.ShowHelpTextThisFrame(Game.GetLocalizedString("RogersSierra_Help_InstallWheelsOnPilot"))
+                UI.Screen.ShowHelpTextThisFrame(Game.GetLocalizedString("RogersSierra_Help_InstallWheelsOnPilot"))
 
-        '        If Game.IsControlJustPressed(Control.Context) Then
+                If Game.IsControlJustPressed(Control.Context) Then
 
-        '            WheelsOnPilot = True
-        '            RejectAttach = False
-        '        End If
-        '    End If
-        'End If
+                    WheelsOnPilot = True
+                    RejectAttach = False
+                End If
+            End If
+        End If
     End Sub
 
     Public Sub KeyDown(e As Windows.Forms.Keys)
@@ -485,6 +486,17 @@ Partial Public Class RogersSierra
                     ForceHandbrake = False
                 End If
             End If
+        End If
+
+        If Not UnlockSpeed AndAlso Not lockSpeed AndAlso Locomotive.SpeedMPH > 51 Then
+
+            lockSpeed = True
+        End If
+
+        If lockSpeed And Not UnlockSpeed AndAlso Locomotive.SpeedMPH < 51 Then
+
+            UnlockSpeed = False
+            lockSpeed = False
         End If
 
         If LocomotiveSpeed > 0 Then
