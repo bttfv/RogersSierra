@@ -202,7 +202,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>IF NOT "%25GTAPath%25" == "" (
+    IF NOT EXIST "%25GTAPath%25" (
+        MKDIR "%25GTAPath%25"
+    ) 
+copy "$(TargetPath)" "%25GTAPath%25\scripts\$(TargetFileName)"
+copy "$(TargetDir)\$(TargetName).pdb" "%25GTAPath%25\scripts\$(TargetName).pdb"
+)</PostBuildEvent>
   </PropertyGroup>
 </Project>
