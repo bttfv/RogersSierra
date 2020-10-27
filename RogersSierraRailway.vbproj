@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="..\ProjectReference.txt" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -68,14 +67,15 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KlangRageAudioLibrary">
-      <HintPath>..\..\SteamLibrary\steamapps\common\Grand Theft Auto V\Scripts\KlangRageAudioLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="LemonUI.SHVDN3, Version=1.1.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\..\SteamLibrary\steamapps\common\Grand Theft Auto V\Scripts\LemonUI.SHVDN3.dll</HintPath>
+    <Reference Include="irrKlang.NET4, Version=1.0.6617.18847, Culture=neutral, PublicKeyToken=a854741bd80517c7, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\KlangRageAudioLibrary\irrKlang\irrKlang.NET4.dll</HintPath>
     </Reference>
     <Reference Include="ScriptHookVDotNet3, Version=3.0.4.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\..\SteamLibrary\steamapps\common\Grand Theft Auto V\ScriptHookVDotNet3.dll</HintPath>
+      <HintPath>..\packages\ScriptHookVDotNet3.3.0.4\lib\net48\ScriptHookVDotNet3.dll</HintPath>
+    </Reference>
+    <Reference Include="LemonUI.SHVDN3, Version=1.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\LemonUI.SHVDN3.1.1.0\lib\net48\LemonUI.SHVDN3.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -194,9 +194,20 @@
   <ItemGroup>
     <None Include="Resources\funnelExplosion.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KlangRageAudioLibrary\KlangRageAudioLibrary.csproj">
+      <Project>{e52db215-0aa9-453a-b5f3-91f3ff35c1d9}</Project>
+      <Name>KlangRageAudioLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(GTAPath)\scripts\$(TargetFileName)"
-copy "$(TargetDir)\$(TargetName).pdb" "$(GTAPath)\scripts\$(TargetName).pdb"</PostBuildEvent>
+    <PostBuildEvent>IF NOT "%25GTAPath%25" == "" (
+    IF NOT EXIST "%25GTAPath%25" (
+        MKDIR "%25GTAPath%25"
+    ) 
+copy "$(TargetPath)" "%25GTAPath%25\scripts\$(TargetFileName)"
+copy "$(TargetDir)\$(TargetName).pdb" "%25GTAPath%25\scripts\$(TargetName).pdb"
+)</PostBuildEvent>
   </PropertyGroup>
 </Project>
