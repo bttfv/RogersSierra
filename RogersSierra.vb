@@ -217,9 +217,15 @@ Partial Public Class RogersSierra
         If Smoke = SmokeColor.Red Then
 
             FunnelFire = True
-            FireboxFireSize = 1
-            sFireboxDoor.RotationUpdate(Coordinate.Z) = True
         End If
+    End Sub
+    ''' <summary>
+    ''' Opens firebox door and increase fire size.
+    ''' </summary>
+    Public Sub ExplodeFirebox()
+
+        FireboxFireSize = 1
+        sFireboxDoor.RotationUpdate(Coordinate.Z) = True
     End Sub
     ''' <summary>
     ''' Returns the world position of <paramref name="boneName"/>.

@@ -18,7 +18,7 @@ Public Class CustomCamera
         Me.FieldOfView = fieldOfView
     End Sub
 
-    Public Sub Show(ByRef OldCamera As CustomCamera)
+    Public Sub Show(ByRef OldCamera As CustomCamera, Optional cameraSwitchType As CameraSwitchType = CameraSwitchType.Instant)
 
         If IsNothing(Camera) OrElse Camera.Exists = False Then
 
@@ -36,7 +36,13 @@ Public Class CustomCamera
             Camera.IsActive = True
             OldCamera.Camera.IsActive = False
 
-            OldCamera.Camera.InterpTo(Camera, 900, 1, 1)
+            If cameraSwitchType = CameraSwitchType.Animated Then
+
+                OldCamera.Camera.InterpTo(Camera, 900, 1, 1)
+            Else
+
+                World.RenderingCamera = Camera
+            End If
         End If
     End Sub
 

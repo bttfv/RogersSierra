@@ -50,7 +50,7 @@ Public Class CustomerCameraManager
         Return ret
     End Function
 
-    Public Sub Show(index As Integer)
+    Public Sub Show(index As Integer, Optional cameraSwitchType As CameraSwitchType = CameraSwitchType.Instant)
 
         If Cameras.Count = 0 Then
 
@@ -62,11 +62,11 @@ Public Class CustomerCameraManager
             Exit Sub
         End If
 
-        Cameras(index).Show(CurrentCamera)
+        Cameras(index).Show(CurrentCamera, cameraSwitchType)
         _CurrentCameraIndex = index
     End Sub
 
-    Public Sub ShowNext()
+    Public Sub ShowNext(Optional cameraSwitchType As CameraSwitchType = CameraSwitchType.Instant)
 
         If Cameras.Count = 0 Then
 
@@ -78,12 +78,12 @@ Public Class CustomerCameraManager
             Abort()
         Else
 
-            Cameras(CurrentCameraIndex + 1).Show(CurrentCamera)
+            Cameras(CurrentCameraIndex + 1).Show(CurrentCamera, cameraSwitchType)
             _CurrentCameraIndex += 1
         End If
     End Sub
 
-    Public Sub ShowPrevious()
+    Public Sub ShowPrevious(Optional cameraSwitchType As CameraSwitchType = CameraSwitchType.Instant)
 
         If Cameras.Count = 0 Then
 
@@ -95,7 +95,7 @@ Public Class CustomerCameraManager
             Abort()
         Else
 
-            Cameras(CurrentCameraIndex - 1).Show(CurrentCamera)
+            Cameras(CurrentCameraIndex - 1).Show(CurrentCamera, cameraSwitchType)
             _CurrentCameraIndex -= 1
         End If
     End Sub
@@ -130,6 +130,11 @@ Public Class CustomerCameraManager
                 ShowNext()
                 nextChange = Game.GameTime + CycleInterval
             End If
+        End If
+
+        If CurrentCameraIndex > -1 AndAlso CurrentCamera.Camera.isRendering = False Then
+
+            [Stop]()
         End If
     End Sub
 End Class
