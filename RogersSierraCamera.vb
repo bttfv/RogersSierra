@@ -1,8 +1,9 @@
 ﻿Imports GTA.Math
+Imports CustomCamera
 
 Partial Public Class RogersSierra
 
-    Private CustomCamera As New CustomerCameraManager
+    Public CustomCamera As New CustomCameraManager
 
     Public Property Camera As TrainCamera
         Get
@@ -85,5 +86,11 @@ Partial Public Class RogersSierra
 
         'Inside
         CustomCamera.Add(Locomotive, New Vector3(0, -6, 2.5), New Vector3(0, -3, 2.5), 75)
+
+        'WheelieUp
+        CustomCamera.Add(Locomotive, New Vector3(2.6, 11.3, 1.36), New Vector3(2, 10.5, 1.37), 50)
+
+        'WheelieDown
+        CustomCamera.Add(Locomotive, New Vector3(1.86, 9, 0.68), New Vector3(0.9, 8.75, 0.5), 50)
     End Sub
 End Class

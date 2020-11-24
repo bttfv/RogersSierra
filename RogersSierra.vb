@@ -44,7 +44,7 @@ Partial Public Class RogersSierra
     ''' Gets or sets whether train should reject new attach to it.
     ''' </summary>
     ''' <returns><seealso cref="Boolean"/></returns>
-    Public Property RejectAttach As Boolean = True
+    Public Property RejectAttach As Boolean = False
     ''' <summary>
     ''' Gets or sets whether train should go full speed.
     ''' </summary>
@@ -129,7 +129,7 @@ Partial Public Class RogersSierra
 
         RandomTrain = isRandom
 
-        WheelsOnPilot = False
+        WheelsOnPilot = True
 
         LoadProps()
 

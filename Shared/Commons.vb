@@ -73,6 +73,8 @@ Public Module Commons
         LeftFrontWheels
         LeftFront2Wheels
         Inside
+        WheelieUp
+        WheelieDown
     End Enum
 
     Public Enum CameraSwitchType

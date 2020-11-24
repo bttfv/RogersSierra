@@ -100,8 +100,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameUtils\CustomCamera.vb" />
-    <Compile Include="GameUtils\CustomerCameraManager.vb" />
     <Compile Include="GameUtils\Light.vb" />
     <Compile Include="GameUtils\LightHandler.vb" />
     <Compile Include="Menu\SpawnMenu.vb" />
@@ -195,6 +193,10 @@
     <None Include="Resources\funnelExplosion.wav" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BTTFVUtils\BTTFVUtils.csproj">
+      <Project>{f5aad1bd-63ca-4a12-97a8-f0d876ab4462}</Project>
+      <Name>BTTFVUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KlangRageAudioLibrary\KlangRageAudioLibrary.csproj">
       <Project>{e52db215-0aa9-453a-b5f3-91f3ff35c1d9}</Project>
       <Name>KlangRageAudioLibrary</Name>
