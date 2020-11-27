@@ -1,5 +1,5 @@
-﻿Imports BTTFVLibrary.Enums
-Imports BTTFVLibrary.Extensions
+﻿Imports FusionLibrary.Enums
+Imports FusionLibrary.Extensions
 Imports GTA
 Imports KlangRageAudioLibrary
 

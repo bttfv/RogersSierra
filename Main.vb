@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Forms
-Imports BTTFVLibrary
-Imports BTTFVLibrary.Enums
-Imports BTTFVLibrary.Extensions
+Imports FusionLibrary
+Imports FusionLibrary.Enums
+Imports FusionLibrary.Extensions
 Imports GTA
 Imports GTA.Math
 

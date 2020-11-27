@@ -3,9 +3,9 @@ Imports GTA
 Imports GTA.Math
 Imports GTA.UI
 Imports KlangRageAudioLibrary
-Imports BTTFVLibrary
-Imports BTTFVLibrary.Extensions
-Imports BTTFVLibrary.Enums
+Imports FusionLibrary
+Imports FusionLibrary.Extensions
+Imports FusionLibrary.Enums
 
 Partial Public Class RogersSierra
     ''' <summary>

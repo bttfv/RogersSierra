@@ -1,4 +1,4 @@
-﻿Imports BTTFVLibrary.Enums
+﻿Imports FusionLibrary.Enums
 
 Friend Class AnimatePropHandler
 
