@@ -12,32 +12,32 @@ Partial Public Class RogersSierra
     Private PistonRelativePosY As Single
     Private PistonRelativePosZ As Single
 
-    Private aAllProps As New AnimatePropHandler
+    Private aAllProps As New AnimatePropHandler2
 
-    Private aSmallWheelsTender As New AnimatePropHandler
+    Private aSmallWheelsTender As New AnimatePropHandler2
 
-    Private aWheels As New AnimatePropHandler
-    Private aSmallWheels As New AnimatePropHandler
-    Private aRods As AnimateProp
-    Private aPRods As AnimateProp
+    Private aWheels As New AnimatePropHandler2
+    Private aSmallWheels As New AnimatePropHandler2
+    Private aRods As AnimateProp2
+    Private aPRods As AnimateProp2
 
-    Private aPistons As AnimateProp
+    Private aPistons As AnimateProp2
     Private PistonOldPos As Single
     Private PistonGoingForward As Boolean = False
 
-    Private aLevValves As AnimateProp
-    Private aValves As AnimateProp
-    Private aValvesPist As AnimateProp
+    Private aLevValves As AnimateProp2
+    Private aValves As AnimateProp2
+    Private aValvesPist As AnimateProp2
 
-    Private aBell As AnimateProp
+    Private aBell As AnimateProp2
     Private BellAnimation As AnimationStep
     Private BellAnimationCounter As Single
     Private BellAnimationLength As Integer = 10
     Private BellAnimationChangedDirection As Boolean = True
 
-    Private sLight As AnimateProp
-    Private sCabCols As AnimateProp
-    Private sFireboxDoor As AnimateProp
+    Private sLight As AnimateProp2
+    Private sCabCols As AnimateProp2
+    Private sFireboxDoor As AnimateProp2
 
     'Private aBrakePads As New AnimatePropHandler
     'Private aBrakeBars As AnimateProp
@@ -67,67 +67,67 @@ Partial Public Class RogersSierra
         With aWheels
             WheelRadius = System.Math.Abs(TrainModels.sWheelDrive.Dimensions.frontTopRight.Z)
 
-            .Props.Add(New AnimateProp(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive1, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp2(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive1, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
-            .Props.Add(New AnimateProp(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive2, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp2(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive2, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
-            .Props.Add(New AnimateProp(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive3, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp2(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive3, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
         End With
 
         With aSmallWheels
             SmallWheelRadius = System.Math.Abs(TrainModels.sWheelFront.Dimensions.frontTopRight.Z)
 
-            .Props.Add(New AnimateProp(TrainModels.sWheelFront, Locomotive, TrainBones.sWheelFront1, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp2(TrainModels.sWheelFront, Locomotive, TrainBones.sWheelFront1, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
-            .Props.Add(New AnimateProp(TrainModels.sWheelFront, Locomotive, TrainBones.sWheelFront2, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp2(TrainModels.sWheelFront, Locomotive, TrainBones.sWheelFront2, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
         End With
 
         With aSmallWheelsTender
 
-            .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender1, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp2(TrainModels.tWheel, Tender, TrainBones.sWheelTender1, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
-            .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender2, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp2(TrainModels.tWheel, Tender, TrainBones.sWheelTender2, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
-            .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender3, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp2(TrainModels.tWheel, Tender, TrainBones.sWheelTender3, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
-            .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender4, Vector3.Zero, Vector3.Zero))
+            .Props.Add(New AnimateProp2(TrainModels.tWheel, Tender, TrainBones.sWheelTender4, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
         End With
 
-        aRods = New AnimateProp(TrainModels.sRods, Locomotive, TrainBones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
+        aRods = New AnimateProp2(TrainModels.sRods, Locomotive, TrainBones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
         aAllProps.Props.Add(aRods)
-        aPRods = New AnimateProp(TrainModels.sPRods, Locomotive, TrainBones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
+        aPRods = New AnimateProp2(TrainModels.sPRods, Locomotive, TrainBones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
         aAllProps.Props.Add(aPRods)
-        aPistons = New AnimateProp(TrainModels.sPistons, Locomotive, TrainBones.sPistons, Vector3.Zero, Vector3.Zero)
+        aPistons = New AnimateProp2(TrainModels.sPistons, Locomotive, TrainBones.sPistons, Vector3.Zero, Vector3.Zero)
         aAllProps.Props.Add(aPistons)
 
-        aLevValves = New AnimateProp(TrainModels.sLevValves, Locomotive, TrainBones.sLevValves, Vector3.Zero, Vector3.Zero)
+        aLevValves = New AnimateProp2(TrainModels.sLevValves, Locomotive, TrainBones.sLevValves, Vector3.Zero, Vector3.Zero)
         aAllProps.Props.Add(aLevValves)
 
-        aValves = New AnimateProp(TrainModels.sValves, Locomotive, TrainBones.sValves, Vector3.Zero, Vector3.Zero)
+        aValves = New AnimateProp2(TrainModels.sValves, Locomotive, TrainBones.sValves, Vector3.Zero, Vector3.Zero)
         aAllProps.Props.Add(aValves)
 
-        aValvesPist = New AnimateProp(TrainModels.sValvesPist, Locomotive, TrainBones.sValvesPist, Vector3.Zero, Vector3.Zero)
+        aValvesPist = New AnimateProp2(TrainModels.sValvesPist, Locomotive, TrainBones.sValvesPist, Vector3.Zero, Vector3.Zero)
         aAllProps.Props.Add(aValvesPist)
 
-        aBell = New AnimateProp(TrainModels.sBell, Locomotive, TrainBones.sBell, Vector3.Zero, Vector3.Zero, True)
+        aBell = New AnimateProp2(TrainModels.sBell, Locomotive, TrainBones.sBell, Vector3.Zero, Vector3.Zero, True)
         aBell.setRotationSettings(Coordinate.X, True, True, -70, 70, 3.5, False, 1, False, 1)
         BellAnimation = AnimationStep.Off
         aAllProps.Props.Add(aBell)
 
-        sLight = New AnimateProp(TrainModels.sLight, Locomotive, Vector3.Zero, Vector3.Zero)
+        sLight = New AnimateProp2(TrainModels.sLight, Locomotive, Vector3.Zero, Vector3.Zero)
         aAllProps.Props.Add(sLight)
 
-        sCabCols = New AnimateProp(TrainModels.sCabCols, Locomotive, Vector3.Zero, Vector3.Zero, True)
+        sCabCols = New AnimateProp2(TrainModels.sCabCols, Locomotive, Vector3.Zero, Vector3.Zero, True)
         sCabCols.Visible = False
         aAllProps.Props.Add(sCabCols)
 
-        sFireboxDoor = New AnimateProp(TrainModels.sFireboxDoor, Locomotive, TrainBones.sFireboxDoor, Vector3.Zero, Vector3.Zero, True)
+        sFireboxDoor = New AnimateProp2(TrainModels.sFireboxDoor, Locomotive, TrainBones.sFireboxDoor, Vector3.Zero, Vector3.Zero, True)
         sFireboxDoor.setRotationSettings(Coordinate.Z, True, True, 10, 80, 7, False, 1, True, 1)
         sFireboxDoor.Play()
-        sFireboxDoor.RotationUpdate(Coordinate.Z) = False
+        sFireboxDoor.set_RotationUpdate(Coordinate.Z, False)
         aAllProps.Props.Add(sFireboxDoor)
 
         'With aBrakePads
@@ -147,38 +147,38 @@ Partial Public Class RogersSierra
     Private Sub AnimationProcess()
 
         Dim modifier As Single = If(Locomotive.GetMPHSpeed <= 10, 1 + (2.5 / 10) * Locomotive.GetMPHSpeed, 2.5)
-        Dim wheelRot As Single = MathExtensions.AngularSpeed(Locomotive.Speed, WheelRadius, aWheels.Rotation(0).X, Locomotive.IsGoingForward, modifier)
+        Dim wheelRot As Single = MathExtensions.AngularSpeed(Locomotive.Speed, WheelRadius, aWheels.get_Rotation(0).X, Locomotive.IsGoingForward, modifier)
 
-        aWheels.AllRotation(Coordinate.X) = wheelRot
+        aWheels.set_AllRotation(Coordinate.X, wheelRot)
 
-        aSmallWheels.AllRotation(Coordinate.X) = MathExtensions.AngularSpeed(Locomotive.Speed, SmallWheelRadius, aSmallWheels.Rotation(0).X, Locomotive.IsGoingForward, modifier)
+        aSmallWheels.set_AllRotation(Coordinate.X, MathExtensions.AngularSpeed(Locomotive.Speed, SmallWheelRadius, aSmallWheels.get_Rotation(0).X, Locomotive.IsGoingForward, modifier))
 
-        aSmallWheelsTender.AllRotation(Coordinate.X) = aSmallWheels.AllRotation(Coordinate.X)
+        aSmallWheelsTender.set_AllRotation(Coordinate.X, aSmallWheels.get_AllRotation(Coordinate.X))
 
         wheelRot = MathExtensions.PositiveAngle(wheelRot)
 
         Dim dY = System.Math.Cos(MathExtensions.ToRad(wheelRot)) * TrainProperties.connPointRadius
         Dim dZ = System.Math.Sin(MathExtensions.ToRad(wheelRot)) * TrainProperties.connPointRadius
 
-        aRods.Position(Coordinate.Y) = dY
-        aRods.Position(Coordinate.Z) = dZ
+        aRods.set_Position(Coordinate.Y, dY)
+        aRods.set_Position(Coordinate.Z, dZ)
 
-        aPRods.Position(Coordinate.Y) = dY
-        aPRods.Position(Coordinate.Z) = dZ
+        aPRods.set_Position(Coordinate.Y, dY)
+        aPRods.set_Position(Coordinate.Z, dZ)
 
         Dim dAngle = 90 - MathExtensions.ToDeg(MathExtensions.ArcCos((PistonRelativePosZ - aPRods.RelativePosition.Z) / TrainProperties.pRodsLength))
 
-        aPRods.Rotation(Coordinate.X) = dAngle
+        aPRods.set_Rotation(Coordinate.X, dAngle)
 
-        aPistons.Position(Coordinate.Y) = TrainProperties.pRodsLength * System.Math.Cos(MathExtensions.ToRad(dAngle)) - (PistonRelativePosY - aPRods.RelativePosition.Y)
+        aPistons.set_Position(Coordinate.Y, TrainProperties.pRodsLength * System.Math.Cos(MathExtensions.ToRad(dAngle)) - (PistonRelativePosY - aPRods.RelativePosition.Y))
 
-        aLevValves.Rotation(Coordinate.X) = (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.Position(Coordinate.Y)
+        aLevValves.set_Rotation(Coordinate.X, (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.Position(Coordinate.Y))
 
-        aValvesPist.Position(Coordinate.Y) = (TrainProperties.minValvesPistPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X
+        aValvesPist.set_Position(Coordinate.Y, (TrainProperties.minValvesPistPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X)
 
-        aValves.Position(Coordinate.Y) = aValvesPist.Position(Coordinate.Y)
-        aValves.Position(Coordinate.Z) = (TrainProperties.maxValvesPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X
-        aValves.Rotation(Coordinate.X) = (TrainProperties.minValesRot / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X
+        aValves.set_Position(Coordinate.Y, aValvesPist.Position(Coordinate.Y))
+        aValves.set_Position(Coordinate.Z, (TrainProperties.maxValvesPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X)
+        aValves.set_Rotation(Coordinate.X, (TrainProperties.minValesRot / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X)
 
         sFireboxDoor.Play()
     End Sub
@@ -210,7 +210,7 @@ Partial Public Class RogersSierra
 
                     .Play()
 
-                    If .RotationIncreasing(Coordinate.X) <> BellAnimationChangedDirection Then
+                    If .get_RotationIncreasing(Coordinate.X) <> BellAnimationChangedDirection Then
 
                         sBellSound.Play()
                         BellAnimationChangedDirection = Not BellAnimationChangedDirection
@@ -218,11 +218,11 @@ Partial Public Class RogersSierra
 
                     If Game.IsControlPressed(Control.VehicleHandbrake) = False Then
 
-                        .RotationMaxMinRatio(Coordinate.X) = 1 - ((1 / BellAnimationLength) * BellAnimationCounter)
-                        .RotationStepRatio(Coordinate.X) = .RotationMaxMinRatio(Coordinate.X)
+                        .set_RotationMaxMinRatio(Coordinate.X, 1 - ((1 / BellAnimationLength) * BellAnimationCounter))
+                        .set_RotationStepRatio(Coordinate.X, .get_RotationMaxMinRatio(Coordinate.X))
 
                         Try
-                            sBellSound.Volume = .RotationMaxMinRatio(Coordinate.X)
+                            sBellSound.Volume = .get_RotationMaxMinRatio(Coordinate.X)
                         Catch ex As Exception
 
                         End Try
@@ -236,8 +236,8 @@ Partial Public Class RogersSierra
                         End If
                     ElseIf Game.IsControlJustPressed(Control.VehicleHandbrake) Then
 
-                        .RotationMaxMinRatio(Coordinate.X) = 1
-                        .RotationStepRatio(Coordinate.X) = 1
+                        .set_RotationMaxMinRatio(Coordinate.X, 1)
+                        .set_RotationStepRatio(Coordinate.X, 1)
 
                         Try
                             sBellSound.Volume = 1

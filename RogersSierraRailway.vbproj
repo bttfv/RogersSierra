@@ -112,8 +112,6 @@
     <Compile Include="RogersSierraProps.vb" />
     <Compile Include="RogersSierraSounds.vb" />
     <Compile Include="Shared\TrainBones.vb" />
-    <Compile Include="GameUtils\AnimateProp.vb" />
-    <Compile Include="GameUtils\AnimatePropHandler.vb" />
     <Compile Include="Main.vb" />
     <Compile Include="Shared\TrainModels.vb" />
     <Compile Include="Shared\TrainParticles.vb" />
@@ -187,7 +185,7 @@
     <None Include="Resources\funnelExplosion.wav" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BTTFVUtils\FusionLibrary.csproj">
+    <ProjectReference Include="..\FusionLibrary\FusionLibrary.csproj">
       <Project>{f5aad1bd-63ca-4a12-97a8-f0d876ab4462}</Project>
       <Name>FusionLibrary</Name>
     </ProjectReference>
