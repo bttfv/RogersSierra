@@ -1,4 +1,6 @@
-﻿Imports GTA
+﻿Imports BTTFVLibrary.Enums
+Imports BTTFVLibrary.Extensions
+Imports GTA
 Imports KlangRageAudioLibrary
 
 Partial Public Class RogersSierra
@@ -65,7 +67,7 @@ Partial Public Class RogersSierra
 
             Dim baseVal As Single = 8
 
-            Select Case Locomotive.SpeedMPHf
+            Select Case Locomotive.GetMPHSpeed
                 Case Is <= baseVal
                     newIndex = 0
                 Case Is <= baseVal * 2

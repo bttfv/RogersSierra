@@ -1,4 +1,6 @@
 ﻿Imports GTA
+Imports BTTFVLibrary
+
 Friend Class TrainModels
 
     'Public Shared DMC12Model As Model
@@ -44,27 +46,27 @@ Friend Class TrainModels
     Public Shared Sub LoadModels()
 
         'DMC12Model = LoadAndRequestModel("dmc12")
-        DMC12ColModel = LoadAndRequestModel("dmc_debug")
-        RogersSierraModel = LoadAndRequestModel("sierra")
-        RogersSierraColModel = LoadAndRequestModel("sierra_debug")
-        TenderModel = LoadAndRequestModel("sierratender")
+        DMC12ColModel = Utils.LoadAndRequestModel("dmc_debug")
+        RogersSierraModel = Utils.LoadAndRequestModel("sierra")
+        RogersSierraColModel = Utils.LoadAndRequestModel("sierra_debug")
+        TenderModel = Utils.LoadAndRequestModel("sierratender")
 
-        tWheel = LoadAndRequestModel("rog_tender_wheel")
+        tWheel = Utils.LoadAndRequestModel("rog_tender_wheel")
 
-        sWheelDrive = LoadAndRequestModel("rog_drive_wheel")
-        sWheelFront = LoadAndRequestModel("rog_front_wheel")
+        sWheelDrive = Utils.LoadAndRequestModel("rog_drive_wheel")
+        sWheelFront = Utils.LoadAndRequestModel("rog_front_wheel")
 
-        sRods = LoadAndRequestModel("rog_rods")
-        sPRods = LoadAndRequestModel("rog_prods")
-        sPistons = LoadAndRequestModel("rog_pistons")
-        sLevValves = LoadAndRequestModel("rog_lev_valves")
-        sValves = LoadAndRequestModel("rog_valves")
-        sValvesPist = LoadAndRequestModel("rog_valves_pist")
+        sRods = Utils.LoadAndRequestModel("rog_rods")
+        sPRods = Utils.LoadAndRequestModel("rog_prods")
+        sPistons = Utils.LoadAndRequestModel("rog_pistons")
+        sLevValves = Utils.LoadAndRequestModel("rog_lev_valves")
+        sValves = Utils.LoadAndRequestModel("rog_valves")
+        sValvesPist = Utils.LoadAndRequestModel("rog_valves_pist")
 
-        sBell = LoadAndRequestModel("bell")
-        sLight = LoadAndRequestModel("sierra_light")
-        sCabCols = LoadAndRequestModel("rog_cab_col")
-        sFireboxDoor = LoadAndRequestModel("rog_furnace_door")
+        sBell = Utils.LoadAndRequestModel("bell")
+        sLight = Utils.LoadAndRequestModel("sierra_light")
+        sCabCols = Utils.LoadAndRequestModel("rog_cab_col")
+        sFireboxDoor = Utils.LoadAndRequestModel("rog_furnace_door")
 
         'sBrakePadsFront = LoadAndRequestModel("brakepads_f")
         'sBrakePadsMiddle = LoadAndRequestModel("brakepads_m")

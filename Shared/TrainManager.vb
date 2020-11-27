@@ -1,4 +1,7 @@
-﻿Imports GTA
+﻿Imports BTTFVLibrary
+Imports GTA
+Imports BTTFVLibrary.Extensions
+
 Public Module TrainManager
 
     Private _CurrentRogersSierra As RogersSierra
@@ -38,7 +41,7 @@ Public Module TrainManager
 
     Public Sub CreateRogersSierra(tPosition As Math.Vector3, Optional warpInPlayer As Boolean = False, Optional direction As Boolean = False)
 
-        Dim tmpTrain = CreateMissionTrain(26, tPosition, direction)
+        Dim tmpTrain = Utils.CreateMissionTrain(26, tPosition, direction)
 
         tmpTrain.setTrainCruiseSpeed(0)
 
@@ -48,7 +51,7 @@ Public Module TrainManager
 
         If warpInPlayer Then
 
-            PlayerPed.Task.WarpIntoVehicle(tmpTrain.GetTrainCarriage(1), VehicleSeat.Driver)
+            Utils.PlayerPed.Task.WarpIntoVehicle(tmpTrain.GetTrainCarriage(1), VehicleSeat.Driver)
         End If
     End Sub
 

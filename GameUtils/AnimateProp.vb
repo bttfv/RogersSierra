@@ -1,4 +1,5 @@
-﻿Imports GTA
+﻿Imports BTTFVLibrary.Enums
+Imports GTA
 Imports GTA.Math
 
 Friend Class AnimateProp

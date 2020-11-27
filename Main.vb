@@ -1,8 +1,14 @@
 ﻿Imports System.Windows.Forms
+Imports BTTFVLibrary
+Imports BTTFVLibrary.Enums
+Imports BTTFVLibrary.Extensions
 Imports GTA
+Imports GTA.Math
 
 Friend Class Main
     Inherits Script
+
+    Private SpawnMenu As New SpawnMenu
 
     Private initialSetup As Boolean = True
 
@@ -16,7 +22,13 @@ Friend Class Main
 
     Private Sub Main_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
 
-        Commons.MenuManager.KeyDown(e)
+        Select Case e.KeyData
+            Case Keys.F9
+                If CustomNativeMenu.ObjectPool.AreAnyVisible = False Then
+
+                    SpawnMenu.Open()
+                End If
+        End Select
 
         If Not IsNothing(CurrentRogersSierra) Then
 
@@ -37,13 +49,10 @@ Friend Class Main
 
             TrainModels.LoadModels()
 
-            Native.Function.Call(Native.Hash.SET_RANDOM_TRAINS, False)
-            Native.Function.Call(Native.Hash.DELETE_ALL_TRAINS)
+            Utils.RandomTrains = False
 
             initialSetup = False
         End If
-
-        Commons.MenuManager.Process()
 
         World.GetAllVehicles(TrainModels.DMC12ColModel).ToList.ForEach(Sub(x)
 
@@ -80,24 +89,24 @@ Friend Class Main
                                          Exit Sub
                                      End If
 
-                                     If PlayerPed.IsInVehicle() = False AndAlso x.IsExploded = False Then
+                                     If Utils.PlayerPed.IsInVehicle() = False AndAlso x.IsExploded = False Then
 
                                          If Game.IsControlJustPressed(GTA.Control.Enter) Then
 
-                                             If x.IsExploded = False AndAlso x.GetBoneDistanceSquared(TrainBones.sDriverSeat, PlayerPed) < 1.3 Then
+                                             If x.IsExploded = False AndAlso x.GetBoneDistanceSquared(TrainBones.sDriverSeat, Utils.PlayerPed) < 1.3 Then
 
                                                  If x.Locomotive.Speed > 0 Then
 
-                                                     PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver,,, EnterVehicleFlags.WarpIn)
+                                                     Utils.PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver,,, EnterVehicleFlags.WarpIn)
                                                  Else
 
-                                                     PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver)
+                                                     Utils.PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver)
                                                  End If
                                              End If
                                          End If
                                      End If
 
-                                     Dim tmpDist = PlayerPed.Position.DistanceToSquared(x.Locomotive.Position)
+                                     Dim tmpDist = Utils.PlayerPed.Position.DistanceToSquared(x.Locomotive.Position)
 
                                      If ClosestRogersSierra Is x Then
 
@@ -121,17 +130,17 @@ Friend Class Main
 
             If ClosestRogersSierraDist <= 200 AndAlso ClosestRogersSierra.LocomotiveSpeed > 0 Then
 
-                If PlayerPed.CanRagdoll Then
+                If Utils.PlayerPed.CanRagdoll Then
 
-                    PlayerPed.CanRagdoll = False
+                    Utils.PlayerPed.CanRagdoll = False
                 End If
-            ElseIf Not PlayerPed.CanRagdoll Then
+            ElseIf Not Utils.PlayerPed.CanRagdoll Then
 
-                PlayerPed.CanRagdoll = True
+                Utils.PlayerPed.CanRagdoll = True
             End If
         End If
 
-        If Not IsNothing(CurrentRogersSierra) AndAlso Not PlayerPed.IsInVehicle Then
+        If Not IsNothing(CurrentRogersSierra) AndAlso Not Utils.PlayerPed.IsInVehicle Then
 
             If CurrentRogersSierra.Camera <> TrainCamera.Off AndAlso Not CurrentRogersSierra.IsOnTrainMission Then
 

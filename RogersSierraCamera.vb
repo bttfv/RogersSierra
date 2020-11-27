@@ -1,9 +1,10 @@
 ﻿Imports GTA.Math
-Imports CustomCamera
+Imports BTTFVLibrary
+Imports BTTFVLibrary.Enums
 
 Partial Public Class RogersSierra
 
-    Public CustomCamera As New CustomCameraManager
+    Public CustomCamera As New CustomCameraHandler
 
     Public Property Camera As TrainCamera
         Get

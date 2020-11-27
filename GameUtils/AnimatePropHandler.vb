@@ -1,4 +1,6 @@
-﻿Friend Class AnimatePropHandler
+﻿Imports BTTFVLibrary.Enums
+
+Friend Class AnimatePropHandler
 
     Public Props As New List(Of AnimateProp)
 

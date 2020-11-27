@@ -1,5 +1,8 @@
 ﻿Imports GTA
 Imports GTA.Math
+Imports BTTFVLibrary
+Imports BTTFVLibrary.Extensions
+Imports BTTFVLibrary.Enums
 
 Partial Public Class RogersSierra
 
@@ -143,19 +146,19 @@ Partial Public Class RogersSierra
 
     Private Sub AnimationProcess()
 
-        Dim modifier As Single = If(Locomotive.SpeedMPH <= 10, 1 + (2.5 / 10) * Locomotive.SpeedMPH, 2.5)
-        Dim wheelRot As Single = GetAngularSpeedRotation(Locomotive.Speed, WheelRadius, aWheels.Rotation(0).X, Locomotive.isGoingForward, modifier)
+        Dim modifier As Single = If(Locomotive.GetMPHSpeed <= 10, 1 + (2.5 / 10) * Locomotive.GetMPHSpeed, 2.5)
+        Dim wheelRot As Single = MathExtensions.AngularSpeed(Locomotive.Speed, WheelRadius, aWheels.Rotation(0).X, Locomotive.IsGoingForward, modifier)
 
         aWheels.AllRotation(Coordinate.X) = wheelRot
 
-        aSmallWheels.AllRotation(Coordinate.X) = GetAngularSpeedRotation(Locomotive.Speed, SmallWheelRadius, aSmallWheels.Rotation(0).X, Locomotive.isGoingForward, modifier)
+        aSmallWheels.AllRotation(Coordinate.X) = MathExtensions.AngularSpeed(Locomotive.Speed, SmallWheelRadius, aSmallWheels.Rotation(0).X, Locomotive.IsGoingForward, modifier)
 
         aSmallWheelsTender.AllRotation(Coordinate.X) = aSmallWheels.AllRotation(Coordinate.X)
 
-        wheelRot = PositiveAngle(wheelRot)
+        wheelRot = MathExtensions.PositiveAngle(wheelRot)
 
-        Dim dY = System.Math.Cos(DegToRad(wheelRot)) * TrainProperties.connPointRadius
-        Dim dZ = System.Math.Sin(DegToRad(wheelRot)) * TrainProperties.connPointRadius
+        Dim dY = System.Math.Cos(MathExtensions.ToRad(wheelRot)) * TrainProperties.connPointRadius
+        Dim dZ = System.Math.Sin(MathExtensions.ToRad(wheelRot)) * TrainProperties.connPointRadius
 
         aRods.Position(Coordinate.Y) = dY
         aRods.Position(Coordinate.Z) = dZ
@@ -163,11 +166,11 @@ Partial Public Class RogersSierra
         aPRods.Position(Coordinate.Y) = dY
         aPRods.Position(Coordinate.Z) = dZ
 
-        Dim dAngle = 90 - RadToDeg(ArcCos((PistonRelativePosZ - aPRods.RelativePosition.Z) / TrainProperties.pRodsLength))
+        Dim dAngle = 90 - MathExtensions.ToDeg(MathExtensions.ArcCos((PistonRelativePosZ - aPRods.RelativePosition.Z) / TrainProperties.pRodsLength))
 
         aPRods.Rotation(Coordinate.X) = dAngle
 
-        aPistons.Position(Coordinate.Y) = TrainProperties.pRodsLength * System.Math.Cos(DegToRad(dAngle)) - (PistonRelativePosY - aPRods.RelativePosition.Y)
+        aPistons.Position(Coordinate.Y) = TrainProperties.pRodsLength * System.Math.Cos(MathExtensions.ToRad(dAngle)) - (PistonRelativePosY - aPRods.RelativePosition.Y)
 
         aLevValves.Rotation(Coordinate.X) = (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.Position(Coordinate.Y)
 
@@ -190,12 +193,12 @@ Partial Public Class RogersSierra
             AnimationProcess()
         End If
 
-        If Game.IsControlJustPressed(Control.VehicleHandbrake) AndAlso Game.IsControlPressed(Control.CharacterWheel) = False AndAlso Bell = False AndAlso PlayerPed.IsInVehicle(Locomotive) Then
+        If Game.IsControlJustPressed(Control.VehicleHandbrake) AndAlso Game.IsControlPressed(Control.CharacterWheel) = False AndAlso Bell = False AndAlso Utils.PlayerPed.IsInVehicle(Locomotive) Then
 
             Bell = True
         End If
 
-        If Game.IsControlJustPressed(Control.VehicleHeadlight) AndAlso PlayerPed.IsInVehicle(Locomotive) Then
+        If Game.IsControlJustPressed(Control.VehicleHeadlight) AndAlso Utils.PlayerPed.IsInVehicle(Locomotive) Then
 
             IsLightOn = Not IsLightOn
         End If

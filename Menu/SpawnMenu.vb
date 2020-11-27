@@ -3,8 +3,12 @@ Imports System.Drawing
 Imports GTA
 Imports GTA.Math
 Imports LemonUI.Menus
+Imports BTTFVLibrary
+Imports BTTFVLibrary.Extensions
+Imports BTTFVLibrary.Enums
+
 Friend Class SpawnMenu
-    Inherits NativeMenu
+    Inherits CustomNativeMenu
 
     Private SpawnMode As Boolean
 
@@ -21,9 +25,19 @@ Friend Class SpawnMenu
     Public Sub New()
         MyBase.New("", Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Subtitle"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Description"))
 
+        SpawnLocation.SpawnLocations = New List(Of SpawnLocation) From {
+                    New SpawnLocation(New Vector3(2611, 1681, 27), New Vector3(2601.0, 1700.2, 29.9), New Vector3(0.8, -0.6, -0.1), False),
+                    New SpawnLocation(New Vector3(2462, -289, 93), New Vector3(2455.4, -276.4, 96.2), New Vector3(0.4, -0.9, 0.1)),
+                    New SpawnLocation(New Vector3(2014, 2493, 58), New Vector3(2028.6, 2482.9, 67.6), New Vector3(-1.0, 0.2, 0.0)),
+                    New SpawnLocation(New Vector3(2994, 3990, 57), New Vector3(3004.8, 3983.3, 60.0), New Vector3(-0.5, 0.9, 0.0)),
+                    New SpawnLocation(New Vector3(1807, 3510, 39), New Vector3(1828.1, 3535.5, 45.2), New Vector3(-0.5, -0.9, 0.1)),
+                    New SpawnLocation(New Vector3(-478, 5253, 88), New Vector3(-476.1, 5215.4, 98.9), New Vector3(-0.5, 0.8, -0.2)),
+                    New SpawnLocation(New Vector3(749, 6433, 30), New Vector3(765.6, 6449.3, 34.3), New Vector3(-0.9, -0.4, 0.2)),
+                    New SpawnLocation(New Vector3(2486, 5743, 64), New Vector3(2510.5, 5716.2, 68.4), New Vector3(-1.0, 0.3, 0.1))}
+
         Banner = New LemonUI.Elements.ScaledTexture(New PointF(0, 0), New SizeF(200, 200), "sierra_gui", "sierra_menu_logo")
 
-        SelectLocation.Items = SpawnLocations
+        SelectLocation.Items = SpawnLocation.SpawnLocations
         DeleteTrain.Items = RogersSierraList
 
         Add(SelectLocation)
@@ -190,8 +204,8 @@ Friend Class SpawnMenu
     Private Sub DeleteAllTrains_Activated(sender As Object, e As EventArgs) Handles DeleteAllTrains.Activated
 
         RogersSierraList.ForEach(Sub(x)
-                                 x.Delete()
-                             End Sub)
+                                     x.Delete()
+                                 End Sub)
 
         Close()
     End Sub
@@ -204,5 +218,9 @@ Friend Class SpawnMenu
 
             Native.Function.Call(Native.Hash.DELETE_ALL_TRAINS)
         End If
+    End Sub
+
+    Public Overrides Sub Tick()
+
     End Sub
 End Class

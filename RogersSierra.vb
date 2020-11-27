@@ -3,6 +3,9 @@ Imports GTA
 Imports GTA.Math
 Imports GTA.UI
 Imports KlangRageAudioLibrary
+Imports BTTFVLibrary
+Imports BTTFVLibrary.Extensions
+Imports BTTFVLibrary.Enums
 
 Partial Public Class RogersSierra
     ''' <summary>
@@ -100,7 +103,7 @@ Partial Public Class RogersSierra
 
     Public Sub New(mTrain As Vehicle, isRandom As Boolean)
 
-        _ID = RndGenerator.Next
+        _ID = Utils.Random.Next
 
         ColDeLorean = mTrain
         Locomotive = ColDeLorean.GetTrainCarriage(1)
@@ -183,7 +186,7 @@ Partial Public Class RogersSierra
     ''' </summary>
     Public Sub Derail()
 
-        Locomotive.MakeTrainDerail()
+        Locomotive.Derail()
 
         ForceHandbrake = True
         _IsExploded = True
@@ -339,11 +342,11 @@ Partial Public Class RogersSierra
 
         Tender.DirtLevel = 0
 
-        If Not PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot AndAlso Not IsExploded Then
+        If Not Utils.PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot AndAlso Not IsExploded Then
 
             Dim tmpPos = Locomotive.GetOffsetPosition(New Vector3(0, TrainModels.RogersSierraModel.Dimensions.frontTopRight.Y, 0.5))
 
-            If PlayerPed.Position.DistanceToSquared(tmpPos) < 1.5 * 1.5 Then
+            If Utils.PlayerPed.Position.DistanceToSquared(tmpPos) < 1.5 * 1.5 Then
 
                 Screen.ShowHelpTextThisFrame(Game.GetLocalizedString("RogersSierra_Help_InstallWheelsOnPilot"))
 
@@ -370,9 +373,9 @@ Partial Public Class RogersSierra
 
         If RandomTrain Then
 
-            If PlayerPed.IsInVehicle(Locomotive) Then
+            If Utils.PlayerPed.IsInVehicle(Locomotive) Then
 
-                Locomotive.setTrainCruiseSpeed(0)
+                Locomotive.SetTrainCruiseSpeed(0)
                 LocomotiveSpeed = Locomotive.Speed
 
                 RandomTrain = False
@@ -382,7 +385,7 @@ Partial Public Class RogersSierra
             End If
         End If
 
-        If PlayerPed.IsInVehicle(Locomotive) Then
+        If Utils.PlayerPed.IsInVehicle(Locomotive) Then
 
             If CurrentRogersSierra IsNot Me Then
 
@@ -390,7 +393,7 @@ Partial Public Class RogersSierra
 
                 Screen.ShowHelpTextThisFrame($"{Game.GetLocalizedString("RogersSierra_Help_Whistle")}: ~INPUT_VEH_HORN~{vbCr}{Game.GetLocalizedString("RogersSierra_Help_Bell")}: ~INPUT_VEH_HANDBRAKE~{vbCr}{Game.GetLocalizedString("RogersSierra_Help_CruiseControl")}: ~INPUT_VEH_DUCK~")
 
-                PlayerPed.Task.PlayAnimation("amb@code_human_in_bus_passenger_idles@female@sit@base", "base", 900, -1, AnimationFlags.Loop)
+                Utils.PlayerPed.Task.PlayAnimation("amb@code_human_in_bus_passenger_idles@female@sit@base", "base", 900, -1, AnimationFlags.Loop)
             End If
 
             If IsNothing(VisibleLocomotive.AttachedBlip) = False AndAlso VisibleLocomotive.AttachedBlip.Exists Then
@@ -400,8 +403,8 @@ Partial Public Class RogersSierra
 
             If Game.IsControlJustPressed(Control.VehicleExit) AndAlso IsVisible Then
 
-                PlayerPed.Task.ClearAnimation("amb@code_human_in_bus_passenger_idles@female@sit@base", "base")
-                PlayerPed.Task.LeaveVehicle()
+                Utils.PlayerPed.Task.ClearAnimation("amb@code_human_in_bus_passenger_idles@female@sit@base", "base")
+                Utils.PlayerPed.Task.LeaveVehicle()
             End If
 
             If IsOnTrainMission = False And ForceHandbrake = False Then
@@ -441,7 +444,7 @@ Partial Public Class RogersSierra
             VisibleLocomotive.AttachedBlip.Name = "Rogers Sierra No. 3"
         End If
 
-        If PlayerPed.IsInVehicle(Locomotive) = False OrElse (Game.IsControlPressed(Control.VehicleAccelerate) = False AndAlso Game.IsControlPressed(Control.VehicleBrake) = False) Then
+        If Utils.PlayerPed.IsInVehicle(Locomotive) = False OrElse (Game.IsControlPressed(Control.VehicleAccelerate) = False AndAlso Game.IsControlPressed(Control.VehicleBrake) = False) Then
 
             If IsCruiseControlOn = False AndAlso IsOnTrainMission = False Then
 
@@ -490,12 +493,12 @@ Partial Public Class RogersSierra
             End If
         End If
 
-        If UnlockSpeed AndAlso Not lockSpeed AndAlso Locomotive.SpeedMPH > 51 Then
+        If UnlockSpeed AndAlso Not lockSpeed AndAlso Locomotive.GetMPHSpeed > 51 Then
 
             lockSpeed = True
         End If
 
-        If UnlockSpeed AndAlso lockSpeed AndAlso Locomotive.SpeedMPH < 51 Then
+        If UnlockSpeed AndAlso lockSpeed AndAlso Locomotive.GetMPHSpeed < 51 Then
 
             UnlockSpeed = False
             lockSpeed = False
@@ -505,15 +508,15 @@ Partial Public Class RogersSierra
 
             Dim maxSpeed As Integer = If(UnlockSpeed, 90, 51)
 
-            If MsToMph(LocomotiveSpeed) > maxSpeed Then
+            If MathExtensions.ToMPH(LocomotiveSpeed) > maxSpeed Then
 
-                LocomotiveSpeed = MphToMs(maxSpeed)
+                LocomotiveSpeed = MathExtensions.ToMS(maxSpeed)
             End If
         Else
 
-            If MsToMph(LocomotiveSpeed) < -40 Then
+            If MathExtensions.ToMPH(LocomotiveSpeed) < -40 Then
 
-                LocomotiveSpeed = MphToMs(-40)
+                LocomotiveSpeed = MathExtensions.ToMS(-40)
             End If
         End If
 

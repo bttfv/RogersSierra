@@ -1,4 +1,7 @@
 ﻿Imports System.Drawing
+Imports BTTFVLibrary
+Imports BTTFVLibrary.Enums
+Imports BTTFVLibrary.Extensions
 Imports GTA
 Imports GTA.Math
 
@@ -76,7 +79,7 @@ Partial Public Class RogersSierra
             If value Then
 
                 pFunnelFire.CreateLoopedOnEntityBone(Locomotive, TrainBones.sFunnel, New Vector3(0, -0.5, -0.25),, 0.75)
-                pFunnelFire.setLoopedEvolution("fade", 1)
+                pFunnelFire.SetLoopedEvolution("fade", 1)
             Else
 
                 pFunnelFire.Stop()
@@ -113,7 +116,7 @@ Partial Public Class RogersSierra
             If value Then
 
                 pFireboxFire.CreateLoopedOnEntityBone(Locomotive, TrainBones.sFireboxFire, New Vector3(0, 0, 0), New Vector3(0, 0, 0), pFireboxFireSize)
-                pFunnelFire.setLoopedEvolution("fade", 1)
+                pFunnelFire.SetLoopedEvolution("fade", 1)
             Else
 
                 pFireboxFire.Stop()
@@ -237,12 +240,12 @@ Partial Public Class RogersSierra
         'Cab
         CustomLights.Add("boilerlight", "boilerlightdir", Color.White, 34, 5, 0, 45, 100)
         CabLight = CustomLights.Lights.Last
-        IsLightOn = IsNight()
+        IsLightOn = TimeHandler.IsNight
     End Sub
 
     Private Sub ParticlesTick()
 
-        pFunnelInterval = 1500 - (1450 / 51) * Locomotive.SpeedMPH
+        pFunnelInterval = 1500 - (1450 / 51) * Locomotive.GetMPHSpeed
 
         If pFunnelInterval < 50 Then pFunnelInterval = 50
 
@@ -305,7 +308,7 @@ Partial Public Class RogersSierra
             Whistle = False
         End If
 
-        If Game.IsControlJustPressed(Control.VehicleHorn) AndAlso PlayerPed.IsInVehicle(Locomotive) Then
+        If Game.IsControlJustPressed(Control.VehicleHorn) AndAlso Utils.PlayerPed.IsInVehicle(Locomotive) Then
 
             Whistle = True
         End If

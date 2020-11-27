@@ -100,8 +100,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameUtils\Light.vb" />
-    <Compile Include="GameUtils\LightHandler.vb" />
     <Compile Include="Menu\SpawnMenu.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -116,10 +114,7 @@
     <Compile Include="Shared\TrainBones.vb" />
     <Compile Include="GameUtils\AnimateProp.vb" />
     <Compile Include="GameUtils\AnimatePropHandler.vb" />
-    <Compile Include="GameUtils\PTFX.vb" />
-    <Compile Include="Shared\Commons.vb" />
     <Compile Include="Main.vb" />
-    <Compile Include="Shared\MenuManager.vb" />
     <Compile Include="Shared\TrainModels.vb" />
     <Compile Include="Shared\TrainParticles.vb" />
     <Compile Include="Shared\TrainManager.vb" />
@@ -135,7 +130,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Shared\TrainProperties.vb" />
-    <Compile Include="Utils\cMath.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -193,9 +187,9 @@
     <None Include="Resources\funnelExplosion.wav" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BTTFVUtils\BTTFVUtils.csproj">
+    <ProjectReference Include="..\BTTFVUtils\BTTFVLibrary.csproj">
       <Project>{f5aad1bd-63ca-4a12-97a8-f0d876ab4462}</Project>
-      <Name>BTTFVUtils</Name>
+      <Name>BTTFVLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\KlangRageAudioLibrary\KlangRageAudioLibrary.csproj">
       <Project>{e52db215-0aa9-453a-b5f3-91f3ff35c1d9}</Project>
