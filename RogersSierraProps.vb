@@ -50,6 +50,11 @@ Partial Public Class RogersSierra
         Set(value As Boolean)
             If value Then
 
+                If aBell.IsAnimationOn = False Then
+
+                    aBell.setRotationIncreasing(Coordinate.X, True)
+                End If
+
                 aBell.IsAnimationOn = True
             End If
         End Set
@@ -112,7 +117,7 @@ Partial Public Class RogersSierra
         aAllProps.Props.Add(aValvesPist)
 
         aBell = New AnimateProp(TrainModels.sBell, Locomotive, TrainBones.sBell, Vector3.Zero, Vector3.Zero)
-        aBell.setRotationSettings(Coordinate.X, True, True, -70, 70, 3.5, False, 1, False, 1)
+        aBell.setRotationSettings(Coordinate.X, True, True, -70, 70, 1, 70, 1, False, True)
         aAllProps.Props.Add(aBell)
 
         sLight = New AnimateProp(TrainModels.sLight, Locomotive, Vector3.Zero, Vector3.Zero)
@@ -123,7 +128,7 @@ Partial Public Class RogersSierra
         aAllProps.Props.Add(sCabCols)
 
         sFireboxDoor = New AnimateProp(TrainModels.sFireboxDoor, Locomotive, TrainBones.sFireboxDoor, Vector3.Zero, Vector3.Zero, True)
-        sFireboxDoor.setRotationSettings(Coordinate.Z, True, True, 10, 80, 7, False, 1, True, 1)
+        sFireboxDoor.setRotationSettings(Coordinate.Z, True, True, 10, 80, 1, 7, 1, True)
         sFireboxDoor.Play()
         sFireboxDoor.IsAnimationOn = False
         aAllProps.Props.Add(sFireboxDoor)
@@ -145,38 +150,38 @@ Partial Public Class RogersSierra
     Private Sub AnimationProcess()
 
         Dim modifier As Single = If(Locomotive.GetMPHSpeed <= 10, 1 + (2.5 / 10) * Locomotive.GetMPHSpeed, 2.5)
-        Dim wheelRot As Single = MathExtensions.AngularSpeed(Locomotive.Speed, WheelRadius, aWheels.get_Rotation(0).X, Locomotive.IsGoingForward, modifier)
+        Dim wheelRot As Single = MathExtensions.AngularSpeed(Locomotive.Speed, WheelRadius, aWheels.getRotation(0).X, Locomotive.IsGoingForward, modifier)
 
-        aWheels.set_AllRotation(Coordinate.X, wheelRot)
+        aWheels.setAllRotation(Coordinate.X, wheelRot)
 
-        aSmallWheels.set_AllRotation(Coordinate.X, MathExtensions.AngularSpeed(Locomotive.Speed, SmallWheelRadius, aSmallWheels.get_Rotation(0).X, Locomotive.IsGoingForward, modifier))
+        aSmallWheels.setAllRotation(Coordinate.X, MathExtensions.AngularSpeed(Locomotive.Speed, SmallWheelRadius, aSmallWheels.getRotation(0).X, Locomotive.IsGoingForward, modifier))
 
-        aSmallWheelsTender.set_AllRotation(Coordinate.X, aSmallWheels.get_AllRotation(Coordinate.X))
+        aSmallWheelsTender.setAllRotation(Coordinate.X, aSmallWheels.getAllRotation(Coordinate.X))
 
         wheelRot = MathExtensions.PositiveAngle(wheelRot)
 
         Dim dY = System.Math.Cos(MathExtensions.ToRad(wheelRot)) * TrainProperties.connPointRadius
         Dim dZ = System.Math.Sin(MathExtensions.ToRad(wheelRot)) * TrainProperties.connPointRadius
 
-        aRods.set_Position(Coordinate.Y, dY)
-        aRods.set_Position(Coordinate.Z, dZ)
+        aRods.setOffset(Coordinate.Y, dY)
+        aRods.setOffset(Coordinate.Z, dZ)
 
-        aPRods.set_Position(Coordinate.Y, dY)
-        aPRods.set_Position(Coordinate.Z, dZ)
+        aPRods.setOffset(Coordinate.Y, dY)
+        aPRods.setOffset(Coordinate.Z, dZ)
 
         Dim dAngle = 90 - MathExtensions.ToDeg(MathExtensions.ArcCos((PistonRelativePosZ - aPRods.RelativePosition.Z) / TrainProperties.pRodsLength))
 
-        aPRods.set_Rotation(Coordinate.X, dAngle)
+        aPRods.setRotation(Coordinate.X, dAngle)
 
-        aPistons.set_Position(Coordinate.Y, TrainProperties.pRodsLength * System.Math.Cos(MathExtensions.ToRad(dAngle)) - (PistonRelativePosY - aPRods.RelativePosition.Y))
+        aPistons.setOffset(Coordinate.Y, TrainProperties.pRodsLength * System.Math.Cos(MathExtensions.ToRad(dAngle)) - (PistonRelativePosY - aPRods.RelativePosition.Y))
 
-        aLevValves.set_Rotation(Coordinate.X, (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.Offset(Coordinate.Y))
+        aLevValves.setRotation(Coordinate.X, (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.Offset(Coordinate.Y))
 
-        aValvesPist.set_Position(Coordinate.Y, (TrainProperties.minValvesPistPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X)
+        aValvesPist.setOffset(Coordinate.Y, (TrainProperties.minValvesPistPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X)
 
-        aValves.set_Position(Coordinate.Y, aValvesPist.Offset(Coordinate.Y))
-        aValves.set_Position(Coordinate.Z, (TrainProperties.maxValvesPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X)
-        aValves.set_Rotation(Coordinate.X, (TrainProperties.minValesRot / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X)
+        aValves.setOffset(Coordinate.Y, aValvesPist.Offset(Coordinate.Y))
+        aValves.setOffset(Coordinate.Z, (TrainProperties.maxValvesPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X)
+        aValves.setRotation(Coordinate.X, (TrainProperties.minValesRot / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X)
     End Sub
 
     Private Sub AnimationTick()
@@ -203,7 +208,7 @@ Partial Public Class RogersSierra
 
             With aBell
 
-                If .get_RotationIncreasing(Coordinate.X) <> BellAnimationChangedDirection Then
+                If .getRotationIncreasing(Coordinate.X) <> BellAnimationChangedDirection Then
 
                     sBellSound.Play()
                     BellAnimationChangedDirection = Not BellAnimationChangedDirection
@@ -211,11 +216,11 @@ Partial Public Class RogersSierra
 
                 If Game.IsControlPressed(Control.VehicleHandbrake) = False Then
 
-                    .set_RotationMaxMinRatio(Coordinate.X, 1 - ((1 / BellAnimationLength) * BellAnimationCounter))
-                    .set_RotationStepRatio(Coordinate.X, .get_RotationMaxMinRatio(Coordinate.X))
+                    .setRotationMaxMinRatio(Coordinate.X, 1 - ((1 / BellAnimationLength) * BellAnimationCounter))
+                    .setRotationStepRatio(Coordinate.X, .getRotationMaxMinRatio(Coordinate.X))
 
                     Try
-                        sBellSound.Volume = .get_RotationMaxMinRatio(Coordinate.X)
+                        sBellSound.Volume = .getRotationMaxMinRatio(Coordinate.X)
                     Catch ex As Exception
 
                     End Try
@@ -229,8 +234,8 @@ Partial Public Class RogersSierra
                     End If
                 ElseIf Game.IsControlJustPressed(Control.VehicleHandbrake) Then
 
-                    .set_RotationMaxMinRatio(Coordinate.X, 1)
-                    .set_RotationStepRatio(Coordinate.X, 1)
+                    .setRotationMaxMinRatio(Coordinate.X, 1)
+                    .setRotationStepRatio(Coordinate.X, 1)
 
                     Try
                         sBellSound.Volume = 1

@@ -228,7 +228,7 @@ Partial Public Class RogersSierra
     Public Sub ExplodeFirebox()
 
         FireboxFireSize = 1
-        sFireboxDoor.set_RotationUpdate(Coordinate.Z, True)
+        sFireboxDoor.setRotationUpdate(Coordinate.Z, True)
     End Sub
     ''' <summary>
     ''' Returns the world position of <paramref name="boneName"/>.
