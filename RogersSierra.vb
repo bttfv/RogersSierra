@@ -154,7 +154,7 @@ Partial Public Class RogersSierra
     ''' </summary>
     Public Sub Delete(Optional deleteVeh As Boolean = True)
 
-        aAllProps.DeleteAll()
+        aAllProps.Dispose()
 
         'aBrakePads.DeleteAll()
         'aBrakePistons.Delete()
@@ -200,7 +200,7 @@ Partial Public Class RogersSierra
 
         pTrainExpl.Create(Locomotive, Vector3.Zero, New Vector3(0, 0, 180))
 
-        aAllProps.ScatterProps(25)
+        aAllProps.ScatterProp(25)
 
         VisibleLocomotive.Explode()
 
@@ -522,15 +522,16 @@ Partial Public Class RogersSierra
 
         If LocomotiveSpeed > 0 Then
 
-            If sCabCols.Position = Vector3.Zero Then
+            If sCabCols.Position = Vector3.Zero AndAlso sCabCols.IsAnimationOn = False Then
 
                 sCabCols.Position = New Vector3(0, 0.75, 0)
-                sCabCols.Play()
+                sCabCols.IsAnimationOn = True
             End If
         ElseIf sCabCols.Position <> Vector3.Zero Then
 
             sCabCols.Position = Vector3.Zero
             sCabCols.Play()
+            sCabCols.IsAnimationOn = False
         End If
 
         Locomotive.setTrainSpeed(LocomotiveSpeed)
