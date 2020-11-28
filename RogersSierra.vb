@@ -522,14 +522,14 @@ Partial Public Class RogersSierra
 
         If LocomotiveSpeed > 0 Then
 
-            If sCabCols.Position = Vector3.Zero AndAlso sCabCols.IsAnimationOn = False Then
+            If sCabCols.Offset = Vector3.Zero AndAlso sCabCols.IsAnimationOn = False Then
 
-                sCabCols.Position = New Vector3(0, 0.75, 0)
+                sCabCols.Offset = New Vector3(0, 0.75, 0)
                 sCabCols.IsAnimationOn = True
             End If
-        ElseIf sCabCols.Position <> Vector3.Zero Then
+        ElseIf sCabCols.Offset <> Vector3.Zero Then
 
-            sCabCols.Position = Vector3.Zero
+            sCabCols.Offset = Vector3.Zero
             sCabCols.Play()
             sCabCols.IsAnimationOn = False
         End If

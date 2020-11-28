@@ -170,11 +170,11 @@ Partial Public Class RogersSierra
 
         aPistons.set_Position(Coordinate.Y, TrainProperties.pRodsLength * System.Math.Cos(MathExtensions.ToRad(dAngle)) - (PistonRelativePosY - aPRods.RelativePosition.Y))
 
-        aLevValves.set_Rotation(Coordinate.X, (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.Position(Coordinate.Y))
+        aLevValves.set_Rotation(Coordinate.X, (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.Offset(Coordinate.Y))
 
         aValvesPist.set_Position(Coordinate.Y, (TrainProperties.minValvesPistPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X)
 
-        aValves.set_Position(Coordinate.Y, aValvesPist.Position(Coordinate.Y))
+        aValves.set_Position(Coordinate.Y, aValvesPist.Offset(Coordinate.Y))
         aValves.set_Position(Coordinate.Z, (TrainProperties.maxValvesPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X)
         aValves.set_Rotation(Coordinate.X, (TrainProperties.minValesRot / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X)
     End Sub
