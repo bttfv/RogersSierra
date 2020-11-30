@@ -117,7 +117,7 @@ Partial Public Class RogersSierra
         aAllProps.Props.Add(aValvesPist)
 
         aBell = New AnimateProp(TrainModels.sBell, Locomotive, TrainBones.sBell, Vector3.Zero, Vector3.Zero)
-        aBell.setRotationSettings(Coordinate.X, True, True, -70, 70, 1, 70, 1, False, True)
+        aBell.setRotationSettings(Coordinate.X, True, True, -70, 70, 1, 140, 1, False, True)
         aAllProps.Props.Add(aBell)
 
         sLight = New AnimateProp(TrainModels.sLight, Locomotive, Vector3.Zero, Vector3.Zero)
