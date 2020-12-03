@@ -228,7 +228,7 @@ Partial Public Class RogersSierra
     Public Sub ExplodeFirebox()
 
         FireboxFireSize = 1
-        sFireboxDoor.setRotationUpdate(Coordinate.Z, True)
+        sFireboxDoor.Play()
     End Sub
     ''' <summary>
     ''' Returns the world position of <paramref name="boneName"/>.
@@ -520,19 +520,18 @@ Partial Public Class RogersSierra
             End If
         End If
 
-        If LocomotiveSpeed > 0 Then
+        'If LocomotiveSpeed > 0 Then
 
-            If sCabCols.Offset = Vector3.Zero AndAlso sCabCols.IsAnimationOn = False Then
+        '    If sCabCols.Offset = Vector3.Zero AndAlso sCabCols.IsPlaying = False Then
 
-                sCabCols.Offset = New Vector3(0, 0.75, 0)
-                sCabCols.IsAnimationOn = True
-            End If
-        ElseIf sCabCols.Offset <> Vector3.Zero Then
+        '        sCabCols.SecondOffset = New Vector3(0, 0.75, 0)
+        '        sCabCols.Play()
+        '    End If
+        'ElseIf sCabCols.Offset <> Vector3.Zero Then
 
-            sCabCols.Offset = Vector3.Zero
-            sCabCols.Play()
-            sCabCols.IsAnimationOn = False
-        End If
+        '    sCabCols.SecondOffset = Vector3.Zero
+        '    sCabCols.Stop()
+        'End If
 
         Locomotive.setTrainSpeed(LocomotiveSpeed)
 
