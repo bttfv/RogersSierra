@@ -47,7 +47,7 @@ Partial Public Class RogersSierra
     ''' Gets or sets whether train should reject new attach to it.
     ''' </summary>
     ''' <returns><seealso cref="Boolean"/></returns>
-    Public Property RejectAttach As Boolean = False
+    Public Property RejectAttach As Boolean = True
     ''' <summary>
     ''' Gets or sets whether train should go full speed.
     ''' </summary>
@@ -132,7 +132,7 @@ Partial Public Class RogersSierra
 
         RandomTrain = isRandom
 
-        WheelsOnPilot = True
+        WheelsOnPilot = False
 
         LoadProps()
 
@@ -493,15 +493,18 @@ Partial Public Class RogersSierra
             End If
         End If
 
-        If UnlockSpeed AndAlso Not lockSpeed AndAlso Locomotive.GetMPHSpeed > 51 Then
+        If IsOnTrainMission = False Then
 
-            lockSpeed = True
-        End If
+            If UnlockSpeed AndAlso Not lockSpeed AndAlso Locomotive.GetMPHSpeed > 51 Then
 
-        If UnlockSpeed AndAlso lockSpeed AndAlso Locomotive.GetMPHSpeed < 51 Then
+                lockSpeed = True
+            End If
 
-            UnlockSpeed = False
-            lockSpeed = False
+            If UnlockSpeed AndAlso lockSpeed AndAlso Locomotive.GetMPHSpeed < 49 Then
+
+                UnlockSpeed = False
+                lockSpeed = False
+            End If
         End If
 
         If LocomotiveSpeed > 0 Then
