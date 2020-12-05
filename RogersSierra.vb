@@ -403,7 +403,7 @@ Partial Public Class RogersSierra
 
             If Game.IsControlJustPressed(Control.VehicleExit) AndAlso IsVisible Then
 
-                Utils.PlayerPed.Task.ClearAnimation("amb@code_human_in_bus_passenger_idles@female@sit@base", "base")
+                Utils.PlayerPed.Task.ClearAll()
                 Utils.PlayerPed.Task.LeaveVehicle()
             End If
 
@@ -523,18 +523,18 @@ Partial Public Class RogersSierra
             End If
         End If
 
-        'If LocomotiveSpeed > 0 Then
+        If LocomotiveSpeed > 0 Then
 
-        '    If sCabCols.Offset = Vector3.Zero AndAlso sCabCols.IsPlaying = False Then
+            If sCabCols.SecondOffset = Vector3.Zero AndAlso sCabCols.IsPlaying = False Then
 
-        '        sCabCols.SecondOffset = New Vector3(0, 0.75, 0)
-        '        sCabCols.Play()
-        '    End If
-        'ElseIf sCabCols.Offset <> Vector3.Zero Then
+                sCabCols.SecondOffset = New Vector3(0, 0.75, 0)
+                sCabCols.Play()
+            End If
+        ElseIf sCabCols.SecondOffset <> Vector3.Zero Then
 
-        '    sCabCols.SecondOffset = Vector3.Zero
-        '    sCabCols.Stop()
-        'End If
+            sCabCols.Stop()
+            sCabCols.MoveProp(Vector3.Zero, Vector3.Zero, False)
+        End If
 
         Locomotive.setTrainSpeed(LocomotiveSpeed)
 
