@@ -64,7 +64,7 @@ Partial Public Class RogersSierra
         TrainProperties.pRodsLength = Locomotive.Bones.Item(TrainBones.sRodsEnd).RelativePosition.DistanceTo(Locomotive.Bones.Item(TrainBones.sRods).RelativePosition)
 
         With aWheels
-            WheelRadius = System.Math.Abs(TrainModels.sWheelDrive.Dimensions.frontTopRight.Z)
+            WheelRadius = System.Math.Abs(TrainModels.sWheelDrive.Model.Dimensions.frontTopRight.Z)
 
             .Props.Add(New AnimateProp(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive1, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)
@@ -75,7 +75,7 @@ Partial Public Class RogersSierra
         End With
 
         With aSmallWheels
-            SmallWheelRadius = System.Math.Abs(TrainModels.sWheelFront.Dimensions.frontTopRight.Z)
+            SmallWheelRadius = System.Math.Abs(TrainModels.sWheelFront.Model.Dimensions.frontTopRight.Z)
 
             .Props.Add(New AnimateProp(TrainModels.sWheelFront, Locomotive, TrainBones.sWheelFront1, Vector3.Zero, Vector3.Zero))
             aAllProps.Props.Add(.Props.Last)

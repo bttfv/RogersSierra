@@ -2,36 +2,36 @@
 Imports FusionLibrary
 
 Friend Class TrainModels
+    Inherits CustomModelHandler
 
-    'Public Shared DMC12Model As Model
-    Public Shared DMC12ColModel As Model
-    Public Shared RogersSierraModel As Model
-    Public Shared RogersSierraColModel As Model
-    Public Shared TenderModel As Model
+    Public Shared DMC12ColModel As New CustomModel("dmc_debug")
+    Public Shared RogersSierraModel As New CustomModel("sierra")
+    Public Shared RogersSierraColModel As New CustomModel("sierra_debug")
+    Public Shared TenderModel As New CustomModel("sierratender")
 
 #Region "Sierra Wheels"
-    Public Shared sWheelFront As Model
-    Public Shared sWheelDrive As Model
+    Public Shared sWheelFront As New CustomModel("rog_front_wheel")
+    Public Shared sWheelDrive As New CustomModel("rog_drive_wheel")
 #End Region
 
 #Region "Tender Wheels"
-    Public Shared tWheel As Model
+    Public Shared tWheel As New CustomModel("rog_tender_wheel")
 #End Region
 
 #Region "Wheels Props"
-    Public Shared sRods As Model
-    Public Shared sPRods As Model
-    Public Shared sPistons As Model
-    Public Shared sLevValves As Model
-    Public Shared sValves As Model
-    Public Shared sValvesPist As Model
+    Public Shared sRods As New CustomModel("rog_rods")
+    Public Shared sPRods As New CustomModel("rog_prods")
+    Public Shared sPistons As New CustomModel("rog_pistons")
+    Public Shared sLevValves As New CustomModel("rog_lev_valves")
+    Public Shared sValves As New CustomModel("rog_valves")
+    Public Shared sValvesPist As New CustomModel("rog_valves_pist")
 #End Region
 
 #Region "Other Props"
-    Public Shared sBell As Model
-    Public Shared sLight As Model
-    Public Shared sCabCols As Model
-    Public Shared sFireboxDoor As Model
+    Public Shared sBell As New CustomModel("bell")
+    Public Shared sLight As New CustomModel("sierra_light")
+    Public Shared sCabCols As New CustomModel("rog_cab_col")
+    Public Shared sFireboxDoor As New CustomModel("rog_furnace_door")
 #End Region
 
     '#Region "Brake Props"
@@ -45,28 +45,27 @@ Friend Class TrainModels
 
     Public Shared Sub LoadModels()
 
-        'DMC12Model = LoadAndRequestModel("dmc12")
-        DMC12ColModel = Utils.LoadAndRequestModel("dmc_debug")
-        RogersSierraModel = Utils.LoadAndRequestModel("sierra")
-        RogersSierraColModel = Utils.LoadAndRequestModel("sierra_debug")
-        TenderModel = Utils.LoadAndRequestModel("sierratender")
+        DMC12ColModel.Request()
+        RogersSierraModel.Request()
+        RogersSierraColModel.Request()
+        TenderModel.Request()
 
-        tWheel = Utils.LoadAndRequestModel("rog_tender_wheel")
+        tWheel.Request()
 
-        sWheelDrive = Utils.LoadAndRequestModel("rog_drive_wheel")
-        sWheelFront = Utils.LoadAndRequestModel("rog_front_wheel")
+        sWheelDrive.Request()
+        sWheelFront.Request()
 
-        sRods = Utils.LoadAndRequestModel("rog_rods")
-        sPRods = Utils.LoadAndRequestModel("rog_prods")
-        sPistons = Utils.LoadAndRequestModel("rog_pistons")
-        sLevValves = Utils.LoadAndRequestModel("rog_lev_valves")
-        sValves = Utils.LoadAndRequestModel("rog_valves")
-        sValvesPist = Utils.LoadAndRequestModel("rog_valves_pist")
+        sRods.Request()
+        sPRods.Request()
+        sPistons.Request()
+        sLevValves.Request()
+        sValves.Request()
+        sValvesPist.Request()
 
-        sBell = Utils.LoadAndRequestModel("bell")
-        sLight = Utils.LoadAndRequestModel("sierra_light")
-        sCabCols = Utils.LoadAndRequestModel("rog_cab_col")
-        sFireboxDoor = Utils.LoadAndRequestModel("rog_furnace_door")
+        sBell.Request()
+        sLight.Request()
+        sCabCols.Request()
+        sFireboxDoor.Request()
 
         'sBrakePadsFront = LoadAndRequestModel("brakepads_f")
         'sBrakePadsMiddle = LoadAndRequestModel("brakepads_m")

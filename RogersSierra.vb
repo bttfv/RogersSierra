@@ -344,7 +344,7 @@ Partial Public Class RogersSierra
 
         If Not Utils.PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot AndAlso Not IsExploded Then
 
-            Dim tmpPos = Locomotive.GetOffsetPosition(New Vector3(0, TrainModels.RogersSierraModel.Dimensions.frontTopRight.Y, 0.5))
+            Dim tmpPos = Locomotive.GetOffsetPosition(New Vector3(0, TrainModels.RogersSierraModel.Model.Dimensions.frontTopRight.Y, 0.5))
 
             If Utils.PlayerPed.Position.DistanceToSquared(tmpPos) < 1.5 * 1.5 Then
 
