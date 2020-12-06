@@ -142,6 +142,8 @@ Friend Class Main
 
         If Not IsNothing(CurrentRogersSierra) AndAlso Not Utils.PlayerPed.IsInVehicle Then
 
+            Utils.PlayerPed.Task.ClearAllImmediately()
+
             If CurrentRogersSierra.Camera <> TrainCamera.Off AndAlso Not CurrentRogersSierra.IsOnTrainMission Then
 
                 CurrentRogersSierra.Camera = TrainCamera.Off

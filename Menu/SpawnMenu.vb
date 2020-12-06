@@ -15,6 +15,8 @@ Friend Class SpawnMenu
     Private LocationCamera As Camera
     Private LocationBlip As Blip
 
+    Private SpawnLocations As New SpawnLocationHandler
+
     Private WithEvents SelectLocation As New NativeListItem(Of SpawnLocation)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Location"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Location_Description"))
     Private WithEvents SpawnTrain As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Spawn"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Spawn_Description"))
     Private WithEvents DeleteTrain As New NativeListItem(Of RogersSierra)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete_Description"))
@@ -25,19 +27,18 @@ Friend Class SpawnMenu
     Public Sub New()
         MyBase.New("", Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Subtitle"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Description"))
 
-        SpawnLocation.SpawnLocations = New List(Of SpawnLocation) From {
-                    New SpawnLocation(New Vector3(2611, 1681, 27), New Vector3(2601.0, 1700.2, 29.9), New Vector3(0.8, -0.6, -0.1), False),
-                    New SpawnLocation(New Vector3(2462, -289, 93), New Vector3(2455.4, -276.4, 96.2), New Vector3(0.4, -0.9, 0.1)),
-                    New SpawnLocation(New Vector3(2014, 2493, 58), New Vector3(2028.6, 2482.9, 67.6), New Vector3(-1.0, 0.2, 0.0)),
-                    New SpawnLocation(New Vector3(2994, 3990, 57), New Vector3(3004.8, 3983.3, 60.0), New Vector3(-0.5, 0.9, 0.0)),
-                    New SpawnLocation(New Vector3(1807, 3510, 39), New Vector3(1828.1, 3535.5, 45.2), New Vector3(-0.5, -0.9, 0.1)),
-                    New SpawnLocation(New Vector3(-478, 5253, 88), New Vector3(-476.1, 5215.4, 98.9), New Vector3(-0.5, 0.8, -0.2)),
-                    New SpawnLocation(New Vector3(749, 6433, 30), New Vector3(765.6, 6449.3, 34.3), New Vector3(-0.9, -0.4, 0.2)),
-                    New SpawnLocation(New Vector3(2486, 5743, 64), New Vector3(2510.5, 5716.2, 68.4), New Vector3(-1.0, 0.3, 0.1))}
+        SpawnLocations.Add(New Vector3(2611, 1681, 27), New Vector3(2601.0, 1700.2, 29.9), New Vector3(0.8, -0.6, -0.1), False)
+        SpawnLocations.Add(New Vector3(2462, -289, 93), New Vector3(2455.4, -276.4, 96.2), New Vector3(0.4, -0.9, 0.1))
+        SpawnLocations.Add(New Vector3(2014, 2493, 58), New Vector3(2028.6, 2482.9, 67.6), New Vector3(-1.0, 0.2, 0.0))
+        SpawnLocations.Add(New Vector3(2994, 3990, 57), New Vector3(3004.8, 3983.3, 60.0), New Vector3(-0.5, 0.9, 0.0))
+        SpawnLocations.Add(New Vector3(1807, 3510, 39), New Vector3(1828.1, 3535.5, 45.2), New Vector3(-0.5, -0.9, 0.1))
+        SpawnLocations.Add(New Vector3(-478, 5253, 88), New Vector3(-476.1, 5215.4, 98.9), New Vector3(-0.5, 0.8, -0.2))
+        SpawnLocations.Add(New Vector3(749, 6433, 30), New Vector3(765.6, 6449.3, 34.3), New Vector3(-0.9, -0.4, 0.2))
+        SpawnLocations.Add(New Vector3(2486, 5743, 64), New Vector3(2510.5, 5716.2, 68.4), New Vector3(-1.0, 0.3, 0.1))
 
         Banner = New LemonUI.Elements.ScaledTexture(New PointF(0, 0), New SizeF(200, 200), "sierra_gui", "sierra_menu_logo")
 
-        SelectLocation.Items = SpawnLocation.SpawnLocations
+        SelectLocation.Items = SpawnLocations.Locations
         DeleteTrain.Items = RogersSierraList
 
         Add(SelectLocation)
@@ -55,15 +56,7 @@ Friend Class SpawnMenu
 
     Public Sub ResetCamera()
 
-        If LocationCamera <> Nothing AndAlso LocationCamera.Exists Then
-
-            LocationCamera.Delete()
-        End If
-
-        Native.Function.Call(Native.Hash.UNLOCK_MINIMAP_POSITION)
-
-        World.DestroyAllCameras()
-        World.RenderingCamera = Nothing
+        SpawnLocation.ResetCamera()
 
         If IsNothing(LocationBlip) = False AndAlso LocationBlip.Exists() Then
 
@@ -78,38 +71,14 @@ Friend Class SpawnMenu
 
     Public Sub ShowLocation()
 
-        Dim position = SelectLocation.SelectedItem.Position
-
-        Native.Function.Call(Native.Hash.NEW_LOAD_SCENE_START_SPHERE, position.X, position.Y, position.Z, 100, 0)
-
-        If LocationCamera <> Nothing AndAlso LocationCamera.Exists Then
-
-            LocationCamera.Delete()
-        End If
-
-        Dim cameraPos = SelectLocation.SelectedItem.CameraPos
-        Dim cameraDir = SelectLocation.SelectedItem.CameraDir
-
-        If cameraPos <> Vector3.Zero AndAlso cameraDir <> Vector3.Zero Then
-
-            LocationCamera = World.CreateCamera(cameraPos, Vector3.Zero, 75)
-            LocationCamera.Direction = cameraDir
-        Else
-
-            LocationCamera = World.CreateCamera(position.GetSingleOffset(Coordinate.Z, 10).GetSingleOffset(Coordinate.Y, 10), Vector3.Zero, 75)
-            LocationCamera.PointAt(position)
-        End If
-
-        World.RenderingCamera = LocationCamera
-
-        Native.Function.Call(Native.Hash.LOCK_MINIMAP_POSITION, position.X, position.Y)
+        SelectLocation.SelectedItem.ShowLocation()
 
         If IsNothing(LocationBlip) = False AndAlso LocationBlip.Exists() Then
 
             LocationBlip.Delete()
         End If
 
-        LocationBlip = World.CreateBlip(position)
+        LocationBlip = World.CreateBlip(SelectLocation.SelectedItem.Position)
         LocationBlip.Sprite = 120
 
         SelectLocation.Description = SelectLocation.SelectedItem.Name
@@ -130,6 +99,8 @@ Friend Class SpawnMenu
         DeleteTrain.Enabled = RogersSierraList.Count > 0
 
         DeleteTrain.Items = RogersSierraList
+
+        RandomTrains.Checked = Utils.RandomTrains
     End Sub
 
     Private Sub DeleteTrain_Activated(sender As Object, e As EventArgs) Handles DeleteTrain.Activated
@@ -212,12 +183,12 @@ Friend Class SpawnMenu
 
     Private Sub RandomTrains_CheckboxChanged(sender As Object, e As EventArgs) Handles RandomTrains.CheckboxChanged
 
-        Native.Function.Call(Native.Hash.SET_RANDOM_TRAINS, RandomTrains.Checked)
+        If Not Game.IsControlJustPressed(Control.PhoneSelect) Then
 
-        If Not RandomTrains.Checked Then
-
-            Native.Function.Call(Native.Hash.DELETE_ALL_TRAINS)
+            Exit Sub
         End If
+
+        Utils.RandomTrains = RandomTrains.Checked
     End Sub
 
     Public Overrides Sub Tick()
