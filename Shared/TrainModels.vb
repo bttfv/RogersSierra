@@ -45,27 +45,9 @@ Friend Class TrainModels
 
     Public Shared Sub LoadModels()
 
-        DMC12ColModel.Request()
-        RogersSierraModel.Request()
-        RogersSierraColModel.Request()
-        TenderModel.Request()
-
-        tWheel.Request()
-
-        sWheelDrive.Request()
-        sWheelFront.Request()
-
-        sRods.Request()
-        sPRods.Request()
-        sPistons.Request()
-        sLevValves.Request()
-        sValves.Request()
-        sValvesPist.Request()
-
-        sBell.Request()
-        sLight.Request()
-        sCabCols.Request()
-        sFireboxDoor.Request()
+        GetAllModels(GetType(TrainModels)).ForEach(Sub(x)
+                                                       PreloadModel(x)
+                                                   End Sub)
 
         'sBrakePadsFront = LoadAndRequestModel("brakepads_f")
         'sBrakePadsMiddle = LoadAndRequestModel("brakepads_m")
@@ -73,7 +55,5 @@ Friend Class TrainModels
         'sBrakeBars = LoadAndRequestModel("brakebars")
         'sBrakeLevers = LoadAndRequestModel("brakelevers")
         'sBrakePistons = LoadAndRequestModel("brakepistons")
-
     End Sub
-
 End Class

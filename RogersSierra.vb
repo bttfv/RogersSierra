@@ -403,8 +403,12 @@ Partial Public Class RogersSierra
 
             If Game.IsControlJustPressed(Control.VehicleExit) AndAlso IsVisible Then
 
-                Utils.PlayerPed.Task.ClearAll()
-                Utils.PlayerPed.Task.LeaveVehicle()
+                Dim exitTask As New TaskSequence()
+
+                exitTask.AddTask().ClearAnimation("amb@code_human_in_bus_passenger_idles@female@sit@base", "base")
+                exitTask.AddTask().LeaveVehicle()
+
+                Utils.PlayerPed.Task.PerformSequence(exitTask)
             End If
 
             If IsOnTrainMission = False And ForceHandbrake = False Then
