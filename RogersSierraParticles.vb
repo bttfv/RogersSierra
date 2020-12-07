@@ -9,22 +9,22 @@ Partial Public Class RogersSierra
 
     Private CustomLights As LightHandler
 
-    Private pWhistle As New PTFX(TrainParticles.sWhistle)
-    Private pSteam As New List(Of PTFX)
-    Private pWaterDrops As New List(Of PTFX)
-    Private pSteamVent As New List(Of PTFX)
-    Private pSteamRunning As New List(Of PTFX)
+    Private pWhistle As New PtfxEntityBonePlayer(TrainParticles.sWhistle)
+    Private pSteam As New List(Of PtfxEntityBonePlayer)
+    Private pWaterDrops As New List(Of PtfxEntityBonePlayer)
+    Private pSteamVent As New List(Of PtfxEntityBonePlayer)
+    Private pSteamRunning As New List(Of PtfxEntityBonePlayer)
 
-    Private pFireboxFire As New PTFX(TrainParticles.sFireboxFire)
+    Private pFireboxFire As New PtfxEntityBonePlayer(TrainParticles.sFireboxFire)
     Private pFireboxFireSize As Single = 0.3
 
-    Private pFunnelSmoke As New PTFX(TrainParticles.sColoredSmoke)
-    Private pFunnelFire As New PTFX(TrainParticles.sFunnelFire)
+    Private pFunnelSmoke As New PtfxEntityBonePlayer(TrainParticles.sColoredSmoke)
+    Private pFunnelFire As New PtfxEntityBonePlayer(TrainParticles.sFunnelFire)
     Private pFunnelInterval As Integer
     Private pFunnelTime As Integer
 
-    Private pTrainExpl As New PTFX(TrainParticles.sTrainExpl)
-    Private pPrestoLogExpl As New PTFX(TrainParticles.sPrestoLogExpl)
+    Private pTrainExpl As New PtfxEntityPlayer(TrainParticles.sTrainExpl)
+    Private pPrestoLogExpl As New PtfxEntityBonePlayer(TrainParticles.sPrestoLogExpl)
 
     Private CabLight As Light
 
@@ -63,7 +63,7 @@ Partial Public Class RogersSierra
             Else
 
                 sWhistleSound.Stop()
-                pWhistle.Stop()
+                pWhistle.StopNaturally()
             End If
         End Set
     End Property
@@ -79,7 +79,7 @@ Partial Public Class RogersSierra
             If value Then
 
                 pFunnelFire.CreateLoopedOnEntityBone(Locomotive, TrainBones.sFunnel, New Vector3(0, -0.5, -0.25),, 0.75)
-                pFunnelFire.SetLoopedEvolution("fade", 1)
+                'pFunnelFire.SetLoopedEvolution("fade", 1)
             Else
 
                 pFunnelFire.Stop()
@@ -116,7 +116,7 @@ Partial Public Class RogersSierra
             If value Then
 
                 pFireboxFire.CreateLoopedOnEntityBone(Locomotive, TrainBones.sFireboxFire, New Vector3(0, 0, 0), New Vector3(0, 0, 0), pFireboxFireSize)
-                pFunnelFire.SetLoopedEvolution("fade", 1)
+                'pFunnelFire.SetLoopedEvolution("fade", 1)
             Else
 
                 pFireboxFire.Stop()
@@ -138,13 +138,13 @@ Partial Public Class RogersSierra
 
                     With pSteam
 
-                        .Add(New PTFX(TrainParticles.sSteam))
+                        .Add(New PtfxEntityBonePlayer(TrainParticles.sSteam))
                         .Last.CreateLoopedOnEntityBone(Locomotive, TrainBones.sSteam(i), Vector3.Zero, New Vector3(90, 0, 0))
                     End With
 
                     With pWaterDrops
 
-                        .Add(New PTFX(TrainParticles.sWaterDrop))
+                        .Add(New PtfxEntityBonePlayer(TrainParticles.sWaterDrop))
                         .Last.CreateLoopedOnEntityBone(Locomotive, TrainBones.sSteam(i), Vector3.Zero, New Vector3(0, 0, 0), 3)
                     End With
                 Next
@@ -179,7 +179,7 @@ Partial Public Class RogersSierra
 
                     With pSteamVent
 
-                        .Add(New PTFX(TrainParticles.sWhistle))
+                        .Add(New PtfxEntityBonePlayer(TrainParticles.sWhistle))
 
                         If i = 1 Or i = 3 Then
 
@@ -215,14 +215,14 @@ Partial Public Class RogersSierra
 
                     With pSteamRunning
 
-                        .Add(New PTFX(TrainParticles.sSteam))
+                        .Add(New PtfxEntityBonePlayer(TrainParticles.sSteam))
                         .Last.CreateLoopedOnEntityBone(Locomotive, TrainBones.sSteamRunning(i), New Vector3(If(i = 0, 0.5, -0.5), -0.5, -0.5), New Vector3(0, 0, 0), 3)
                     End With
                 Next
             Else
 
                 pSteamRunning.ForEach(Sub(x)
-                                          x.Stop()
+                                          x.StopNaturally()
                                       End Sub)
                 pSteamRunning.Clear()
             End If
@@ -231,6 +231,8 @@ Partial Public Class RogersSierra
 #End Region
 
     Private Sub LoadParticles()
+
+        pFunnelFire.SetEvolutionParam("fade", 1)
 
         PistonSteam = True
         FireboxFire = True
