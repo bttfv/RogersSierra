@@ -49,7 +49,7 @@ Friend Class TrainModels
                                                        PreloadModel(x)
                                                    End Sub)
 
-        UI.LoadingPrompt.Hide()
+        Native.Function.Call(Native.Hash.BUSYSPINNER_OFF)
 
         'sBrakePadsFront = LoadAndRequestModel("brakepads_f")
         'sBrakePadsMiddle = LoadAndRequestModel("brakepads_m")

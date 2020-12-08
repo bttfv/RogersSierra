@@ -22,7 +22,6 @@ Partial Public Class RogersSierra
     Private aPRods As AnimateProp
 
     Private aPistons As AnimateProp
-    Private PistonOldPos As Single
     Private PistonGoingForward As Boolean = False
 
     Private aLevValves As AnimateProp

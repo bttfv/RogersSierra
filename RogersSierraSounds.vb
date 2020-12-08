@@ -103,7 +103,7 @@ Partial Public Class RogersSierra
 
         If PistonSteam = False AndAlso PistonSteamVent = False Then
 
-            If aPistons.CurrentOffset(Coordinate.Y) > PistonOldPos AndAlso PistonGoingForward = False Then
+            If aPistons.CurrentOffset(Coordinate.Y) > aPistons.Offset(Coordinate.Y) AndAlso PistonGoingForward = False Then
 
                 If Val(Game.GameTime.ToString.Last) <= 4 Then
 
@@ -116,7 +116,7 @@ Partial Public Class RogersSierra
                 PistonGoingForward = True
             End If
 
-            If aPistons.CurrentOffset(Coordinate.Y) < PistonOldPos AndAlso PistonGoingForward Then
+            If aPistons.CurrentOffset(Coordinate.Y) < aPistons.Offset(Coordinate.Y) AndAlso PistonGoingForward Then
 
                 If Val(Game.GameTime.ToString.Last) <= 4 Then
 
@@ -128,8 +128,6 @@ Partial Public Class RogersSierra
 
                 PistonGoingForward = False
             End If
-
-            PistonOldPos = aPistons.Offset(Coordinate.Y)
         End If
     End Sub
 End Class
