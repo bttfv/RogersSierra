@@ -1,11 +1,10 @@
-﻿Imports System.Drawing
+﻿Imports FusionLibrary
+Imports FusionLibrary.Enums
+Imports FusionLibrary.Extensions
 Imports GTA
 Imports GTA.Math
 Imports GTA.UI
 Imports KlangRageAudioLibrary
-Imports FusionLibrary
-Imports FusionLibrary.Extensions
-Imports FusionLibrary.Enums
 
 Partial Public Class RogersSierra
     ''' <summary>

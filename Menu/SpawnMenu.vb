@@ -1,11 +1,9 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing
+Imports FusionLibrary
 Imports GTA
 Imports GTA.Math
 Imports LemonUI.Menus
-Imports FusionLibrary
-Imports FusionLibrary.Extensions
-Imports FusionLibrary.Enums
 
 Friend Class SpawnMenu
     Inherits CustomNativeMenu

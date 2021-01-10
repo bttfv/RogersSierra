@@ -3,7 +3,6 @@ Imports FusionLibrary
 Imports FusionLibrary.Enums
 Imports FusionLibrary.Extensions
 Imports GTA
-Imports GTA.Math
 
 Friend Class Main
     Inherits Script

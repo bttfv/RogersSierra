@@ -1,8 +1,8 @@
-﻿Imports GTA
-Imports GTA.Math
-Imports FusionLibrary
-Imports FusionLibrary.Extensions
+﻿Imports FusionLibrary
 Imports FusionLibrary.Enums
+Imports FusionLibrary.Extensions
+Imports GTA
+Imports GTA.Math
 
 Partial Public Class RogersSierra
 
