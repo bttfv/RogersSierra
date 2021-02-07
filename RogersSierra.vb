@@ -390,7 +390,7 @@ Partial Public Class RogersSierra
 
                 CurrentRogersSierra = Me
 
-                Screen.ShowHelpTextThisFrame($"{Game.GetLocalizedString("RogersSierra_Help_Whistle")}: ~INPUT_VEH_HORN~{vbCr}{Game.GetLocalizedString("RogersSierra_Help_Bell")}: ~INPUT_VEH_HANDBRAKE~{vbCr}{Game.GetLocalizedString("RogersSierra_Help_CruiseControl")}: ~INPUT_VEH_DUCK~")
+                'Screen.ShowHelpTextThisFrame($"{Game.GetLocalizedString("RogersSierra_Help_Whistle")}: ~INPUT_VEH_HORN~{vbCr}{Game.GetLocalizedString("RogersSierra_Help_Bell")}: ~INPUT_VEH_HANDBRAKE~{vbCr}{Game.GetLocalizedString("RogersSierra_Help_CruiseControl")}: ~INPUT_VEH_DUCK~")
 
                 Utils.PlayerPed.Task.PlayAnimation("amb@code_human_in_bus_passenger_idles@female@sit@base", "base", 900, -1, AnimationFlags.Loop)
             End If
