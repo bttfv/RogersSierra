@@ -76,6 +76,11 @@ Public Module TrainManager
 
                 Return t
             End If
+
+            If t.VisibleLocomotive = t Then
+
+                Return t
+            End If
         Next
 
         For Each t In RogersSierraList
@@ -86,6 +91,11 @@ Public Module TrainManager
             End If
 
             If t = veh Then
+
+                Return t
+            End If
+
+            If t.VisibleLocomotive = t Then
 
                 Return t
             End If
