@@ -113,6 +113,7 @@
     <Compile Include="RogersSierraSounds.vb" />
     <Compile Include="Shared\TrainBones.vb" />
     <Compile Include="Main.vb" />
+    <Compile Include="Shared\TrainExtensions.vb" />
     <Compile Include="Shared\TrainModels.vb" />
     <Compile Include="Shared\TrainParticles.vb" />
     <Compile Include="Shared\TrainManager.vb" />

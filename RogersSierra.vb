@@ -61,7 +61,7 @@ Partial Public Class RogersSierra
     ''' Modifier for the train's acceleration.
     ''' </summary>
     ''' <returns><seealso cref="Boolean"/></returns>
-    Private Property LocomotiveAccModifier As Single = 1
+    Public Property LocomotiveAccModifier As Single = 1
     ''' <summary>
     ''' Setted speed of the train.
     ''' </summary>
@@ -312,9 +312,17 @@ Partial Public Class RogersSierra
             Exit Sub
         End If
 
-        If (VisibleLocomotive.Health = 0 Or Locomotive.Health = 0 Or Tender.Health = 0) AndAlso Not IsExploded AndAlso IsVisible Then
+        If (VisibleLocomotive.Health = 0 Or Locomotive.Health = 0 Or Tender.Health = 0) AndAlso Not IsExploded Then
 
-            Explode()
+            If IsVisible Then
+
+                Explode()
+            Else
+
+                VisibleLocomotive.Health = VisibleLocomotive.MaxHealth
+                Locomotive.Health = Locomotive.MaxHealth
+                Tender.Health = Tender.MaxHealth
+            End If
         End If
 
         If rejectTimer > 0 AndAlso rejectTimer <= Game.GameTime Then
