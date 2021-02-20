@@ -286,6 +286,11 @@ Partial Public Class RogersSierra
 
             ForceHandbrake = Not value
 
+            For Each ped In Locomotive.Occupants
+
+                ped.IsVisible = value
+            Next
+
             If value = False Then
 
                 LocomotiveSpeed = 0
@@ -293,7 +298,7 @@ Partial Public Class RogersSierra
                 Locomotive.RemoveParticleEffects()
                 VisibleLocomotive.RemoveParticleEffects()
 
-                SoundsTick()
+                StopAllSounds()
             End If
         End Set
     End Property
@@ -307,7 +312,7 @@ Partial Public Class RogersSierra
             Exit Sub
         End If
 
-        If (VisibleLocomotive.Health = 0 Or Locomotive.Health = 0 Or Tender.Health = 0) AndAlso Not IsExploded Then
+        If (VisibleLocomotive.Health = 0 Or Locomotive.Health = 0 Or Tender.Health = 0) AndAlso Not IsExploded AndAlso IsVisible Then
 
             Explode()
         End If
@@ -320,7 +325,10 @@ Partial Public Class RogersSierra
 
         TrainSpeedTick()
 
-        CustomLights.Draw()
+        If IsVisible Then
+
+            CustomLights.Draw()
+        End If
 
         CustomCamera.Process()
 

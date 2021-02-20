@@ -59,6 +59,21 @@ Partial Public Class RogersSierra
         End With
     End Sub
 
+    Private Sub StopAllSounds()
+
+        sTrainStart.Stop(True)
+        sTrainMove1.Stop(True)
+        sTrainMove2.Stop(True)
+        sWhistleSound.Stop(True)
+        sPistonSteamVentSound.Stop(True)
+        sBellSound.Stop(True)
+        sPrestoLogExpl.Stop(True)
+        sTrainMoving.ForEach(Sub(x)
+                                 x.Stop(True)
+                             End Sub)
+        sTrainMovingIndex = -1
+    End Sub
+
     Private Sub SoundsTick()
 
         If Locomotive.Speed > 0 Then
