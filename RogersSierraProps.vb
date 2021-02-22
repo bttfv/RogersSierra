@@ -111,7 +111,7 @@ Partial Public Class RogersSierra
         aAllProps.Props.Add(aValvesPist)
 
         aBell = New AnimateProp(TrainModels.sBell, Locomotive, TrainBones.sBell, Vector3.Zero, Vector3.Zero)
-        aBell(AnimationType.Rotation)(AnimationStep.First)(Coordinate.X).Setup(True, False, True, -70, 70, 1, 140, 1)
+        aBell(AnimationType.Rotation)(AnimationStep.First)(Coordinate.X).Setup(False, True, -70, 70, 1, 140, 1)
         aAllProps.Props.Add(aBell)
 
         sLight = New AnimateProp(TrainModels.sLight, Locomotive, Vector3.Zero, Vector3.Zero)
@@ -122,7 +122,7 @@ Partial Public Class RogersSierra
         aAllProps.Props.Add(sCabCols)
 
         sFireboxDoor = New AnimateProp(TrainModels.sFireboxDoor, Locomotive, TrainBones.sFireboxDoor, Vector3.Zero, Vector3.Zero)
-        sFireboxDoor(AnimationType.Rotation)(AnimationStep.First)(Coordinate.Z).Setup(True, True, True, 10, 80, 1, 140, 1)
+        sFireboxDoor(AnimationType.Rotation)(AnimationStep.First)(Coordinate.Z).Setup(True, True, 10, 80, 1, 140, 1)
         sFireboxDoor.setRotation(Coordinate.Z, 10)
         aAllProps.Props.Add(sFireboxDoor)
 
