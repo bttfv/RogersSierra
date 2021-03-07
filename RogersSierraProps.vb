@@ -66,65 +66,68 @@ Partial Public Class RogersSierra
             WheelRadius = System.Math.Abs(TrainModels.sWheelDrive.Model.Dimensions.frontTopRight.Z)
 
             .Props.Add(New AnimateProp(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive1, Vector3.Zero, Vector3.Zero))
-            aAllProps.Props.Add(.Props.Last)
+            aAllProps.Add(.Props.Last)
             .Props.Add(New AnimateProp(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive2, Vector3.Zero, Vector3.Zero))
-            aAllProps.Props.Add(.Props.Last)
+            aAllProps.Add(.Props.Last)
             .Props.Add(New AnimateProp(TrainModels.sWheelDrive, Locomotive, TrainBones.sWheelDrive3, Vector3.Zero, Vector3.Zero))
-            aAllProps.Props.Add(.Props.Last)
+            aAllProps.Add(.Props.Last)
         End With
 
         With aSmallWheels
             SmallWheelRadius = System.Math.Abs(TrainModels.sWheelFront.Model.Dimensions.frontTopRight.Z)
 
             .Props.Add(New AnimateProp(TrainModels.sWheelFront, Locomotive, TrainBones.sWheelFront1, Vector3.Zero, Vector3.Zero))
-            aAllProps.Props.Add(.Props.Last)
+            aAllProps.Add(.Props.Last)
             .Props.Add(New AnimateProp(TrainModels.sWheelFront, Locomotive, TrainBones.sWheelFront2, Vector3.Zero, Vector3.Zero))
-            aAllProps.Props.Add(.Props.Last)
+            aAllProps.Add(.Props.Last)
         End With
 
         With aSmallWheelsTender
 
             .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender1, Vector3.Zero, Vector3.Zero))
-            aAllProps.Props.Add(.Props.Last)
+            aAllProps.Add(.Props.Last)
             .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender2, Vector3.Zero, Vector3.Zero))
-            aAllProps.Props.Add(.Props.Last)
+            aAllProps.Add(.Props.Last)
             .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender3, Vector3.Zero, Vector3.Zero))
-            aAllProps.Props.Add(.Props.Last)
+            aAllProps.Add(.Props.Last)
             .Props.Add(New AnimateProp(TrainModels.tWheel, Tender, TrainBones.sWheelTender4, Vector3.Zero, Vector3.Zero))
-            aAllProps.Props.Add(.Props.Last)
+            aAllProps.Add(.Props.Last)
         End With
 
         aRods = New AnimateProp(TrainModels.sRods, Locomotive, TrainBones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
-        aAllProps.Props.Add(aRods)
+        aAllProps.Add(aRods)
         aPRods = New AnimateProp(TrainModels.sPRods, Locomotive, TrainBones.sWheelDrive2, New Vector3(0, TrainProperties.connPointRadius, 0), Vector3.Zero)
-        aAllProps.Props.Add(aPRods)
+        aAllProps.Add(aPRods)
         aPistons = New AnimateProp(TrainModels.sPistons, Locomotive, TrainBones.sPistons, Vector3.Zero, Vector3.Zero)
-        aAllProps.Props.Add(aPistons)
+        aAllProps.Add(aPistons)
 
         aLevValves = New AnimateProp(TrainModels.sLevValves, Locomotive, TrainBones.sLevValves, Vector3.Zero, Vector3.Zero)
-        aAllProps.Props.Add(aLevValves)
+        aAllProps.Add(aLevValves)
 
         aValves = New AnimateProp(TrainModels.sValves, Locomotive, TrainBones.sValves, Vector3.Zero, Vector3.Zero)
-        aAllProps.Props.Add(aValves)
+        aAllProps.Add(aValves)
 
         aValvesPist = New AnimateProp(TrainModels.sValvesPist, Locomotive, TrainBones.sValvesPist, Vector3.Zero, Vector3.Zero)
-        aAllProps.Props.Add(aValvesPist)
+        aAllProps.Add(aValvesPist)
 
         aBell = New AnimateProp(TrainModels.sBell, Locomotive, TrainBones.sBell, Vector3.Zero, Vector3.Zero)
         aBell(AnimationType.Rotation)(AnimationStep.First)(Coordinate.X).Setup(False, True, -70, 70, 1, 140, 1)
-        aAllProps.Props.Add(aBell)
+        aAllProps.Add(aBell)
 
         sLight = New AnimateProp(TrainModels.sLight, Locomotive, Vector3.Zero, Vector3.Zero)
-        aAllProps.Props.Add(sLight)
+        aAllProps.Add(sLight)
 
         sCabCols = New AnimateProp(TrainModels.sCabCols, Locomotive, Vector3.Zero, Vector3.Zero)
-        sCabCols.Visible = False
-        aAllProps.Props.Add(sCabCols)
+        aAllProps.Add(sCabCols)
 
         sFireboxDoor = New AnimateProp(TrainModels.sFireboxDoor, Locomotive, TrainBones.sFireboxDoor, Vector3.Zero, Vector3.Zero)
         sFireboxDoor(AnimationType.Rotation)(AnimationStep.First)(Coordinate.Z).Setup(True, True, 10, 80, 1, 140, 1)
+        aAllProps.Add(sFireboxDoor)
+
+        aAllProps.SpawnProp()
+
         sFireboxDoor.setRotation(Coordinate.Z, 10)
-        aAllProps.Props.Add(sFireboxDoor)
+        sCabCols.Visible = False
 
         'With aBrakePads
 
