@@ -171,13 +171,13 @@ Partial Public Class RogersSierra
 
         aPistons.setOffset(Coordinate.Y, TrainProperties.pRodsLength * System.Math.Cos(MathExtensions.ToRad(dAngle)) - (PistonRelativePosY - aPRods.RelativePosition.Y), True)
 
-        aLevValves.setRotation(Coordinate.X, (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.Offset(Coordinate.Y), True)
+        aLevValves.setRotation(Coordinate.X, (TrainProperties.maxLevValvesRot / TrainProperties.maxPistonPos) * aPistons.CurrentOffset.Y, True)
 
-        aValvesPist.setOffset(Coordinate.Y, (TrainProperties.minValvesPistPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X, True)
+        aValvesPist.setOffset(Coordinate.Y, (TrainProperties.minValvesPistPos / TrainProperties.maxLevValvesRot) * aLevValves.CurrentRotation.X, True)
 
-        aValves.setOffset(Coordinate.Y, aValvesPist.Offset(Coordinate.Y), True)
-        aValves.setOffset(Coordinate.Z, (TrainProperties.maxValvesPos / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X, True)
-        aValves.setRotation(Coordinate.X, (TrainProperties.minValesRot / TrainProperties.maxLevValvesRot) * aLevValves.Rotation.X, True)
+        aValves.setOffset(Coordinate.Y, aValvesPist.CurrentOffset.Y, True)
+        aValves.setOffset(Coordinate.Z, (TrainProperties.maxValvesPos / TrainProperties.maxLevValvesRot) * aLevValves.CurrentRotation.X, True)
+        aValves.setRotation(Coordinate.X, (TrainProperties.minValesRot / TrainProperties.maxLevValvesRot) * aLevValves.CurrentRotation.X, True)
     End Sub
 
     Private Sub AnimationTick()

@@ -338,7 +338,7 @@ Partial Public Class RogersSierra
             CustomLights.Draw()
         End If
 
-        CustomCamera.Process()
+        CustomCamera.Tick()
 
         If IsVisible Then
 
