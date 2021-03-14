@@ -230,35 +230,6 @@ Partial Public Class RogersSierra
         sFireboxDoor.Play()
     End Sub
     ''' <summary>
-    ''' Returns the world position of <paramref name="boneName"/>.
-    ''' </summary>
-    ''' <param name="boneName"><seealso cref="TrainBones"/></param>
-    ''' <returns></returns>
-    Public Function GetBonePosition(boneName As String) As Vector3
-
-        Return Locomotive.Bones(boneName).Position
-    End Function
-    ''' <summary>
-    ''' Returns the squared distance of <paramref name="entity"/> from world position of <paramref name="boneName"/>.
-    ''' </summary>
-    ''' <param name="boneName"><seealso cref="TrainBones"/></param>
-    ''' <param name="entity"><seealso cref="GTA.Entity"/></param>
-    ''' <returns><seealso cref="GTA.Math.Vector3"/></returns>
-    Public Function GetBoneDistanceSquared(boneName As String, entity As Entity) As Single
-
-        Return Locomotive.Bones(boneName).Position.DistanceToSquared(entity.Position)
-    End Function
-    ''' <summary>
-    ''' Returns the squared distance of <paramref name="entity"/> from position <paramref name="pos"/>.
-    ''' </summary>
-    ''' <param name="boneName"><seealso cref="TrainBones"/></param>
-    ''' <param name="pos"><seealso cref="GTA.Math.Vector3"/></param>
-    ''' <returns><seealso cref="GTA.Math.Vector3"/></returns>
-    Public Function GetBoneDistanceSquared(boneName As String, pos As Vector3) As Single
-
-        Return Locomotive.Bones(boneName).Position.DistanceToSquared(pos)
-    End Function
-    ''' <summary>
     ''' Set a <paramref name="delay"/> for permit attach to train again.
     ''' </summary>
     ''' <param name="delay"><seealso cref="Integer"/></param>
@@ -361,7 +332,7 @@ Partial Public Class RogersSierra
 
             Dim tmpPos = Locomotive.GetOffsetPosition(New Vector3(0, TrainModels.RogersSierraModel.Model.Dimensions.frontTopRight.Y, 0.5))
 
-            If Utils.PlayerPed.Position.DistanceToSquared(tmpPos) < 1.5 * 1.5 Then
+            If Utils.PlayerPed.DistanceToSquared2D(tmpPos, 1.5) Then
 
                 Screen.ShowHelpTextThisFrame(Game.GetLocalizedString("RogersSierra_Help_InstallWheelsOnPilot"))
 

@@ -182,9 +182,7 @@ Partial Public Class RogersSierra
 
     Private Sub AnimationTick()
 
-        If VisibleLocomotive.Position.DistanceToSquared(Game.Player.Character.Position) > 100 * 100 AndAlso Locomotive.Speed = 0 Then
-
-        Else
+        If Locomotive.DistanceToSquared2D(Utils.PlayerPed, 100) AndAlso Locomotive.Speed > 0 Then
 
             AnimationProcess()
         End If

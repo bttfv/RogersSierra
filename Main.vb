@@ -80,43 +80,37 @@ Friend Class Main
             RogersSierraToRemove.Clear()
         End If
 
-        RogersSierraList.ForEach(Sub(x)
+        RogersSierraList.ForEach(Sub(train)
 
-                                     If x.Deleted Then
+                                     If train.Deleted Then
 
-                                         RemoveRogersSierra(x)
+                                         RemoveRogersSierra(train)
                                          Exit Sub
                                      End If
 
-                                     If Utils.PlayerPed.IsInVehicle() = False AndAlso x.IsExploded = False Then
+                                     If Utils.PlayerPed.IsInVehicle() = False AndAlso train.IsExploded = False Then
 
                                          If Game.IsControlJustPressed(GTA.Control.Enter) Then
 
-                                             If x.GetBoneDistanceSquared(TrainBones.sDriverSeat, Utils.PlayerPed) < 1.3 Then
+                                             If Utils.PlayerPed.DistanceToSquared2D(train, TrainBones.sDriverSeat, 1.3) Then
 
-                                                 'If x.Locomotive.Speed > 0 Then
-
-                                                 Utils.PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver,,, EnterVehicleFlags.WarpIn)
-                                                 'Else
-
-                                                 '    Utils.PlayerPed.Task.EnterVehicle(x.Locomotive, VehicleSeat.Driver)
-                                                 'End If
+                                                 Utils.PlayerPed.Task.EnterVehicle(train.Locomotive, VehicleSeat.Driver,,, EnterVehicleFlags.WarpIn)
                                              End If
                                          End If
                                      End If
 
-                                     Dim tmpDist = Utils.PlayerPed.Position.DistanceToSquared(x.Locomotive.Position)
+                                     Dim tmpDist = Utils.PlayerPed.DistanceToSquared2D(train)
 
-                                     If ClosestRogersSierra Is x Then
+                                     If ClosestRogersSierra Is train Then
 
                                          ClosestRogersSierraDist = tmpDist
                                      ElseIf tmpDist < ClosestRogersSierraDist OrElse ClosestRogersSierraDist = -1 Then
 
                                          ClosestRogersSierraDist = tmpDist
-                                         ClosestRogersSierra = x
+                                         ClosestRogersSierra = train
                                      End If
 
-                                     x.Tick()
+                                     train.Tick()
                                  End Sub)
 
         If RogersSierraList.Count = 0 AndAlso ClosestRogersSierraDist > -1 Then
