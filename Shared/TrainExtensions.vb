@@ -2,6 +2,8 @@
 
 Public Module TrainExtensions
 
+    Friend TextHandler As New FusionLibrary.CustomText("RogersSierra_Text_{0}")
+
     <Extension>
     Public Function IsRogersSierra(vehicle As GTA.Vehicle) As Boolean
 

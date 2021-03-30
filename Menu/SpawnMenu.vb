@@ -1,12 +1,11 @@
 ﻿Imports System.ComponentModel
-Imports System.Drawing
 Imports FusionLibrary
 Imports GTA
 Imports GTA.Math
 Imports LemonUI.Menus
 
 Friend Class SpawnMenu
-    Inherits CustomNativeMenu
+    Inherits SierraMenu
 
     Private SpawnMode As Boolean
 
@@ -15,15 +14,15 @@ Friend Class SpawnMenu
 
     Private SpawnLocations As New SpawnLocationHandler
 
-    Private WithEvents SelectLocation As New NativeListItem(Of SpawnLocation)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Location"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Location_Description"))
-    Private WithEvents SpawnTrain As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Spawn"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Spawn_Description"))
-    Private WithEvents DeleteTrain As New NativeListItem(Of RogersSierra)(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Delete_Description"))
-    Private WithEvents DeleteAllTrains As New NativeItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_DeleteAll"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_DeleteAll_Description"))
-    Private WithEvents WarpPlayer As New NativeCheckboxItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_WarpPlayer"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_WarpPlayer_Description"), True)
-    Private WithEvents RandomTrains As New NativeCheckboxItem(Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_RandomTrains"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_RandomTrains_Description"), False)
+    Private WithEvents SelectLocation As NativeListItem(Of SpawnLocation)
+    Private WithEvents WarpPlayer As NativeCheckboxItem
+    Private WithEvents SpawnTrain As NativeItem
+    Private WithEvents DeleteTrain As NativeListItem(Of RogersSierra)
+    Private WithEvents DeleteAllTrains As NativeItem
+    Private WithEvents RandomTrains As NativeCheckboxItem
 
     Public Sub New()
-        MyBase.New("", Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Subtitle"), Game.GetLocalizedString("RogersSierra_Menu_SpawnMenu_Description"))
+        MyBase.New("Spawn")
 
         SpawnLocations.Add(New Vector3(2611, 1681, 27), New Vector3(2601.0, 1700.2, 29.9), New Vector3(0.8, -0.6, -0.1), False)
         SpawnLocations.Add(New Vector3(2462, -289, 93), New Vector3(2455.4, -276.4, 96.2), New Vector3(0.4, -0.9, 0.1))
@@ -34,20 +33,15 @@ Friend Class SpawnMenu
         SpawnLocations.Add(New Vector3(749, 6433, 30), New Vector3(765.6, 6449.3, 34.3), New Vector3(-0.9, -0.4, 0.2))
         SpawnLocations.Add(New Vector3(2486, 5743, 64), New Vector3(2510.5, 5716.2, 68.4), New Vector3(-1.0, 0.3, 0.1))
 
-        Banner = New LemonUI.Elements.ScaledTexture(New PointF(0, 0), New SizeF(200, 200), "sierra_gui", "sierra_menu_logo")
-
-        SelectLocation.Items = SpawnLocations.Locations
-        DeleteTrain.Items = RogersSierraList
-
-        Add(SelectLocation)
-        Add(WarpPlayer)
-        Add(SpawnTrain)
-        Add(RandomTrains)
-        Add(DeleteTrain)
-        Add(DeleteAllTrains)
+        SelectLocation = NewListItem("SelectLocation", SpawnLocations.Locations.ToArray)
+        WarpPlayer = NewCheckboxItem("WarpPlayer", True)
+        SpawnTrain = NewItem("SpawnTrain")
+        RandomTrains = NewCheckboxItem("RandomTrains", False)
+        DeleteTrain = NewListItem("Delete", RogersSierraList.ToArray)
+        DeleteAllTrains = NewItem("DeleteAll")
     End Sub
 
-    Private Sub SpawnMenu_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+    Public Overrides Sub Menu_Closing(sender As Object, e As CancelEventArgs)
 
         ResetCamera()
     End Sub
@@ -90,7 +84,7 @@ Friend Class SpawnMenu
         Close()
     End Sub
 
-    Private Sub SpawnMenu_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+    Public Overrides Sub Menu_Shown(sender As Object, e As EventArgs)
 
         ShowLocation()
 
@@ -190,6 +184,22 @@ Friend Class SpawnMenu
     End Sub
 
     Public Overrides Sub Tick()
+
+    End Sub
+
+    Public Overrides Sub Menu_OnItemValueChanged(sender As NativeSliderItem, e As EventArgs)
+
+    End Sub
+
+    Public Overrides Sub Menu_OnItemCheckboxChanged(sender As NativeCheckboxItem, e As EventArgs, Checked As Boolean)
+
+    End Sub
+
+    Public Overrides Sub Menu_OnItemSelected(sender As NativeItem, e As SelectedEventArgs)
+
+    End Sub
+
+    Public Overrides Sub Menu_OnItemActivated(sender As NativeItem, e As EventArgs)
 
     End Sub
 End Class
