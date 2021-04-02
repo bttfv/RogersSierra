@@ -34,7 +34,6 @@ Public Module TrainManager
         End Set
     End Property
 
-
     Public ReadOnly RogersSierraList As New List(Of RogersSierra)
 
     Friend RogersSierraToRemove As New List(Of RogersSierra)
@@ -45,9 +44,11 @@ Public Module TrainManager
 
         tmpTrain.setTrainCruiseSpeed(0)
 
-        tmpTrain.setTrainSpeed(0)
+        tmpTrain.SetTrainSpeed(0)
 
-        RogersSierraList.Add(New RogersSierra(tmpTrain, False))
+        tmpTrain.IsVisible = False
+
+        tmpTrain.GetTrainCarriage(1).IsVisible = False
 
         If warpInPlayer Then
 

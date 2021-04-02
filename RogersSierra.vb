@@ -98,7 +98,7 @@ Partial Public Class RogersSierra
     Public Property RandomTrain As Boolean = True
 
     Private rejectTimer As Integer = -1
-    Private lockSpeed As Boolean
+    Private speedUnlocked As Boolean
 
     Public Sub New(mTrain As Vehicle, isRandom As Boolean)
 
@@ -233,7 +233,7 @@ Partial Public Class RogersSierra
     ''' Set a <paramref name="delay"/> for permit attach to train again.
     ''' </summary>
     ''' <param name="delay"><seealso cref="Integer"/></param>
-    Public Sub SetRejectDelay(Optional delay As Integer = 0)
+    Public Sub SetRejectDelay(delay As Integer)
 
         rejectTimer = Game.GameTime + delay
         RejectAttach = True
@@ -321,7 +321,7 @@ Partial Public Class RogersSierra
         End If
 
         VisibleLocomotive.DirtLevel = 0
-        
+
         ' TEMPORARY DISABLED BECAUSE IT DOESNT FUCKING WORK IT ASSIGNS RANDOM COLORS!!!
         'VisibleLocomotive.Mods.PrimaryColor = Locomotive.Mods.PrimaryColor
         'VisibleLocomotive.Mods.SecondaryColor = Locomotive.Mods.SecondaryColor
@@ -483,15 +483,15 @@ Partial Public Class RogersSierra
 
         If IsOnTrainMission = False Then
 
-            If UnlockSpeed AndAlso Not lockSpeed AndAlso Locomotive.GetMPHSpeed > 51 Then
+            If UnlockSpeed AndAlso Not speedUnlocked AndAlso Locomotive.GetMPHSpeed > 51 Then
 
-                lockSpeed = True
+                speedUnlocked = True
             End If
 
-            If UnlockSpeed AndAlso lockSpeed AndAlso Locomotive.GetMPHSpeed < 49 Then
+            If UnlockSpeed AndAlso speedUnlocked AndAlso Locomotive.GetMPHSpeed < 49 Then
 
                 UnlockSpeed = False
-                lockSpeed = False
+                speedUnlocked = False
             End If
         End If
 
@@ -524,7 +524,7 @@ Partial Public Class RogersSierra
             sCabCols.MoveProp(Vector3.Zero, Vector3.Zero, False)
         End If
 
-        Locomotive.setTrainSpeed(LocomotiveSpeed)
+        Locomotive.SetTrainSpeed(LocomotiveSpeed)
 
         If LocomotiveSpeed = 0 AndAlso Locomotive.Speed > 0 Then
 
