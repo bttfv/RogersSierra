@@ -92,7 +92,7 @@ Friend Class SpawnMenu
 
         DeleteTrain.Items = RogersSierraList
 
-        RandomTrains.Checked = Utils.RandomTrains
+        RandomTrains.Checked = FusionUtils.RandomTrains
     End Sub
 
     Private Sub DeleteTrain_Activated(sender As Object, e As EventArgs) Handles DeleteTrain.Activated
@@ -180,7 +180,7 @@ Friend Class SpawnMenu
             Exit Sub
         End If
 
-        Utils.RandomTrains = RandomTrains.Checked
+        FusionUtils.RandomTrains = RandomTrains.Checked
     End Sub
 
     Public Overrides Sub Tick()

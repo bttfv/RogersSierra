@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Forms
 Imports FusionLibrary
-Imports FusionLibrary.Enums
+Imports FusionLibrary.FusionEnums
 Imports FusionLibrary.Extensions
 Imports GTA
 
@@ -48,7 +48,7 @@ Friend Class Main
 
             TrainModels.LoadModels()
 
-            Utils.RandomTrains = False
+            FusionUtils.RandomTrains = False
 
             initialSetup = False
         End If
@@ -88,18 +88,18 @@ Friend Class Main
                                          Exit Sub
                                      End If
 
-                                     If Utils.PlayerPed.IsInVehicle() = False AndAlso train.IsExploded = False Then
+                                     If FusionUtils.PlayerPed.IsInVehicle() = False AndAlso train.IsExploded = False Then
 
                                          If Game.IsControlJustPressed(GTA.Control.Enter) Then
 
-                                             If Utils.PlayerPed.DistanceToSquared2D(train, TrainBones.sDriverSeat, 1.3) Then
+                                             If FusionUtils.PlayerPed.DistanceToSquared2D(train, TrainBones.sDriverSeat, 1.3) Then
 
-                                                 Utils.PlayerPed.Task.EnterVehicle(train.Locomotive, VehicleSeat.Driver,,, EnterVehicleFlags.WarpIn)
+                                                 FusionUtils.PlayerPed.Task.EnterVehicle(train.Locomotive, VehicleSeat.Driver,,, EnterVehicleFlags.WarpIn)
                                              End If
                                          End If
                                      End If
 
-                                     Dim tmpDist = Utils.PlayerPed.DistanceToSquared2D(train)
+                                     Dim tmpDist = FusionUtils.PlayerPed.DistanceToSquared2D(train)
 
                                      If ClosestRogersSierra Is train Then
 
@@ -123,19 +123,19 @@ Friend Class Main
 
             If ClosestRogersSierraDist <= 200 AndAlso ClosestRogersSierra.LocomotiveSpeed > 0 Then
 
-                If Utils.PlayerPed.CanRagdoll Then
+                If FusionUtils.PlayerPed.CanRagdoll Then
 
-                    Utils.PlayerPed.CanRagdoll = False
+                    FusionUtils.PlayerPed.CanRagdoll = False
                 End If
-            ElseIf Not Utils.PlayerPed.CanRagdoll Then
+            ElseIf Not FusionUtils.PlayerPed.CanRagdoll Then
 
-                Utils.PlayerPed.CanRagdoll = True
+                FusionUtils.PlayerPed.CanRagdoll = True
             End If
         End If
 
-        If Not IsNothing(CurrentRogersSierra) AndAlso Not Utils.PlayerPed.IsInVehicle Then
+        If Not IsNothing(CurrentRogersSierra) AndAlso Not FusionUtils.PlayerPed.IsInVehicle Then
 
-            Utils.PlayerPed.Task.ClearAllImmediately()
+            FusionUtils.PlayerPed.Task.ClearAllImmediately()
 
             If CurrentRogersSierra.Camera <> TrainCamera.Off AndAlso Not CurrentRogersSierra.IsOnTrainMission Then
 

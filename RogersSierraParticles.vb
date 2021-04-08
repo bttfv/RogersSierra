@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
 Imports FusionLibrary
-Imports FusionLibrary.Enums
+Imports FusionLibrary.FusionEnums
 Imports FusionLibrary.Extensions
 Imports GTA
 Imports GTA.Math
@@ -310,7 +310,7 @@ Partial Public Class RogersSierra
             Whistle = False
         End If
 
-        If Game.IsControlJustPressed(Control.VehicleHorn) AndAlso Utils.PlayerPed.IsInVehicle(Locomotive) Then
+        If Game.IsControlJustPressed(Control.VehicleHorn) AndAlso FusionUtils.PlayerPed.IsInVehicle(Locomotive) Then
 
             Whistle = True
         End If

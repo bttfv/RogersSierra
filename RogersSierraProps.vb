@@ -1,5 +1,5 @@
 ﻿Imports FusionLibrary
-Imports FusionLibrary.Enums
+Imports FusionLibrary.FusionEnums
 Imports FusionLibrary.Extensions
 Imports GTA
 Imports GTA.Math
@@ -182,17 +182,17 @@ Partial Public Class RogersSierra
 
     Private Sub AnimationTick()
 
-        If Locomotive.DistanceToSquared2D(Utils.PlayerPed, 100) AndAlso Locomotive.Speed > 0 Then
+        If Locomotive.DistanceToSquared2D(FusionUtils.PlayerPed, 100) AndAlso Locomotive.Speed > 0 Then
 
             AnimationProcess()
         End If
 
-        If Game.IsControlJustPressed(Control.VehicleHandbrake) AndAlso Game.IsControlPressed(Control.CharacterWheel) = False AndAlso Bell = False AndAlso Utils.PlayerPed.IsInVehicle(Locomotive) Then
+        If Game.IsControlJustPressed(Control.VehicleHandbrake) AndAlso Game.IsControlPressed(Control.CharacterWheel) = False AndAlso Bell = False AndAlso FusionUtils.PlayerPed.IsInVehicle(Locomotive) Then
 
             Bell = True
         End If
 
-        If Game.IsControlJustPressed(Control.VehicleHeadlight) AndAlso Utils.PlayerPed.IsInVehicle(Locomotive) Then
+        If Game.IsControlJustPressed(Control.VehicleHeadlight) AndAlso FusionUtils.PlayerPed.IsInVehicle(Locomotive) Then
 
             IsLightOn = Not IsLightOn
         End If

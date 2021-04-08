@@ -1,5 +1,5 @@
 ﻿Imports FusionLibrary
-Imports FusionLibrary.Enums
+Imports FusionLibrary.FusionEnums
 Imports FusionLibrary.Extensions
 Imports GTA
 Imports GTA.Math
@@ -102,7 +102,7 @@ Partial Public Class RogersSierra
 
     Public Sub New(mTrain As Vehicle, isRandom As Boolean)
 
-        _ID = Utils.Random.Next
+        _ID = FusionUtils.Random.Next
 
         ColDeLorean = mTrain
         Locomotive = ColDeLorean.GetTrainCarriage(1)
@@ -328,11 +328,11 @@ Partial Public Class RogersSierra
 
         Tender.DirtLevel = 0
 
-        If Not Utils.PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot AndAlso Not IsExploded Then
+        If Not FusionUtils.PlayerPed.IsInVehicle AndAlso Not WheelsOnPilot AndAlso Not IsExploded Then
 
             Dim tmpPos = Locomotive.GetOffsetPosition(New Vector3(0, TrainModels.RogersSierraModel.Model.Dimensions.frontTopRight.Y, 0.5))
 
-            If Utils.PlayerPed.DistanceToSquared2D(tmpPos, 1.5) Then
+            If FusionUtils.PlayerPed.DistanceToSquared2D(tmpPos, 1.5) Then
 
                 TextHandler.ShowHelp("WheelsOnPilot")
 
@@ -359,7 +359,7 @@ Partial Public Class RogersSierra
 
         If RandomTrain Then
 
-            If Utils.PlayerPed.IsInVehicle(Locomotive) Then
+            If FusionUtils.PlayerPed.IsInVehicle(Locomotive) Then
 
                 Locomotive.SetTrainCruiseSpeed(0)
                 LocomotiveSpeed = Locomotive.Speed
@@ -371,13 +371,13 @@ Partial Public Class RogersSierra
             End If
         End If
 
-        If Utils.PlayerPed.IsInVehicle(Locomotive) Then
+        If FusionUtils.PlayerPed.IsInVehicle(Locomotive) Then
 
             If CurrentRogersSierra IsNot Me Then
 
                 CurrentRogersSierra = Me
 
-                Utils.PlayerPed.Task.PlayAnimation("amb@code_human_in_bus_passenger_idles@female@sit@base", "base", 900, -1, AnimationFlags.Loop)
+                FusionUtils.PlayerPed.Task.PlayAnimation("amb@code_human_in_bus_passenger_idles@female@sit@base", "base", 900, -1, AnimationFlags.Loop)
             End If
 
             If IsNothing(VisibleLocomotive.AttachedBlip) = False AndAlso VisibleLocomotive.AttachedBlip.Exists Then
@@ -392,7 +392,7 @@ Partial Public Class RogersSierra
                 exitTask.AddTask().ClearAnimation("amb@code_human_in_bus_passenger_idles@female@sit@base", "base")
                 exitTask.AddTask().LeaveVehicle()
 
-                Utils.PlayerPed.Task.PerformSequence(exitTask)
+                FusionUtils.PlayerPed.Task.PerformSequence(exitTask)
             End If
 
             If IsOnTrainMission = False And ForceHandbrake = False Then
@@ -432,7 +432,7 @@ Partial Public Class RogersSierra
             VisibleLocomotive.AttachedBlip.Name = "Rogers Sierra No. 3"
         End If
 
-        If Utils.PlayerPed.IsInVehicle(Locomotive) = False OrElse (Game.IsControlPressed(Control.VehicleAccelerate) = False AndAlso Game.IsControlPressed(Control.VehicleBrake) = False) Then
+        If FusionUtils.PlayerPed.IsInVehicle(Locomotive) = False OrElse (Game.IsControlPressed(Control.VehicleAccelerate) = False AndAlso Game.IsControlPressed(Control.VehicleBrake) = False) Then
 
             If IsCruiseControlOn = False AndAlso IsOnTrainMission = False Then
 

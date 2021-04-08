@@ -1,4 +1,4 @@
-﻿Imports FusionLibrary.Enums
+﻿Imports FusionLibrary.FusionEnums
 Imports FusionLibrary.Extensions
 Imports GTA
 Imports KlangRageAudioLibrary
