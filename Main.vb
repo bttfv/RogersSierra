@@ -37,6 +37,11 @@ Friend Class Main
 
     Private Sub Main_Tick(sender As Object, e As EventArgs) Handles Me.Tick
 
+        If Game.IsLoading OrElse FusionUtils.FirstTick Then
+
+            Return
+        End If
+
         On Error Resume Next
 
         If initialSetup Then
