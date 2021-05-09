@@ -145,6 +145,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Shared\TrainClone.vb" />
     <Compile Include="RogersSierra.vb" />
     <Compile Include="RogersSierraCamera.vb" />
     <Compile Include="RogersSierraParticles.vb" />

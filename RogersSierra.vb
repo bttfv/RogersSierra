@@ -106,11 +106,14 @@ Partial Public Class RogersSierra
 
         ColDeLorean = mTrain
         Locomotive = ColDeLorean.GetTrainCarriage(1)
+        Locomotive.Decorator.DotNotDelete = True
 
         ColDeLorean.IsVisible = False
         ColDeLorean.IsCollisionEnabled = False
+        ColDeLorean.Decorator().DotNotDelete = True
 
         Tender = ColDeLorean.GetTrainCarriage(2)
+        Tender.Decorator.DotNotDelete = True
 
         Native.Function.Call(Native.Hash.SET_HORN_ENABLED, Locomotive.Handle, False)
 
