@@ -1,5 +1,5 @@
-﻿Imports GTA
-Imports System.Drawing
+﻿Imports System.Drawing
+Imports GTA
 
 MustInherit Class SierraMenu
     Inherits FusionLibrary.CustomNativeMenu

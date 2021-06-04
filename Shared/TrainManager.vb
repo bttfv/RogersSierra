@@ -1,6 +1,6 @@
 ﻿Imports FusionLibrary
-Imports GTA
 Imports FusionLibrary.Extensions
+Imports GTA
 
 Public Module TrainManager
 

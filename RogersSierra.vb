@@ -1,9 +1,7 @@
 ﻿Imports FusionLibrary
-Imports FusionLibrary.FusionEnums
 Imports FusionLibrary.Extensions
 Imports GTA
 Imports GTA.Math
-Imports GTA.UI
 Imports KlangRageAudioLibrary
 
 Partial Public Class RogersSierra

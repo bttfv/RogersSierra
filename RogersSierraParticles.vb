@@ -1,6 +1,5 @@
 ﻿Imports System.Drawing
 Imports FusionLibrary
-Imports FusionLibrary.FusionEnums
 Imports FusionLibrary.Extensions
 Imports GTA
 Imports GTA.Math
